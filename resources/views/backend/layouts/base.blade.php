@@ -161,10 +161,11 @@
                         <a href="{{ route('admin.ambulance.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Ambulance</span></a>
                     </li>
 
-
+                    <li class="nav-label">Restaurant</li>
                     <li>
                         <a href="{{ route('admin.food.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">food</span></a>
                     </li>
+                    
 
                 </ul>
             </div>

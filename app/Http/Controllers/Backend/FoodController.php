@@ -17,18 +17,17 @@ class FoodController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Food::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.food.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.food.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.food.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" data-route="' . route('admin.food.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.food.index');
@@ -41,7 +40,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.food.create');
     }
 
     /**
@@ -52,7 +51,25 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:foods',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
+        ]);
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/food/', $filename);
+            $input['image'] = $filename;
+        }
+
+        Food::create($input);
+
+        return redirect()->route('admin.food.index')->with('success', 'New Food has been added successfully');
     }
 
     /**
@@ -74,7 +91,8 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        //
+        $food = Food::findOrFail(intval($id));
+        return view('backend.food.edit', compact('food'));
     }
 
     /**
@@ -86,7 +104,36 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $food = Food::findOrFail(intval($id));
+
+        if($food->slug == $request->slug){
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }else{
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:foods',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }
+        
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/food/', $filename);
+            $input['image'] = $filename;
+        }
+
+        $food->update($input);
+
+        return redirect()->route('admin.food.index')->with('success', 'Food has been updated successfully');
     }
 
     /**

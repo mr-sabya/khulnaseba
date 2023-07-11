@@ -1,34 +1,32 @@
 @extends('backend.layouts.base')
 
-@section('title', 'All Newspapers')
+@section('title', 'All Food')
 
 @section('content')
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Newspaper List</h4>
-				<a href="{{ route('admin.newspaper.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Newspaper</a>
+				<h4 class="card-title">Food List</h4>
+				<a href="{{ route('admin.food.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Food</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table id="example" class="display w-100">
+					<table id="dataTable" class="display w-100">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Image</th>
 								<th>Name</th>
-								<th>Link</th>
 								<th>Action</th>
 							</tr>
 						</thead>
-						
+
 						<tfoot>
 							<tr>
 								<th>#</th>
 								<th>Image</th>
 								<th>Name</th>
-								<th>Link</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>
@@ -66,46 +64,41 @@
 
 @section('scripts')
 <script>
-	$('#example').DataTable({
+	$('#dataTable').DataTable({
 		processing: true,
 		serverSide: true,
-		ajax:{
-			url: "{{ route('admin.newspaper.index') }}",
+		ajax: {
+			url: "{{ route('admin.food.index') }}",
 		},
-		columns:[
-		{ 
-			data: 'DT_RowIndex',
-			name: 'DT_RowIndex',
-			orderable: false,
-			searchable: false 
-		},
-		{
-			data: 'image',
-			name: 'image',
-			render: function(data, type, full, meta){
-				return "<img src={{ URL::to('/') }}/images/newspaper/" + data + " width='120' class='img-thumbnail' />";
+		columns: [{
+				data: 'DT_RowIndex',
+				name: 'DT_RowIndex',
+				orderable: false,
+				searchable: false
 			},
-			orderable: false
-		},
-		{
-			data: 'name',
-			name: 'name'
-		},
-		{
-			data: 'link',
-			name: 'link'
-		},
-		{
-			data: 'action',
-			name: 'action',
-			orderable: false
-		}
+			{
+				data: 'image',
+				name: 'image',
+				render: function(data, type, full, meta) {
+					return "<img src={{ URL::to('/') }}/images/food/" + data + " width='120' class='img-thumbnail' />";
+				},
+				orderable: false
+			},
+			{
+				data: 'name',
+				name: 'name'
+			},
+			{
+				data: 'action',
+				name: 'action',
+				orderable: false
+			}
 		]
 	});
 
 
 
-	$(document).on('click', '.delete', function () {
+	$(document).on('click', '.delete', function() {
 		var route = $(this).attr('data-route');
 		$('#deleteForm').attr('action', route);
 		$('#deleteModal').modal('show');
