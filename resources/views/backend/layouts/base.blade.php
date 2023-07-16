@@ -165,6 +165,14 @@
                     <li>
                         <a href="{{ route('admin.food.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">food</span></a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.restaurant.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Restaurant</span></a>
+                    </li>
+
+                    <li class="nav-label">Person</li>
+                    <li>
+                        <a href="{{ route('admin.fireservice.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Fire Service</span></a>
+                    </li>
                     
 
                 </ul>

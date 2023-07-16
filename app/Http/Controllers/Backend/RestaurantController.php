@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\District;
 use Illuminate\Http\Request;
 
-use App\Models\Ambulance;
-use App\Models\District;
-use App\Models\City;
+use App\Models\Food;
+use App\Models\Restaurant;
 
-class AmbulanceController extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -20,7 +21,7 @@ class AmbulanceController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +31,7 @@ class AmbulanceController extends Controller
     {
         if(request()->ajax())
         {
-            return datatables()->of(Ambulance::latest()->get())
+            return datatables()->of(Restaurant::latest()->get())
             ->addColumn('district', function($data){
                 return $data->district['name'];
             })
@@ -38,16 +39,16 @@ class AmbulanceController extends Controller
                 return $data->city['name'];
             })
             ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.ambulance.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                $button = '<a href="'.route('admin.restaurant.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.ambulance.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                $button .= '<button type="button" name="delete" data-route="'.route('admin.restaurant.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
                 return $button;
             })
             ->rawColumns(['district', 'city', 'action'])
             ->addIndexColumn()
             ->make(true);
         }
-        return view('backend.ambulance.index');
+        return view('backend.restaurant.index');
     }
 
     /**
@@ -58,9 +59,10 @@ class AmbulanceController extends Controller
     public function create()
     {
         $districts = District::orderBy('name', 'ASC')->get();
-        $cities = City::orderBy('name', 'ASC')->get();
+        $cities = City::OrderBy('name', 'ASC')->get();
+        $foods = Food::orderBy('name', 'ASC')->get();
 
-        return view('backend.ambulance.create', compact('districts', 'cities'));
+        return view('backend.restaurant.create', compact('districts', 'cities', 'foods'));
     }
 
     /**
@@ -71,18 +73,29 @@ class AmbulanceController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|max:15|unique:ambulances',
+            'phone' => 'required|max:15|unique:restaurants',
+            'address' => 'required|max:255',
             'district_id' => 'required',
             'city_id' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
         $input = $request->all();
-    
-        Ambulance::create($input);
 
-        return redirect()->route('admin.ambulance.index')->with('success', 'New Ambulance has been added successfully');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/food/', $filename);
+            $input['image'] = $filename;
+        }
+
+        $restaurant = Restaurant::create($input);
+        $restaurant->foods()->sync($request->food);
+
+        return redirect()->route('admin.restaurant.index')->with('success', 'New Restaurants has been added successfully');
     }
 
     /**
@@ -104,12 +117,13 @@ class AmbulanceController extends Controller
      */
     public function edit($id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
+        $restaurant = Restaurant::findOrFail(intval($id));
 
         $districts = District::orderBy('name', 'ASC')->get();
-        $cities = City::orderBy('name', 'ASC')->get();
+        $cities = City::OrderBy('name', 'ASC')->get();
+        $foods = Food::orderBy('name', 'ASC')->get();
 
-        return view('backend.ambulance.edit', compact('ambulance', 'districts', 'cities'));
+        return view('backend.restaurant.edit', compact('restaurant', 'districts', 'cities', 'foods'));
     }
 
     /**
@@ -121,30 +135,7 @@ class AmbulanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
-
-        if($ambulance->phone == $request->phone){
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone' => 'required|max:15',
-                'district_id' => 'required',
-                'city_id' => 'required',
-            ]);
-        }else{
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone' => 'required|max:15|unique:ambulances',
-                'district_id' => 'required',
-                'city_id' => 'required',
-            ]);
-        }
-        
-
-        $input = $request->all();
-
-        $ambulance->update($input);
-
-        return redirect()->route('admin.ambulance.index')->with('success', 'Ambulance has been updated successfully');
+        //
     }
 
     /**
@@ -155,10 +146,6 @@ class AmbulanceController extends Controller
      */
     public function destroy($id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
-
-        $ambulance->delete();
-
-        return redirect()->route('admin.ambulance.index')->with('success', 'Ambulance has been deleted successfully');
+        //
     }
 }

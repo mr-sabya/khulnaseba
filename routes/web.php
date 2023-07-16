@@ -62,4 +62,9 @@ Route::prefix('admin')->group(function () {
 	//food
 	Route::resource('food', App\Http\Controllers\Backend\FoodController::class, ['names' => 'admin.food']);
 
+	Route::resource('restaurant', App\Http\Controllers\Backend\RestaurantController::class, ['names' => 'admin.restaurant']);
+
+	//fire servive
+	Route::resource('fire-service', App\Http\Controllers\Backend\FireServiceController::class, ['names' => 'admin.fireservice']);
+
 });

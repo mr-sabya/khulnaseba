@@ -5,22 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Ambulance;
+use App\Models\Fireservice;
 use App\Models\District;
 use App\Models\City;
 
-class AmbulanceController extends Controller
+class FireServiveController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -57,10 +47,7 @@ class AmbulanceController extends Controller
      */
     public function create()
     {
-        $districts = District::orderBy('name', 'ASC')->get();
-        $cities = City::orderBy('name', 'ASC')->get();
-
-        return view('backend.ambulance.create', compact('districts', 'cities'));
+        //
     }
 
     /**
@@ -71,18 +58,7 @@ class AmbulanceController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|max:15|unique:ambulances',
-            'district_id' => 'required',
-            'city_id' => 'required',
-        ]);
-
-        $input = $request->all();
-    
-        Ambulance::create($input);
-
-        return redirect()->route('admin.ambulance.index')->with('success', 'New Ambulance has been added successfully');
+        //
     }
 
     /**
@@ -104,12 +80,7 @@ class AmbulanceController extends Controller
      */
     public function edit($id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
-
-        $districts = District::orderBy('name', 'ASC')->get();
-        $cities = City::orderBy('name', 'ASC')->get();
-
-        return view('backend.ambulance.edit', compact('ambulance', 'districts', 'cities'));
+        //
     }
 
     /**
@@ -121,30 +92,7 @@ class AmbulanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
-
-        if($ambulance->phone == $request->phone){
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone' => 'required|max:15',
-                'district_id' => 'required',
-                'city_id' => 'required',
-            ]);
-        }else{
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone' => 'required|max:15|unique:ambulances',
-                'district_id' => 'required',
-                'city_id' => 'required',
-            ]);
-        }
-        
-
-        $input = $request->all();
-
-        $ambulance->update($input);
-
-        return redirect()->route('admin.ambulance.index')->with('success', 'Ambulance has been updated successfully');
+        //
     }
 
     /**
@@ -155,10 +103,6 @@ class AmbulanceController extends Controller
      */
     public function destroy($id)
     {
-        $ambulance = Ambulance::findOrFail(intval($id));
-
-        $ambulance->delete();
-
-        return redirect()->route('admin.ambulance.index')->with('success', 'Ambulance has been deleted successfully');
+        //
     }
 }

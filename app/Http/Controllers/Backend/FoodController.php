@@ -11,6 +11,16 @@ use App\Models\Food;
 class FoodController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -53,7 +63,7 @@ class FoodController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:foods',
+            'slug' => 'required|string|max:255|unique:food',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
@@ -115,7 +125,7 @@ class FoodController extends Controller
         }else{
             $request->validate([
                 'name' => 'required|string|max:255',
-                'slug' => 'required|string|max:255|unique:foods',
+                'slug' => 'required|string|max:255|unique:food',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }

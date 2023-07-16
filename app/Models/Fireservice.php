@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class Fireservice extends Model
 {
     use HasFactory;
 
@@ -17,19 +17,9 @@ class Restaurant extends Model
     protected $fillable = [
         'name',
         'phone',
-        'address',
-        'image',
         'district_id',
-        'city_id'
+        'city_id',
     ];
-
-    /**
-     * The foods that belong to the restaurant.
-     */
-    public function foods()
-    {
-        return $this->belongsToMany('App\Models\Food');
-    }
 
     public function district()
     {
@@ -39,15 +29,5 @@ class Restaurant extends Model
     public function city()
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
-    }
-
-    public function get_food($id){
-        $food = $this->foods()->where('id', $id)->count();
-
-        if($food > 0){
-            return true;
-        }else{
-            return false;
-        }
     }
 }
