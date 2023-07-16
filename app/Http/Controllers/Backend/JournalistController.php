@@ -5,11 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Fireservice;
-use App\Models\District;
-use App\Models\City;
-
-class FireServiveController extends Controller
+class JournalistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,26 +14,7 @@ class FireServiveController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
-            return datatables()->of(Ambulance::latest()->get())
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('city', function($data){
-                return $data->city['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.ambulance.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.ambulance.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'city', 'action'])
-            ->addIndexColumn()
-            ->make(true);
-        }
-        return view('backend.ambulance.index');
+        //
     }
 
     /**

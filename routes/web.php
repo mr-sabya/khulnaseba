@@ -66,5 +66,9 @@ Route::prefix('admin')->group(function () {
 
 	//fire servive
 	Route::resource('fire-service', App\Http\Controllers\Backend\FireServiceController::class, ['names' => 'admin.fireservice']);
+	
+	//journalist
+	Route::resource('journalist', App\Http\Controllers\Backend\JournalistController::class, ['names' => 'admin.journalist']);
+
 
 });

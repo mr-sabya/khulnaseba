@@ -1,6 +1,6 @@
 @extends('backend.layouts.base')
 
-@section('title', 'All Fire Service)
+@section('title', 'All Fire Service')
 
 @section('content')
 <div class="row">
