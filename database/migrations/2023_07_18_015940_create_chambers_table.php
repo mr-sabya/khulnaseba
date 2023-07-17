@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJournalistsTable extends Migration
+class CreateChambersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateJournalistsTable extends Migration
      */
     public function up()
     {
-        Schema::create('journalists', function (Blueprint $table) {
+        Schema::create('chambers', function (Blueprint $table) {
             $table->id();
+            $table->integer('doctor_id');
             $table->string('name');
-            $table->string('phone', 20)->unique();
-            $table->string('media');
-            $table->integer('district_id');
-            $table->integer('city_id');
+            $table->string('phone');
+            $table->string('address');
+            $table->string('time')->nullable();
+            $table->string('phone_1');
+            $table->string('phone_2')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateJournalistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journalists');
+        Schema::dropIfExists('chambers');
     }
 }

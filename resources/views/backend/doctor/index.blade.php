@@ -1,14 +1,14 @@
 @extends('backend.layouts.base')
 
-@section('title', 'All Journalist')
+@section('title', 'All Doctor')
 
 @section('content')
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Journalist List</h4>
-				<a href="{{ route('admin.journalist.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Journalist</a>
+				<h4 class="card-title">Doctor List</h4>
+				<a href="{{ route('admin.doctor.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Doctor</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -17,8 +17,7 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
-								<th>Phone</th>
-								<th>Newspaper/TV</th>
+								<th>Degree</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -29,8 +28,7 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
-								<th>Phone</th>
-								<th>Newspaper/TV</th>
+								<th>Degree</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -55,7 +53,7 @@
 				@csrf
 				@method('DELETE')
 				<div class="modal-body">
-					<h3 class="text-center">Do you want to delete this Newspaper?</h3>
+					<h3 class="text-center">Do you want to delete this Doctor?</h3>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -74,7 +72,7 @@
 		processing: true,
 		serverSide: true,
 		ajax:{
-			url: "{{ route('admin.journalist.index') }}",
+			url: "{{ route('admin.doctor.index') }}",
 		},
 		columns:[
 		{ 
@@ -88,12 +86,8 @@
 			name: 'name'
 		},
 		{
-			data: 'phone',
-			name: 'phone'
-		},
-		{
-			data: 'media',
-			name: 'media'
+			data: 'degree',
+			name: 'degree'
 		},
 		{
 			data: 'city',

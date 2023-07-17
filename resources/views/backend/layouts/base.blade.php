@@ -173,6 +173,26 @@
                     <li>
                         <a href="{{ route('admin.fireservice.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Fire Service</span></a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.journalist.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Journalist</span></a>
+                    </li>
+
+                    <li class="nav-label">Lawyer</li>
+                    <li>
+                        <a href="{{ route('admin.lawdepartment.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Law Department</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.lawyer.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Lawyer</span></a>
+                    </li>
+
+                    <li class="nav-label">Doctor</li>
+                    <li>
+                        <a href="{{ route('admin.medical.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Doctor Type</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.doctor.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Doctor</span></a>
+                    </li>
+                    
                     
 
                 </ul>

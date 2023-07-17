@@ -1,14 +1,14 @@
 @extends('backend.layouts.base')
 
-@section('title', 'All Journalist')
+@section('title', 'All Lawyer')
 
 @section('content')
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Journalist List</h4>
-				<a href="{{ route('admin.journalist.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Journalist</a>
+				<h4 class="card-title">Lawyer List</h4>
+				<a href="{{ route('admin.lawyer.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Lawyer</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -18,7 +18,7 @@
 								<th>#</th>
 								<th>Name</th>
 								<th>Phone</th>
-								<th>Newspaper/TV</th>
+								<th>Department</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -30,7 +30,7 @@
 								<th>#</th>
 								<th>Name</th>
 								<th>Phone</th>
-								<th>Newspaper/TV</th>
+								<th>Department</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -74,7 +74,7 @@
 		processing: true,
 		serverSide: true,
 		ajax:{
-			url: "{{ route('admin.journalist.index') }}",
+			url: "{{ route('admin.lawyer.index') }}",
 		},
 		columns:[
 		{ 
@@ -92,8 +92,8 @@
 			name: 'phone'
 		},
 		{
-			data: 'media',
-			name: 'media'
+			data: 'department',
+			name: 'department'
 		},
 		{
 			data: 'city',

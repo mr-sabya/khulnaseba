@@ -71,4 +71,19 @@ Route::prefix('admin')->group(function () {
 	Route::resource('journalist', App\Http\Controllers\Backend\JournalistController::class, ['names' => 'admin.journalist']);
 
 
+	//law
+	Route::resource('law-department', App\Http\Controllers\Backend\LawDepartmentController::class, ['names' => 'admin.lawdepartment']);
+	Route::resource('lawyer', App\Http\Controllers\Backend\LawyerController::class, ['names' => 'admin.lawyer']);
+
+	//doctor
+	Route::resource('doctor-type', App\Http\Controllers\Backend\DoctorTypeController::class, ['names' => 'admin.medical']);
+
+	Route::resource('doctor', App\Http\Controllers\Backend\DoctorController::class, ['names' => 'admin.doctor']);
+
+	Route::get('doctor/chamber/{id}', [App\Http\Controllers\Backend\ChamberController::class, 'index'])->name('admin.chamber.index');
+	Route::post('chamber/store', [App\Http\Controllers\Backend\ChamberController::class, 'store'])->name('admin.chamber.store');
+	Route::get('chamber/edit/{id}', [App\Http\Controllers\Backend\ChamberController::class, 'edit'])->name('admin.chamber.edit');
+	Route::put('chamber/edit/{id}', [App\Http\Controllers\Backend\ChamberController::class, 'update'])->name('admin.chamber.update');
+
+
 });

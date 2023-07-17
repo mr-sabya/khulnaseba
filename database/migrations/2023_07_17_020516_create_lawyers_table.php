@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJournalistsTable extends Migration
+class CreateLawyersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateJournalistsTable extends Migration
      */
     public function up()
     {
-        Schema::create('journalists', function (Blueprint $table) {
+        Schema::create('lawyers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone', 20)->unique();
-            $table->string('media');
+            $table->integer('department_id');
             $table->integer('district_id');
             $table->integer('city_id');
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateJournalistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journalists');
+        Schema::dropIfExists('lawyers');
     }
 }

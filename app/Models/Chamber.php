@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Journalist extends Model
+class Chamber extends Model
 {
     use HasFactory;
 
@@ -15,20 +15,12 @@ class Journalist extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'doctor_id',
         'name',
         'phone',
-        'media',
-        'district_id',
-        'city_id',
+        'address',
+        'time',
+        'phone_1',
+        'phone_2'
     ];
-
-    public function district()
-    {
-    	return $this->belongsTo('App\Models\District', 'district_id');
-    }
-
-    public function city()
-    {
-    	return $this->belongsTo('App\Models\City', 'city_id');
-    }
 }
