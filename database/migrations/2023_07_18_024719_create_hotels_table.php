@@ -18,6 +18,7 @@ class CreateHotelsTable extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('address');
+            $table->string('image');
             $table->text('details');
             $table->integer('star');
             $table->integer('district_id');

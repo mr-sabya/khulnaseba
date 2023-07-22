@@ -117,6 +117,14 @@ Route::prefix('admin')->group(function () {
 
 	// educational institute
 	Route::resource('educational-institute', App\Http\Controllers\Backend\EducationalInstituteController::class, ['names' => 'admin.educationalinstitute']);
+	
+	
+	// train ticket
+	Route::resource('train-route', App\Http\Controllers\Backend\TrainRouteController::class, ['names' => 'admin.trainroute']);
+	Route::resource('train-class', App\Http\Controllers\Backend\TrainClassController::class, ['names' => 'admin.trainclass']);
+	Route::resource('train', App\Http\Controllers\Backend\TrainController::class, ['names' => 'admin.train']);
+	Route::resource('train-ticket', App\Http\Controllers\Backend\TrainTicketController::class, ['names' => 'admin.trainticket']);
+
 
 
 

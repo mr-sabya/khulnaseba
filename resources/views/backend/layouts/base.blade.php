@@ -246,6 +246,20 @@
                     <li>
                         <a href="{{ route('admin.educationalinstitute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Educational Institute</span></a>
                     </li>
+
+                    <li class="nav-label">Train Ticket</li>
+                    <li>
+                        <a href="{{ route('admin.trainroute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Route</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.trainclass.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Class</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.train.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.trainticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Ticket</span></a>
+                    </li>
                     
                     
 
