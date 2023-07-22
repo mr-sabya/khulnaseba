@@ -86,4 +86,38 @@ Route::prefix('admin')->group(function () {
 	Route::put('chamber/edit/{id}', [App\Http\Controllers\Backend\ChamberController::class, 'update'])->name('admin.chamber.update');
 
 
+	//bus route
+	Route::resource('bus-route', App\Http\Controllers\Backend\BusRouteController::class, ['names' => 'admin.busroute']);
+	Route::resource('bus', App\Http\Controllers\Backend\BusController::class, ['names' => 'admin.bus']);
+	Route::resource('bus-ticket', App\Http\Controllers\Backend\BusTicketController::class, ['names' => 'admin.busticket']);
+
+
+
+	// ehelp
+	Route::resource('ehelp', App\Http\Controllers\Backend\EhelpController::class, ['names' => 'admin.ehelp']);
+
+	// govt office
+	Route::resource('govt-office', App\Http\Controllers\Backend\GovtOfficeController::class, ['names' => 'admin.govtoffice']);
+
+	// job
+	Route::resource('job', App\Http\Controllers\Backend\JobController::class, ['names' => 'admin.job']);
+
+	// training center
+	Route::resource('training-center', App\Http\Controllers\Backend\TrainingCenterController::class, ['names' => 'admin.trainingcenter']);
+
+	// helpline
+	Route::resource('helpline', App\Http\Controllers\Backend\HelplineController::class, ['names' => 'admin.helpline']);
+
+	// business
+	Route::resource('business-type', App\Http\Controllers\Backend\BusinessTypeController::class, ['names' => 'admin.businesstype']);
+	Route::resource('business-idea', App\Http\Controllers\Backend\BusinessIdeaController::class, ['names' => 'admin.businessidea']);
+
+	// library
+	Route::resource('library', App\Http\Controllers\Backend\LibraryController::class, ['names' => 'admin.library']);
+
+	// educational institute
+	Route::resource('educational-institute', App\Http\Controllers\Backend\EducationalInstituteController::class, ['names' => 'admin.educationalinstitute']);
+
+
+
 });

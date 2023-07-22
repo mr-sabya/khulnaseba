@@ -192,6 +192,60 @@
                     <li>
                         <a href="{{ route('admin.doctor.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Doctor</span></a>
                     </li>
+
+                    <li class="nav-label">Bus Ticket</li>
+                    <li>
+                        <a href="{{ route('admin.busroute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Route</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.bus.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.busticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Ticket</span></a>
+                    </li>
+
+                    <li class="nav-label">E-Help</li>
+                    <li>
+                        <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">E-Help</span></a>
+                    </li>
+
+                    <li class="nav-label">Govt. Office</li>
+                    <li>
+                        <a href="{{ route('admin.govtoffice.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Govt. Office</span></a>
+                    </li>
+
+                    <li class="nav-label">Job</li>
+                    <li>
+                        <a href="{{ route('admin.job.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Job</span></a>
+                    </li>
+
+                    <li class="nav-label">Training Center</li>
+                    <li>
+                        <a href="{{ route('admin.trainingcenter.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Traing Center</span></a>
+                    </li>
+
+                    <li class="nav-label">Helpline</li>
+                    <li>
+                        <a href="{{ route('admin.helpline.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Helpline</span></a>
+                    </li>
+
+                    <li class="nav-label">Business</li>
+                    <li>
+                        <a href="{{ route('admin.businesstype.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Business Type</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.businessidea.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Business Idea</span></a>
+                    </li>
+
+                    <li class="nav-label">Library</li>
+                    <li>
+                        <a href="{{ route('admin.library.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Library</span></a>
+                    </li>
+
+                    <li class="nav-label">Educational Institute</li>
+                    <li>
+                        <a href="{{ route('admin.educationalinstitute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Educational Institute</span></a>
+                    </li>
                     
                     
 

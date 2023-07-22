@@ -3,25 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bus;
 use Illuminate\Http\Request;
 
-// models
-use App\Models\Newspaper;
-
-
-
-class NewspaperController extends Controller
+class BusController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -31,11 +17,11 @@ class NewspaperController extends Controller
     {
         if(request()->ajax())
         {
-            return datatables()->of(Newspaper::latest()->get())
+            return datatables()->of(Bus::latest()->get())
             ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.newspaper.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                $button = '<a href="'.route('admin.bus.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.newspaper.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                $button .= '<button type="button" name="delete" data-route="'.route('admin.bus.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
                 return $button;
             })
             ->rawColumns(['action'])
@@ -43,7 +29,7 @@ class NewspaperController extends Controller
             ->make(true);
         }
 
-        return view('backend.newspaper.index');
+        return view('backend.bus.index');
     }
 
     /**
@@ -53,7 +39,7 @@ class NewspaperController extends Controller
      */
     public function create()
     {
-        return view('backend.newspaper.create');
+        return view('backend.bus.create');
     }
 
     /**
@@ -65,26 +51,23 @@ class NewspaperController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:newspapers',
-            'link' => 'required',
+            'name' => 'required|string|max:255|unique:buses',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
         $input = $request->all();
 
-
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalName();
             $filename = time().'-image-'.$extension;
-            $file->move('images/newspaper/', $filename);
+            $file->move('images/bus/', $filename);
             $input['image'] = $filename;
         }
 
-        Newspaper::create($input);
+        Bus::create($input);
 
-        return redirect()->route('admin.newspaper.index')->with('success', 'Newspaper has been added successfully');
+        return redirect()->route('admin.bus.index')->with('success', 'Bus has been added successfully');
     }
 
     /**
@@ -106,8 +89,8 @@ class NewspaperController extends Controller
      */
     public function edit($id)
     {
-        $newspaper = Newspaper::findOrFail(intval($id));
-        return view('backend.newspaper.edit', compact('newspaper'));
+        $bus = Bus::findOrFail(intval($id));
+        return view('backend.bus.edit', compact('bus'));
     }
 
     /**
@@ -119,39 +102,35 @@ class NewspaperController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $bus = Bus::findOrFail(intval($id));
 
-        $newspaper = Newspaper::findOrFail(intval($id));
-
-        if($newspaper->slug == $request->slug){
-            $validated = $request->validate([
+        if($bus->name == $request->name){
+            $request->validate([
                 'name' => 'required|string|max:255',
-                'slug' => 'required|string|max:255',
-                'link' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
+    
         }else{
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'slug' => 'required|string|max:255|unique:newspapers',
-                'link' => 'required',
+            $request->validate([
+                'name' => 'required|string|max:255|unique:buses',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
+    
         }
         
-
         $input = $request->all();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalName();
             $filename = time().'-image-'.$extension;
-            $file->move('images/newspaper/', $filename);
+            $file->move('images/bus/', $filename);
             $input['image'] = $filename;
         }
 
-        $newspaper->update($input);
+        $bus->update($input);
 
-        return redirect()->route('admin.newspaper.index')->with('success', 'Newspaper has been update successfully');
+        return redirect()->route('admin.bus.index')->with('success', 'Bus has been updated successfully');
     }
 
     /**
@@ -162,9 +141,6 @@ class NewspaperController extends Controller
      */
     public function destroy($id)
     {
-        $newspaper = Newspaper::findOrFail(intval($id));
-        $newspaper->delete();
-
-        return redirect()->route('admin.newspaper.index')->with('success', 'Newspaper has been deleted successfully');
+        //
     }
 }
