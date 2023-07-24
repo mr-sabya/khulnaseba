@@ -260,6 +260,11 @@
                     <li>
                         <a href="{{ route('admin.trainticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Ticket</span></a>
                     </li>
+
+                    <li class="nav-label">Hotel</li>
+                    <li>
+                        <a href="{{ route('admin.hotel.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Hotel</span></a>
+                    </li>
                     
                     
 

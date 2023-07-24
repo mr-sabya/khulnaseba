@@ -126,6 +126,9 @@ Route::prefix('admin')->group(function () {
 	Route::resource('train-ticket', App\Http\Controllers\Backend\TrainTicketController::class, ['names' => 'admin.trainticket']);
 
 
+	//hotel
+	Route::resource('hotel', App\Http\Controllers\Backend\HotelController::class, ['names' => 'admin.hotel']);
+
 
 
 });

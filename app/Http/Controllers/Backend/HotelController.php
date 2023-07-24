@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -14,7 +17,25 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
+        if (request()->ajax()) {
+            return datatables()->of(Hotel::latest()->get())
+                ->addColumn('district', function ($data) {
+                    return $data->district['name'];
+                })
+                ->addColumn('city', function ($data) {
+                    return $data->city['name'];
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.hotel.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" data-route="' . route('admin.hotel.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    return $button;
+                })
+                ->rawColumns(['district', 'city', 'action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.hotel.index');
     }
 
     /**
@@ -24,7 +45,10 @@ class HotelController extends Controller
      */
     public function create()
     {
-        //
+        $districts = District::orderBy('name', 'ASC')->get();
+        $cities = City::OrderBy('name', 'ASC')->get();
+
+        return view('backend.hotel.create', compact('districts', 'cities'));
     }
 
     /**
@@ -35,7 +59,30 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|max:20|unique:hotels',
+            'details' => 'required',
+            'address' => 'required',
+            'star' => 'required',
+            'district_id' => 'required',
+            'city_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
+        ]);
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/hotel/', $filename);
+            $input['image'] = $filename;
+        }
+
+        Hotel::create($input);
+
+        return redirect()->route('admin.hotel.index')->with('success', 'New Hotel has been added successfully');
     }
 
     /**
@@ -57,7 +104,11 @@ class HotelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hotel = Hotel::findOrFail(intval($id));
+        $districts = District::orderBy('name', 'ASC')->get();
+        $cities = City::OrderBy('name', 'ASC')->get();
+
+        return view('backend.hotel.edit', compact('hotel', 'districts', 'cities'));
     }
 
     /**
@@ -69,7 +120,46 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $hotel = Hotel::findOrFail(intval($id));
+
+        if($hotel->phone == $request->phone){
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'phone' => 'required|max:20',
+                'details' => 'required',
+                'address' => 'required',
+                'star' => 'required',
+                'district_id' => 'required',
+                'city_id' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }else{
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'phone' => 'required|max:20|unique:hotels',
+                'details' => 'required',
+                'address' => 'required',
+                'star' => 'required',
+                'district_id' => 'required',
+                'city_id' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }
+        
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/hotel/', $filename);
+            $input['image'] = $filename;
+        }
+
+        $hotel->update($input);
+
+        return redirect()->route('admin.hotel.index')->with('success', 'Hotel has been updated successfully');
     }
 
     /**
@@ -80,6 +170,8 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hotel = Hotel::findOrFail(intval($id));
+        $hotel->delete();
+        return redirect()->route('admin.hotel.index')->with('success', 'Hotel has been deleted successfully');
     }
 }
