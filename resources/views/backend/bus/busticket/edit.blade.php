@@ -43,26 +43,28 @@
 						</div>
 
 						<div class="form-group">
-							<label for="counter">Counter</label>
-							<input type="text" class="form-control" name="counter" id="counter" value="{{ $busticket->counter }}">
-							@if($errors->has('counter'))
-							<small style="color: red">{{ $errors->first('counter') }}</small>
+							<label for="type_id">Bus Type</label>
+							<select class="form-control single-select" id="type_id" name="type_id">
+								<option value="" selected disabled>--select bus type--</option>
+								@foreach($types as $type)
+								<option value="{{ $type->id }}" {{ $busticket->type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('type_id'))
+							<small style="color: red">{{ $errors->first('type_id') }}</small>
 							@endif
 						</div>
 
-                        <div class="form-group">
-							<label for="address">Address</label>
-							<input type="text" class="form-control" name="address" id="address" value="{{ $busticket->address }}">
-							@if($errors->has('address'))
-							<small style="color: red">{{ $errors->first('address') }}</small>
-							@endif
-						</div>
-
-                        <div class="form-group">
-							<label for="phone">Phone</label>
-							<input type="text" class="form-control" name="phone" id="phone" value="{{ $busticket->phone }}">
-							@if($errors->has('phone'))
-							<small style="color: red">{{ $errors->first('phone') }}</small>
+						<div class="form-group">
+							<label for="counter_id">Bus Counter</label>
+							<select class="form-control single-select" id="counter_id" name="counter_id">
+								<option value="" selected disabled>--select bus type--</option>
+								@foreach($counters as $counter)
+								<option value="{{ $counter->id }}" {{ $busticket->counter_id == $counter->id ? 'selected' : '' }}>{{ $counter->counter }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('counter_id'))
+							<small style="color: red">{{ $errors->first('counter_id') }}</small>
 							@endif
 						</div>
 
@@ -71,14 +73,6 @@
 							<input type="number" class="form-control" name="price" id="price" value="{{ $busticket->price }}">
 							@if($errors->has('price'))
 							<small style="color: red">{{ $errors->first('price') }}</small>
-							@endif
-						</div>
-
-                        <div class="form-group">
-							<label for="info">Additional Info</label>
-							<textarea class="form-control" name="info" id="info">{{ $busticket->info }}</textarea>
-							@if($errors->has('info'))
-							<small style="color: red">{{ $errors->first('info') }}</small>
 							@endif
 						</div>
 

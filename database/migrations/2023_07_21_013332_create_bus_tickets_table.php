@@ -17,11 +17,9 @@ class CreateBusTicketsTable extends Migration
             $table->id();
             $table->integer('route_id');
             $table->integer('bus_id');
-            $table->string('counter');
-            $table->string('address');
-            $table->string('phone', 20)->unique();
+            $table->integer('type_id');
+            $table->string('counter_id');
             $table->integer('price');
-            $table->string('info')->nullable();
             $table->timestamps();
         });
     }

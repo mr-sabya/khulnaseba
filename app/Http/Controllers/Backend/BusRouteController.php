@@ -29,7 +29,7 @@ class BusRouteController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        return view('backend.busroute.index');
+        return view('backend.bus.busroute.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class BusRouteController extends Controller
      */
     public function create()
     {
-        return view('backend.busroute.create');
+        return view('backend.bus.busroute.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class BusRouteController extends Controller
     public function edit($id)
     {
         $busroute = BusRoute::findOrFail(intval($id));
-        return view('backend.busroute.edit', compact('busroute'));
+        return view('backend.bus.busroute.edit', compact('busroute'));
     }
 
     /**

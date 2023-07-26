@@ -29,7 +29,7 @@ class BusController extends Controller
             ->make(true);
         }
 
-        return view('backend.bus.index');
+        return view('backend.bus.bus.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class BusController extends Controller
      */
     public function create()
     {
-        return view('backend.bus.create');
+        return view('backend.bus.bus.create');
     }
 
     /**
@@ -90,7 +90,7 @@ class BusController extends Controller
     public function edit($id)
     {
         $bus = Bus::findOrFail(intval($id));
-        return view('backend.bus.edit', compact('bus'));
+        return view('backend.bus.bus.edit', compact('bus'));
     }
 
     /**

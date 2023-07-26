@@ -36,18 +36,24 @@ ul {
 }
 
 h2 {
-    font-size: 36px;
-    font-weight: 400;
+    font-size: 30px;
+    font-weight: 500;
 }
 
 h4 {
     transition: all .3s linear;
 }
 
+
 p {
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
 }
 
+img{
+    width: 100%;
+}
 
 .container {
     width: 1320px;
@@ -67,7 +73,7 @@ p {
     padding-top: 80px;
 }
 
-.mt-30{
+.mt-30 {
     margin-top: 30px;
 }
 
@@ -86,12 +92,17 @@ p {
 
 .custom-btn {
     background: var(--primary);
-    padding: 13px 30px;
     color: var(--white);
     border: none;
     outline: none;
     cursor: pointer;
     border-radius: 8px;
+    padding: 10px 20px;
+}
+
+.custom-btn:hover{
+    background: var(--primary);
+    color: var(--white);
 }
 
 .back {
@@ -120,9 +131,10 @@ p {
 }
 
 .card {
-    box-shadow: var(--box-shadow);
-    padding: 30px;
-    text-align: center;
+    /* box-shadow: var(--box-shadow); */
+    padding: 25px;
+    /* border: none; */
+    overflow: hidden;
 }
 
 .call-button .call-btn {
@@ -134,7 +146,7 @@ p {
     font-size: 16px;
 }
 
-.call-button .call-btn:hover{
+.call-button .call-btn:hover {
     background: var(--primary);
     color: var(--white);
 }
@@ -173,6 +185,10 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.menu .logo img{
+    width: 180px;
 }
 
 .menu .menu-section .nav {
@@ -369,6 +385,22 @@ p {
     background-color: var(--primary);
 }
 
+.hero-section{
+    padding: 50px 0;
+    padding-top: 90px;
+    background: linear-gradient(90deg, rgb(6, 72, 253) 0%, rgb(66, 141, 252) 35%, rgb(116, 232, 255) 100%);
+    color: var(--white);
+}
+
+.hero-section h5{
+    color: var(--white);
+}
+
+.hero-section h1{
+    font-size: 56px;
+    font-weight: bold;
+}
+
 /* slider section end */
 
 
@@ -423,7 +455,7 @@ p {
 
 .services .service img {
     position: absolute;
-    width: 180px;
+    width: 165px;
     bottom: 0;
     right: 0;
     transition: all .3s linear;
@@ -437,6 +469,7 @@ p {
 
 .services .service p {
     width: 55%;
+    line-height: 1.2;
 }
 
 .services .service:hover h4 {
@@ -500,22 +533,29 @@ p {
 /* other service section start */
 .service-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 }
 
 .other-services .card {
-    box-shadow: 0 0 7px rgb(0 0 0 / 20%);
+    /* box-shadow: 0 0 7px rgb(0 0 0 / 20%); */
     padding: 12px 25px;
     border-radius: 8px;
     transition: all .3s linear;
 }
 
 .other-services .card:hover {
-    box-shadow: 0 0 7px 5px rgb(0 0 0 / 20%);
+    box-shadow: 0 0 8px 3px rgb(0 0 0 / 10%);
+    border-color: var(--white);
 }
 
-.other-services .card:hover h4 {
+.other-services .card h5 {
+    font-size: 18px;
+    transition: all .3s linear;
+    margin: 0;
+}
+
+.other-services .card:hover h5 {
     color: var(--primary);
 }
 
@@ -525,7 +565,7 @@ p {
 }
 
 .other-services .service img {
-    width: 60px;
+    width: 48px;
 }
 
 .other-services .service .text {
@@ -615,11 +655,7 @@ p {
 
 
 /* blog section start */
-.blogs .blog-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
+
 
 .blogs .card {
     background-color: #fff;
@@ -750,7 +786,7 @@ p {
     gap: 20px;
 }
 
-.blood-container .card{
+.blood-container .card {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -760,26 +796,23 @@ p {
 
 
 /* hospital section start */
-.hospital-container{
+.hospital-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.hospital-container .card{
+.hospital-container .card {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
+
 /* hospital section end */
 
 
 /* doctor section start */
-.doctor-container{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
 
-.doctor-container .all-info{
+.person .all-info {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -788,7 +821,7 @@ p {
     padding-bottom: 10px;
 }
 
-.doctor-container .image img{
+.person .image img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -797,22 +830,46 @@ p {
 
 
 
-.doctor-container .text{
+.doctor-container .text {
     text-align: left;
+    line-height: 2.5;
 }
 
-.doctor-container .call-button{
+.doctor-container .call-button {
     display: flex;
     gap: 15px;
     justify-content: center;
 }
+
+.single-doctor .card {
+    width: 600px;
+}
+
 /* doctor section end */
+
+/* hotel start */
+.hotel .card .image{
+    position: relative;
+}
+
+.hotel .card .image .star{
+    position: absolute;
+    bottom: 0;
+    padding: 6px 20px;
+    /* color: var(--primary); */
+    background: var(--primary);
+    opacity: .7;
+    color: var(--white);
+    width: 100%;
+    text-align: center;
+}
+/* hotel end */
 
 
 /* hospital */
 
 /* filter form start */
-.filter-form{
+.filter-form {
     display: flex;
     gap: 10px;
     margin-bottom: 30px;
@@ -821,20 +878,24 @@ p {
 /* filter form end */
 
 /* form start */
-.form-input{
-    width: 200px;
-    padding: 7px 20px;
-    border-radius: 8px;
+.form-control{
+    font-size: 15px;
 }
 
-.form-input:focus{
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary);
+}
+
+.form-btn {
+    padding: 7px 20px;
+}
+
+.form-input:focus {
     outline-color: var(--primary);
 }
 
 select {
-    padding: 10px;
-    padding-right: 30px;
-
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -846,8 +907,9 @@ select {
 
 /* For IE (thanks to @SaiManoj) */
 select::-ms-expand {
-  display: none;
+    display: none;
 }
+
 /* form end */
 
 
@@ -859,7 +921,7 @@ select::-ms-expand {
     text-align: center;
 }
 
-.footer .row {
+.footer .widget {
     display: flex;
     gap: 20px;
     color: var(--white);
@@ -870,27 +932,27 @@ select::-ms-expand {
     margin-bottom: 40px;
 }
 
-.footer .row a {
+.footer .widget a {
     text-decoration: none;
     color: var(--white);
     transition: 0.5s;
     font-size: 14px;
 }
 
-.footer .row a:hover {
+.footer .widget a:hover {
     color: #fff;
 }
 
-.footer .row ul {
+.footer .widget ul {
     width: 100%;
 }
 
-.footer .row ul li {
+.footer .widget ul li {
     display: inline-block;
     margin: 0px 30px;
 }
 
-.footer .row a i {
+.footer .widget a i {
     font-size: 2em;
     margin: 0% 1%;
 }
@@ -902,133 +964,22 @@ select::-ms-expand {
 
 
 /*pagination*/
-.pagination{
-    height:36px;
-    margin:0;
-    padding: 0;
+.pagination {
+    gap: 7px;
 }
-.pager,.pagination ul{
-    margin-left:0;
-    *zoom:1
+
+.pagination .active span {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--white);
 }
-.pagination ul{
-    padding:0;
-    display:inline-block;
-    *display:inline;
-    margin-bottom:0;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
-    border-radius:3px;
-    -webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);
-    -moz-box-shadow:0 1px 2px rgba(0,0,0,.05);
-    box-shadow:0 1px 2px rgba(0,0,0,.05)
-}
-.pagination li{
-    display:inline
-}
-.pagination a{
-    float:left;
-    padding:0 12px;
-    line-height:30px;
-    text-decoration:none;
-    border:1px solid #ddd;
-    border-left-width:0
-}
-.pagination .active a,.pagination a:hover{
-    background-color:#f5f5f5;
+
+.pagination .page-link {
     color: var(--primary);
 }
-.pagination .active a{
-    color:#94999E;
-    cursor:default
-}
-.pagination .disabled a,.pagination .disabled a:hover,.pagination .disabled span{
-    color:#94999E;
-    background-color:transparent;
-    cursor:default
-}
-.pagination li:first-child a,.pagination li:first-child span{
-    border-left-width:1px;
-    -webkit-border-radius:3px 0 0 3px;
-    -moz-border-radius:3px 0 0 3px;
-    border-radius:3px 0 0 3px
-}
-.pagination li:last-child a{
-    -webkit-border-radius:0 3px 3px 0;
-    -moz-border-radius:0 3px 3px 0;
-    border-radius:0 3px 3px 0
-}
-.pagination-centered{
-    text-align:center
-}
-.pagination-right{
-    text-align:right
-}
-.pager{
-    margin-bottom:18px;
-    text-align:center
-}
-.pager:after,.pager:before{
-    display:table;
-    content:""
-}
-.pager li{
-    display:inline
-}
-.pager a{
-    display:inline-block;
-    padding:5px 12px;
-    background-color:#fff;
-    border:1px solid #ddd;
-    -webkit-border-radius:15px;
-    -moz-border-radius:15px;
-    border-radius:15px
-}
-.pager a:hover{
-    text-decoration:none;
-    background-color:#f5f5f5
-}
-.pager .next a{
-    float:right
-}
-.pager .previous a{
-    float:left
-}
-.pager .disabled a,.pager .disabled a:hover{
-    color:#999;
-    background-color:#fff;
-    cursor:default
-}
-.pagination .prev.disabled span{
-    float:left;
-    padding:0 12px;
-    line-height:30px;
-    text-decoration:none;
-    border:1px solid #ddd;
-    border-left-width:1
-}
-.pagination .next.disabled span{
-    float:left;
-    padding:0 12px;
-    line-height:30px;
-    text-decoration:none;
-    border:1px solid #ddd;
-    border-left-width:0
-}
-.pagination li.active, .pagination li.disabled {
-   float:left;
-   padding:0 12px;
-   line-height:30px;
-   text-decoration:none;
-   border:1px solid #ddd;
-   border-left-width:0 
-}
-.pagination li.active {
-   background: var(--primary);
-   color: #fff;
-}
-.pagination li:first-child {
-   border-left-width: 1px;
+
+.pagination .page-link:focus {
+    box-shadow: none;
 }
 
 /*pagination*/
@@ -1039,13 +990,13 @@ select::-ms-expand {
         padding: 5%;
     }
 
-    .footer .row ul li {
+    .footer .widget ul li {
         display: block;
         margin: 10px 0px;
         text-align: left;
     }
 
-    .footer .row a i {
+    .footer .widget a i {
         margin: 0% 3%;
     }
 }
@@ -1157,9 +1108,6 @@ select::-ms-expand {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .blogs .blog-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -1214,10 +1162,6 @@ select::-ms-expand {
         font-size: 14px;
     }
 
-
-    .blogs .blog-container {
-        grid-template-columns: repeat(1, 1fr);
-    }
 
     .mobile-menu {
         display: block;

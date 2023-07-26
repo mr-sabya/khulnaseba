@@ -31,7 +31,33 @@ Route::get('hospital', [App\Http\Controllers\Frontend\HospitalController::class,
 //ambulance
 Route::get('ambulance', [App\Http\Controllers\Frontend\AmbulanceController::class, 'index'])->name('ambulance.index');
 
+//doctor
+Route::get('doctor', [App\Http\Controllers\Frontend\DoctorController::class, 'index'])->name('doctor.index');
+Route::get('doctor/{id}', [App\Http\Controllers\Frontend\DoctorController::class, 'show'])->name('doctor.show');
 
+//journalist
+Route::get('journalist', [App\Http\Controllers\Frontend\JournalistController::class, 'index'])->name('journalist.index');
+
+
+//lawyer
+Route::get('lawyer', [App\Http\Controllers\Frontend\LawyerController::class, 'index'])->name('lawyer.index');
+
+//fire-service
+Route::get('fire-service', [App\Http\Controllers\Frontend\FireServiceController::class, 'index'])->name('fireservice.index');
+
+//restaurant
+Route::get('restaurant', [App\Http\Controllers\Frontend\RestaurantController::class, 'index'])->name('restaurant.index');
+
+//hotel
+Route::get('hotel', [App\Http\Controllers\Frontend\HotelController::class, 'index'])->name('hotel.index');
+
+//hotel
+Route::get('bus-ticket', [App\Http\Controllers\Frontend\BusController::class, 'index'])->name('bus.index');
+
+Route::post('bus-ticket/result', [App\Http\Controllers\Frontend\BusController::class, 'search'])->name('bus.search');
+
+
+//admin
 Route::prefix('admin')->group(function () {
 
 	Auth::routes();
@@ -88,8 +114,10 @@ Route::prefix('admin')->group(function () {
 
 	//bus route
 	Route::resource('bus-route', App\Http\Controllers\Backend\BusRouteController::class, ['names' => 'admin.busroute']);
+	Route::resource('bus-type', App\Http\Controllers\Backend\BusTypeController::class, ['names' => 'admin.bustype']);
 	Route::resource('bus', App\Http\Controllers\Backend\BusController::class, ['names' => 'admin.bus']);
 	Route::resource('bus-ticket', App\Http\Controllers\Backend\BusTicketController::class, ['names' => 'admin.busticket']);
+	Route::resource('bus-counter', App\Http\Controllers\Backend\BusCounterController::class, ['names' => 'admin.buscounter']);
 
 
 

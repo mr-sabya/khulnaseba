@@ -201,6 +201,12 @@
                         <a href="{{ route('admin.bus.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus</span></a>
                     </li>
                     <li>
+                        <a href="{{ route('admin.bustype.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Type</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.buscounter.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Counter</span></a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.busticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Ticket</span></a>
                     </li>
 

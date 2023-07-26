@@ -41,4 +41,9 @@ class Doctor extends Model
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
     }
+
+    public function chambers()
+    {
+        return $this->hasMany('App\Models\Chamber', 'doctor_id');    
+    }
 }

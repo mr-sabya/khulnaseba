@@ -17,11 +17,9 @@ class BusTicket extends Model
     protected $fillable = [
         'route_id',
         'bus_id',
-        'counter',
-        'address',
-        'phone',
-        'price',
-        'info'
+        'type_id',
+        'counter_id',
+        'price'
     ];
 
     public function route(){
@@ -30,5 +28,13 @@ class BusTicket extends Model
 
     public function bus(){
         return $this->belongsTo('App\Models\Bus', 'bus_id');
+    }
+
+    public function type(){
+        return $this->belongsTo('App\Models\BusType', 'type_id');
+    }
+
+    public function counter(){
+        return $this->belongsTo('App\Models\BusCounter', 'counter_id');
     }
 }

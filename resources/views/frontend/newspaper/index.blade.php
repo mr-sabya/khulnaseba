@@ -15,7 +15,6 @@
 <div class="newspaper-section section-padding">
 	<div class="container">
 		<div class="newspaper-conatiner">
-
 			@foreach($newspapers as $newspaper)
 			<div class="newspaper">
 				<div class="image">
@@ -28,9 +27,6 @@
 				</div>
 			</div>
 			@endforeach
-
-
-
 		</div>
 	</div>
 </div>

@@ -1,14 +1,14 @@
 @extends('backend.layouts.base')
 
-@section('title', 'All Bus Ticket')
+@section('title', 'All Bus Type')
 
 @section('content')
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Bus Ticket List</h4>
-				<a href="{{ route('admin.busticket.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Bus Ticket</a>
+				<h4 class="card-title">Bus Type List</h4>
+				<a href="{{ route('admin.bustype.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Bus Type</a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -16,10 +16,7 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Route</th>
-								<th>Bus</th>
-								<th>Counter</th>
-								<th>Price</th>
+								<th>Name</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -27,10 +24,7 @@
 						<tfoot>
 							<tr>
 								<th>#</th>
-								<th>Route</th>
-								<th>Bus</th>
-								<th>Counter</th>
-								<th>Price</th>
+								<th>Name</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>
@@ -72,7 +66,7 @@
 		processing: true,
 		serverSide: true,
 		ajax:{
-			url: "{{ route('admin.busticket.index') }}",
+			url: "{{ route('admin.bustype.index') }}",
 		},
 		columns:[
 		{ 
@@ -82,20 +76,8 @@
 			searchable: false 
 		},
 		{
-			data: 'route',
-			name: 'route'
-		},
-		{
-			data: 'bus',
-			name: 'bus'
-		},
-		{
-			data: 'counter',
-			name: 'counter'
-		},
-		{
-			data: 'price',
-			name: 'price'
+			data: 'name',
+			name: 'name'
 		},
 		{
 			data: 'action',

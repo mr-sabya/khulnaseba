@@ -16,41 +16,58 @@
 <!-- newspaper section start -->
 <div class="blood-section section-padding">
 	<div class="container">
-		<form action="">
-			<div class="filter-form">
-				<select name="" id="" class="form-input">
-					<option value="" selected disabled>Seclect District</option>
-					@foreach($districts as $district)
-					<option value="{{ $district->id }}">{{ $district->name }}</option>
-					@endforeach
-				</select>
 
-				<select name="" id="" class="form-input">
-					<option value="" disabled selected>Select City</option>
-				</select>
+		<!-- filter form -->
+		<div class="filter mb-4">
+			<form action="">
+				<div class="row g-2">
+					<div class="col-lg-2">
+						<select name="" id="" class="form-control">
+							<option value="" selected disabled>Seclect District</option>
+							@foreach($districts as $district)
+							<option value="{{ $district->id }}">{{ $district->name }}</option>
+							@endforeach
+						</select>
+					</div>
 
-				<button class="form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
-			</div>
-		</form>
+					<div class="col-lg-2">
+						<select name="" id="" class="form-control">
+							<option value="" disabled selected>Select City</option>
+						</select>
+					</div>
 
-		<div class="hospital-container">
 
+					<div class="col-lg-2">
+						<button class="btn form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="row g-3">
 			@foreach($hospitals as $hospital)
-			<div class="hospital card">
-				<div class="info">
-					<h4>{{ $hospital->name }}</h4>
-				</div>
-				<div class="phone">
-					<p>{{ $hospital->phone }}</p>
-					<p>{{ $hospital->address }}</p>
-					<p>{{ $hospital->city['name'] }}, {{ $hospital->district['name'] }}</p>
-				</div>
-				<div class="call-button">
-					<a class="call-btn" href="tel:{{ $hospital->phone }}"><i class="fa-solid fa-phone"></i> Call</a>
+			<div class="col-lg-4">
+				<div class="hospital card text-center">
+					<div class="info">
+						<h5>{{ $hospital->name }}</h5>
+					</div>
+					<div class="phone">
+						<p>{{ $hospital->phone }}</p>
+						<p>{{ $hospital->address }}</p>
+						<p>{{ $hospital->city['name'] }}, {{ $hospital->district['name'] }}</p>
+					</div>
+					<hr>
+					<div class="call-button">
+						<a class="call-btn" href="tel:{{ $hospital->phone }}"><i class="fa-solid fa-phone"></i> Call</a>
+					</div>
 				</div>
 			</div>
 			@endforeach
 
+		</div>
+
+		<div class="mt-30">
+			{{ $hospitals->links() }}
 		</div>
 	</div>
 </div>

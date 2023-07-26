@@ -15,6 +15,9 @@
     <!-- fontawesome -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/fontawesome/css/all.min.css') }}">
 
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/bootstrap/css/bootstrap.min.css') }}">
+
     <!-- slick slider -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/slick/slick.css') }}">
 
@@ -35,7 +38,7 @@
 
                 <div class="logo">
                     <a href="{{ route('index')}}">
-                        <h2 style="color: #fff;">Khulna Seba</h2>
+                        <img src="{{ url('assets/frontend/image/logo.png') }}" alt="">
                     </a>
                 </div>
 
@@ -53,11 +56,7 @@
                     </div> -->
 
                     <a href="#" class="help"><i class="fa-solid fa-circle-info"></i> Help</a>
-
                 </div>
-
-                
-
             </div>
         </div>
     </div>
@@ -87,18 +86,21 @@
     </div>
     <!-- mobile menu end -->
 
+    
+
     @yield('content')
 
+    <button class="btn btn-dark shadow" id="btnSwitch">Toggle Mode</button>
     <footer>
         <div class="footer">
-            <div class="row">
+            <div class="widget">
                 <a href="#"><i class="fa-brands fa-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
             </div>
 
-            <div class="row">
+            <div class="widget">
                 <ul>
                     <li><a href="#">Contact us</a></li>
                     <li><a href="#">Our Services</a></li>
@@ -118,12 +120,25 @@
     <!-- jquery -->
     <script src="{{ asset('assets/frontend/js/code.jquery.com_jquery-3.7.0.min.js') }}"></script>
 
+    <!-- bootstrap -->
+    <script src="{{ asset('assets/frontend/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
     <!-- slick slider -->
     <script src="{{ asset('assets/frontend/vendor/slick/slick.min.js') }}"></script>
 
     <!-- main js -->
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+
+    <script>
+        document.getElementById('btnSwitch').addEventListener('click',()=>{
+    if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+        document.documentElement.setAttribute('data-bs-theme','light')
+    }
+    else {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+    }
+})
+    </script>
 
 
 </body>
