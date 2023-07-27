@@ -1,12 +1,12 @@
 @extends('frontend.layouts.base')
 
-@section('title', 'Bus Tickets')
+@section('title', 'Train Tickets')
 
 @section('content')
 <!-- hero section start -->
 <div class="header">
     <div class="container">
-        <h2>Bus Tickets</h2>
+        <h2>Train Tickets</h2>
     </div>
 </div>
 <!-- hero section end -->
@@ -16,30 +16,20 @@
 <div class="blood-section section-padding">
     <div class="container ">
 
-        <h5>Result For : <span>{{ $route->name }} - {{ $bus->name }} - {{ $type->name }}</span></h5>
+        <h5>Result For : <span>{{ $route->name }} - {{ $train_class->name }}</span></h5>
         <div class="table-responsive mt-3">
             <table class="table table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>Counter</th>
-                        <th>Address</th>
-                        <th>Phone</th>
+                        <th>Train</th>
                         <th>Price</th>
-                        <th>Call</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($tickets as $ticket)
                     <tr>
-                        <td>{{ $ticket->counter['counter'] }}</td>
-                        <td>{{ $ticket->counter['address'] }}</td>
-                        <td>{{ $ticket->counter['phone'] }}</td>
-                        <td>{{ $ticket->price }}</td>
-                        <td>
-                            <div class="call-button">
-                                <a class="call-btn" href="tel:{{ $ticket->counter['phone'] }}"><i class="fa-solid fa-phone"></i> Call</a>
-                            </div>
-                        </td>
+                        <td>{{ $ticket->train['name'] }}</td>
+                        <td>{{ $ticket->amount }}</td>
                     </tr>
                     @endforeach
                 </tbody>

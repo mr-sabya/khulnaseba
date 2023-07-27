@@ -17,8 +17,6 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
-								<th>Details</th>
-								<th>Link</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -27,8 +25,6 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
-								<th>Details</th>
-								<th>Link</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>
@@ -82,14 +78,6 @@
 		{
 			data: 'name',
 			name: 'name'
-		},
-		{
-			data: 'details',
-			name: 'details'
-		},
-		{
-			data: 'link',
-			name: 'link'
 		},
 		{
 			data: 'action',

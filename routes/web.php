@@ -18,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('index');
 
+Route::get('theme', [App\Http\Controllers\Frontend\HomeController::class, 'theme'])->name('theme');
+
 //newspapers
 Route::get('newspapers', [App\Http\Controllers\Frontend\NewspaperController::class, 'index'])->name('newspaper.index');
 Route::get('newspapers/{slug}', [App\Http\Controllers\Frontend\NewspaperController::class, 'show'])->name('newspaper.show');
+
+//ehelp
+Route::get('ehelp', [App\Http\Controllers\Frontend\EhelpController::class, 'index'])->name('ehelp.index');
+Route::get('ehelp/{id}', [App\Http\Controllers\Frontend\EhelpController::class, 'show'])->name('ehelp.show');
 
 //blood donor
 Route::get('blood-donor', [App\Http\Controllers\Frontend\BloodDonorController::class, 'index'])->name('blood-donor.index');
@@ -51,10 +57,26 @@ Route::get('restaurant', [App\Http\Controllers\Frontend\RestaurantController::cl
 //hotel
 Route::get('hotel', [App\Http\Controllers\Frontend\HotelController::class, 'index'])->name('hotel.index');
 
-//hotel
+//bus ticket
 Route::get('bus-ticket', [App\Http\Controllers\Frontend\BusController::class, 'index'])->name('bus.index');
-
 Route::post('bus-ticket/result', [App\Http\Controllers\Frontend\BusController::class, 'search'])->name('bus.search');
+
+//train ticket
+Route::get('train-ticket', [App\Http\Controllers\Frontend\TrainController::class, 'index'])->name('train.index');
+Route::post('train-ticket/result', [App\Http\Controllers\Frontend\TrainController::class, 'search'])->name('train.search');
+
+//training_centers
+Route::get('training-centers', [App\Http\Controllers\Frontend\TrainingCenterController::class, 'index'])->name('training_centers.index');
+
+//govt_offices
+Route::get('govt-office', [App\Http\Controllers\Frontend\GovtOfficeController::class, 'index'])->name('govt_office.index');
+
+//job
+Route::get('jobs', [App\Http\Controllers\Frontend\JobController::class, 'index'])->name('job.index');
+
+
+
+
 
 
 //admin

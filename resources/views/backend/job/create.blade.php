@@ -25,7 +25,7 @@
 
 						<div class="form-group">
 							<label for="details">Details</label>
-							<input type="text" class="form-control" name="details" id="details" value="{{ old('details') }}">
+							<textarea type="text" class="form-control details" name="details" id="details">{!! old('details') !!}</textarea>
 							@if($errors->has('details'))
 							<small style="color: red">{{ $errors->first('details') }}</small>
 							@endif
@@ -58,5 +58,7 @@
 		Text = Text.replace(/[^a-zA-Z0-9]+/g,'-');
 		$("#slug").val(Text);        
 	});
+
+	
 </script>
 @endsection

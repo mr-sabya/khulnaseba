@@ -406,18 +406,16 @@ img{
 
 /* header section start */
 .header {
-    background: #ddd;
     padding: 60px 0;
     padding-top: 110px;
-    background-image: url(../image/back.png);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(90deg, rgb(6, 72, 253) 0%, rgb(66, 141, 252) 35%, rgb(116, 232, 255) 100%);
 }
 
 .header h2 {
     text-align: center;
     font-weight: 500;
+    margin: 0;
+    color: var(--black);
 }
 
 /* header section end */

@@ -12,11 +12,11 @@
 						<h1>Khulna Seba <br> Online Help Center</h1>
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi rerum exercitationem similique minus animi laudantium, magni vel asperiores earum saepe?</p>
 
-						<a href="#" class="btn custom-btn mt-4">Learn More</a>
+						<a href="#" class="btn custom-btn mt-4">About Khulna</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<img src="{{ url('assets/frontend/image/collage.png') }}" alt="">
+					<img src="{{ url('assets/frontend/image/khulna-all.png') }}" alt="">
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@
 <!-- service area start -->
 <div class="services section-padding">
 	<div class="container">
-		<h2 class="heading">Our Services</h2>
+		<h2 class="heading">Top Services</h2>
 
 		<div class="servive-section">
 			<div class="item">
@@ -80,6 +80,18 @@
 			</div>
 
 			<div class="item">
+				<a href="{{ route('doctor.index') }}">
+					<div class="service ghostwhite">
+						<div class="text">
+							<h4>Doctor</h4>
+							<p>Get all doctors beside you</p>
+						</div>
+						<img src="{{ url('assets/frontend/image/doctor.png') }}" alt="">
+					</div>
+				</a>
+			</div>
+
+			<div class="item">
 				<a href="{{ route('bus.index') }}">
 					<div class="service honeydew">
 						<div class="text">
@@ -92,8 +104,8 @@
 			</div>
 
 			<div class="item">
-				<a href="#">
-					<div class="service ghostwhite">
+				<a href="{{ route('train.index') }}">
+					<div class="service lavender">
 						<div class="text">
 							<h4>Train Service</h4>
 							<p>Get all newpapers at once</p>
@@ -103,17 +115,7 @@
 				</a>
 			</div>
 
-			<div class="item">
-				<a href="#">
-					<div class="service lavender">
-						<div class="text">
-							<h4>Plane Service</h4>
-							<p>Get all newpapers at once</p>
-						</div>
-						<img src="{{ url('assets/frontend/image/plane.png') }}" alt="">
-					</div>
-				</a>
-			</div>
+			
 
 			<div class="item">
 				<a href="{{ route('restaurant.index') }}">
@@ -180,10 +182,10 @@
 			<div class="service card">
 				<a href="{{ route('doctor.index') }}">
 					<div class="icon">
-						<img src="{{ url('assets/frontend/image/icons8-doctor-96.png') }}" alt="">
+						<img src="{{ url('assets/frontend/image/icons8-train-96.png') }}" alt="">
 					</div>
 					<div class="text">
-						<h5>Doctor</h5>
+						<h5>Train Tickets</h5>
 					</div>
 				</a>
 			</div>
@@ -266,7 +268,7 @@
 			</div>
 
 			<div class="service card">
-				<a href="#">
+				<a href="{{ route('ehelp.index') }}">
 					<div class="icon">
 						<img src="{{ url('assets/frontend/image/icons8-web-64.png') }}" alt="">
 					</div>
@@ -277,12 +279,34 @@
 			</div>
 
 			<div class="service card">
-				<a href="#">
+				<a href="{{ route('training_centers.index') }}">
 					<div class="icon">
 						<img src="{{ url('assets/frontend/image/icons8-online-class-64.png') }}" alt="">
 					</div>
 					<div class="text">
 						<h5>Training Center</h5>
+					</div>
+				</a>
+			</div>
+
+			<div class="service card">
+				<a href="{{ route('govt_office.index') }}">
+					<div class="icon">
+						<img src="{{ url('assets/frontend/image/icons8-office-96.png') }}" alt="">
+					</div>
+					<div class="text">
+						<h5>Govt Office</h5>
+					</div>
+				</a>
+			</div>
+
+			<div class="service card">
+				<a href="{{ route('job.index') }}">
+					<div class="icon">
+						<img src="{{ url('assets/frontend/image/icons8-job-64.png') }}" alt="">
+					</div>
+					<div class="text">
+						<h5>Jobs</h5>
 					</div>
 				</a>
 			</div>

@@ -1,14 +1,18 @@
 @extends('frontend.layouts.base')
 
-@section('title', 'Bus Tickets')
+@section('title', 'Train Tickets')
 
 @section('content')
 <!-- hero section start -->
+
 <div class="header">
 	<div class="container">
-		<h2>Bus Tickets</h2>
+		<!-- <a href="{{ url()->previous() }}" ><i class="fa-solid fa-arrow-left"></i> Go Back</a> -->
+		<h2>Train Tickets</h2>
 	</div>
 </div>
+
+
 <!-- hero section end -->
 
 
@@ -22,7 +26,7 @@
 				<div class="card">
 					<!-- filter form -->
 					<div class="filter">
-						<form action="{{ route('bus.search') }}" method="post">
+						<form action="{{ route('train.search') }}" method="post">
 							@csrf
 							<div class="row g-3">
 								<div class="col-lg-6">
@@ -36,23 +40,13 @@
 										</select>
 									</div>
 								</div>
+
 								<div class="col-lg-6">
 									<div class="form-group">
-										<label for="bus_id">Select Bus</label>
-										<select name="bus_id" id="bus_id" class="form-control">
-											<option value="" selected disabled>-- pic a bus --</option>
-											@foreach($buses as $bus)
-											<option value="{{ $bus->id }}">{{ $bus->name }}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label for="type_id">Select Bus type</label>
-										<select name="type_id" id="type_id" class="form-control">
-											<option value="" selected disabled>-- pic a bus type --</option>
-											@foreach($types as $type)
+										<label for="class_id">Select Class</label>
+										<select name="class_id" id="class_id" class="form-control">
+											<option value="" selected disabled>-- pic a class --</option>
+											@foreach($train_classes as $type)
 											<option value="{{ $type->id }}">{{ $type->name }}</option>
 											@endforeach
 										</select>
@@ -70,7 +64,7 @@
 
 		<div class="row mt-5">
 			<div class="col-lg-12">
-				<h5>Available Bus Routes</h5>
+				<h5>Available Train Routes</h5>
 				<hr>
 				<div class="row g-3">
 					@foreach($routes as $route)
@@ -85,14 +79,13 @@
 
 		<div class="row mt-5">
 			<div class="col-lg-12">
-				<h5>Available Bus Providers</h5>
+				<h5>Available Trains</h5>
 				<hr>
 				<div class="row g-3">
-					@foreach($buses as $bus)
+					@foreach($trains as $train)
 					<div class="col-lg-3">
 						<div class="card p-3">
-							<img src="{{ url('images/bus', $bus->image) }}" alt="">
-							<h5 class="text-center mt-2">{{ $bus->name }}</h5>
+							<h5 class="text-center mt-2">{{ $train->name }}</h5>
 						</div>
 					</div>
 					@endforeach

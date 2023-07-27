@@ -9,7 +9,6 @@
 <div class="back padding-top">
 	<div class="container">
 		<a href="{{ route('newspaper.index') }}" class="custom-btn back-btn "><i class="fa-solid fa-arrow-left"></i> Go Back</a>
-
 		<h2>{{ $newspaper->name }}</h2>
 	</div>
 </div>

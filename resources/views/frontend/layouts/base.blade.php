@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="{{ Session::get('theme') }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @if(Route::is('index'))
     <title> Khulna Seba | Online Service Platform</title>
     @else
     <title>@yield('title') - Khulna Seba | Online Service Platform</title>
     @endif
-    
+
 
     <!-- fontawesome -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/fontawesome/css/all.min.css') }}">
@@ -50,10 +50,13 @@
                         <li><a href="#">Job</a></li>
                     </ul>
 
-                    <!-- <div class="buttons">
-                        <a href="#" class="active">EN</a> <span>|</span>
-                        <a href="#">বাং</a>
-                    </div> -->
+                    <div class="buttons">
+
+                        
+                        <a href="javascript:void(0)" id="btnSwitch" title="Switch to Dark Theme"><i class="fa-solid fa-moon"></i></a>
+                       
+                        <!-- <a href="#"><i class="fa-solid fa-sun"></i></a> -->
+                    </div>
 
                     <a href="#" class="help"><i class="fa-solid fa-circle-info"></i> Help</a>
                 </div>
@@ -86,11 +89,11 @@
     </div>
     <!-- mobile menu end -->
 
-    
+
 
     @yield('content')
 
-    <button class="btn btn-dark shadow" id="btnSwitch">Toggle Mode</button>
+
     <footer>
         <div class="footer">
             <div class="widget">
@@ -129,15 +132,49 @@
     <!-- main js -->
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
 
+    @if(Session::get('theme'))
     <script>
-        document.getElementById('btnSwitch').addEventListener('click',()=>{
-    if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-    }
-    else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-    }
-})
+        $('#btnSwitch').html('<i class="fa-solid fa-sun"></i>');
+        $('#btnSwitch').attr('title', 'Switch to White Theme');
+    </script>
+    @endif
+
+    <script>
+        //ajax csrf token
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        $('#btnSwitch').click(function() {
+
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('theme') }}",
+                dataType: 'json',
+                success: function(data) {
+
+                    if (data.added) {
+                        document.documentElement.setAttribute('data-bs-theme', 'dark')
+                        $('#btnSwitch').html('<i class="fa-solid fa-sun"></i>');
+                        $('#btnSwitch').attr('title', 'Switch to White Theme');
+                    } else {
+                        document.documentElement.setAttribute('data-bs-theme', 'light')
+                        $('#btnSwitch').html('<i class="fa-solid fa-moon"></i>');
+                        $('#btnSwitch').attr('title', 'Switch to Dark Theme');
+                    }
+
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                }
+            });
+
+
+        })
     </script>
 
 

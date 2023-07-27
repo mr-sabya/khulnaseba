@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +17,11 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('assets/backend/vendor/toastr/css/toastr.min.css') }}">
 
+    <!-- select2 -->
     <link rel="stylesheet" href="{{ asset('assets/backend/vendor/select2/css/select2.min.css') }}">
+
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('assets/backend/vendor/summernote/summernote-bs4.min.css') }}">
 
     <link href="{{ asset('assets/backend/css/style.css') }}" rel="stylesheet">
 
@@ -85,7 +88,7 @@
                                         <i class="icon-user"></i>
                                         <span class="ml-2">Profile </span>
                                     </a>
-                                    
+
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="icon-key"></i>
                                         <span class="ml-2">Logout </span>
@@ -108,171 +111,220 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                        class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="./index.html">Dashboard 1</a></li>
-                            <li><a href="./index2.html">Dashboard 2</a></li>
-                        </ul>
+                    <li>
+                        <a href="{{ route('dashboard') }}" aria-expanded="false">
+                            <i class="fa-solid fa-house"></i><span class="nav-text">Dashboard</span>
+                        </a>
                     </li>
-                    <li class="nav-label">Apps</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                        class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
+
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Address</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./email-compose.html">Compose</a></li>
-                                    <li><a href="./email-inbox.html">Inbox</a></li>
-                                    <li><a href="./email-read.html">Read</a></li>
-                                </ul>
+                            <li>
+                                <a href="{{ route('admin.district.index') }}">District</a>
                             </li>
-                            <li><a href="./app-calender.html">Calendar</a></li>
+                            <li>
+                                <a href="{{ route('admin.city.index') }}">City</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-label">Services</li>
+                    <li>
+                        <a href="{{ route('admin.newspaper.index') }}" aria-expanded="false">
+                            <i class="icon icon-globe-2"></i><span class="nav-text">Newspaper</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-person"></i><span class="nav-text">Blood Donor</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.blood.index') }}">Blood group</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('admin.blood-donor.index') }}">Blood Donor</a>
+                            </li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.newspaper.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Newspaper</span></a>
-                    </li>
-
-                    <li class="nav-label">Address</li>
-                    <li>
-                        <a href="{{ route('admin.district.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">District</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.city.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">City</span></a>
-                    </li>
-
-                    <li class="nav-label">Blood</li>
-                    <li>
-                        <a href="{{ route('admin.blood.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Blood group</span></a>
+                        <a href="{{ route('admin.hospital.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-hospital"></i><span class="nav-text">Hospital</span>
+                        </a>
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.blood-donor.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Blood Donor</span></a>
+                        <a href="{{ route('admin.ambulance.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-truck-medical"></i><span class="nav-text">Ambulance</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-utensils"></i><span class="nav-text">Restaurant</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.food.index') }}">food</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.restaurant.index') }}">Restaurant</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.fireservice.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-fire-extinguisher"></i><span class="nav-text">Fire Service</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.journalist.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-user-secret"></i><span class="nav-text">Journalist</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-gavel"></i><span class="nav-text">Lawyer</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.lawdepartment.index') }}">Law Department</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.lawyer.index') }}">Lawyer</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-user-doctor"></i><span class="nav-text">Doctor</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.medical.index') }}">Doctor Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.doctor.index') }}">Doctor</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-bus"></i><span class="nav-text">Bus Ticket</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.busroute.index') }}">Bus Route</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.bus.index') }}">>Bus</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.bustype.index') }}">Bus Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.buscounter.index') }}">Bus Counter</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.busticket.index') }}">Bus Ticket</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-train"></i><span class="nav-text">Train Ticket</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.trainroute.index') }}">Train Route</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.trainclass.index') }}">Train Class</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.train.index') }}">Train</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.trainticket.index') }}">Train Ticket</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-handshake-angle"></i><span class="nav-text">E-Help</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.govtoffice.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-building"></i><span class="nav-text">Govt. Office</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.job.index') }}" aria-expanded="false">
+                        <i class="fa-solid fa-briefcase"></i><span class="nav-text">Job</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.trainingcenter.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-computer"></i><span class="nav-text">Traing Center</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.helpline.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-phone-volume"></i><span class="nav-text">Helpline</span>
+                        </a>
                     </li>
 
 
                     <li>
-                        <a href="{{ route('admin.hospital.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Hospital</span></a>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-business-time"></i><span class="nav-text">Business Idea</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.businesstype.index') }}">Business Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.businessidea.index') }}">Business Idea</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.ambulance.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Ambulance</span></a>
+                        <a href="{{ route('admin.library.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-book-atlas"></i><span class="nav-text">Library</span>
+                        </a>
                     </li>
 
-                    <li class="nav-label">Restaurant</li>
                     <li>
-                        <a href="{{ route('admin.food.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">food</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.restaurant.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Restaurant</span></a>
+                        <a href="{{ route('admin.educationalinstitute.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-school-flag"></i><span class="nav-text">Educational Institute</span>
+                        </a>
                     </li>
 
-                    <li class="nav-label">Person</li>
                     <li>
-                        <a href="{{ route('admin.fireservice.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Fire Service</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.journalist.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Journalist</span></a>
+                        <a href="{{ route('admin.hotel.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-hotel"></i><span class="nav-text">Hotel</span>
+                        </a>
                     </li>
 
-                    <li class="nav-label">Lawyer</li>
-                    <li>
-                        <a href="{{ route('admin.lawdepartment.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Law Department</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.lawyer.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Lawyer</span></a>
-                    </li>
 
-                    <li class="nav-label">Doctor</li>
-                    <li>
-                        <a href="{{ route('admin.medical.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Doctor Type</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.doctor.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Doctor</span></a>
-                    </li>
-
-                    <li class="nav-label">Bus Ticket</li>
-                    <li>
-                        <a href="{{ route('admin.busroute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Route</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.bus.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.bustype.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Type</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.buscounter.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Counter</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.busticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Bus Ticket</span></a>
-                    </li>
-
-                    <li class="nav-label">E-Help</li>
-                    <li>
-                        <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">E-Help</span></a>
-                    </li>
-
-                    <li class="nav-label">Govt. Office</li>
-                    <li>
-                        <a href="{{ route('admin.govtoffice.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Govt. Office</span></a>
-                    </li>
-
-                    <li class="nav-label">Job</li>
-                    <li>
-                        <a href="{{ route('admin.job.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Job</span></a>
-                    </li>
-
-                    <li class="nav-label">Training Center</li>
-                    <li>
-                        <a href="{{ route('admin.trainingcenter.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Traing Center</span></a>
-                    </li>
-
-                    <li class="nav-label">Helpline</li>
-                    <li>
-                        <a href="{{ route('admin.helpline.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Helpline</span></a>
-                    </li>
-
-                    <li class="nav-label">Business</li>
-                    <li>
-                        <a href="{{ route('admin.businesstype.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Business Type</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.businessidea.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Business Idea</span></a>
-                    </li>
-
-                    <li class="nav-label">Library</li>
-                    <li>
-                        <a href="{{ route('admin.library.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Library</span></a>
-                    </li>
-
-                    <li class="nav-label">Educational Institute</li>
-                    <li>
-                        <a href="{{ route('admin.educationalinstitute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Educational Institute</span></a>
-                    </li>
-
-                    <li class="nav-label">Train Ticket</li>
-                    <li>
-                        <a href="{{ route('admin.trainroute.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Route</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.trainclass.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Class</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.train.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.trainticket.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Train Ticket</span></a>
-                    </li>
-
-                    <li class="nav-label">Hotel</li>
-                    <li>
-                        <a href="{{ route('admin.hotel.index') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Hotel</span></a>
-                    </li>
-                    
-                    
 
                 </ul>
             </div>
@@ -296,9 +348,7 @@
         <!-- footer -->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-                <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p> 
-            </div>
+                <p>Developed by <a href="https://sabyaroy.info/" target="_blank">Sabya Roy</a> 2019</p>
         </div>
 
 
@@ -318,7 +368,11 @@
     <!-- Toastr -->
     <script src="{{ asset('assets/backend/vendor/toastr/js/toastr.min.js') }}"></script>
 
+    <!-- select 2 -->
     <script src="{{ asset('assets/backend/vendor/select2/js/select2.full.min.js') }}"></script>
+
+    <!-- summernote -->
+    <script src="{{ asset('assets/backend/vendor/summernote/summernote-bs4.min.js') }}"></script>
 
     <script src="{{ asset('assets/backend/js/custom.min.js') }}"></script>
 
@@ -331,17 +385,23 @@
         });
 
 
-        $('#image').change(function(){
+        $('#image').change(function() {
             const file = this.files[0];
             console.log(file);
-            if (file){
+            if (file) {
                 let reader = new FileReader();
-                reader.onload = function(event){
+                reader.onload = function(event) {
                     console.log(event.target.result);
                     $('#imgPreview').attr('src', event.target.result);
                 }
                 reader.readAsDataURL(file);
             }
+        });
+
+        $('.details').summernote({
+            placeholder: 'details here....',
+            tabsize: 2,
+            height: 300
         });
 
         $(".single-select").select2();

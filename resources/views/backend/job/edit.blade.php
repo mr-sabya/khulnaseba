@@ -24,8 +24,8 @@
 						</div>
 
 						<div class="form-group">
-							<label for="details">Ddetails</label>
-							<input type="text" class="form-control" name="details" id="details" value="{{ $job->details }}">
+							<label for="details">Details</label>
+							<textarea type="text" class="form-control details" name="details" id="details">{!! $job->details !!}</textarea>
 							@if($errors->has('details'))
 							<small style="color: red">{{ $errors->first('details') }}</small>
 							@endif
