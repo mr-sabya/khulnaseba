@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\LawDepartment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LawDepartmentController extends Controller
 {
@@ -15,18 +16,19 @@ class LawDepartmentController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(LawDepartment::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.lawdepartment.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.lawdepartment.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.lawdepartment.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.lawdepartment.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.lawdepartment.index');
     }
@@ -94,16 +96,16 @@ class LawDepartmentController extends Controller
     {
         $law = LawDepartment::findOrFail(intval($id));
 
-        if($law->name == $request->name){
+        if ($law->name == $request->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255|unique:law_departments',
             ]);
         }
-        
+
         $input = $request->all();
         $law->update($input);
 

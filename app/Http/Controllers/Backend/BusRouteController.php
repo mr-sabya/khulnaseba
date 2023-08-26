@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\BusRoute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
 
 class BusRouteController extends Controller
@@ -16,18 +17,19 @@ class BusRouteController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(BusRoute::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.busroute.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.busroute.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.busroute.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.busroute.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.bus.busroute.index');
     }
@@ -95,16 +97,16 @@ class BusRouteController extends Controller
     {
         $busroute = BusRoute::findOrFail(intval($id));
 
-        if($busroute->name == $request->name){
+        if ($busroute->name == $request->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255|unique:bus_routes',
             ]);
         }
-        
+
         $input = $request->all();
 
         $busroute->update($input);

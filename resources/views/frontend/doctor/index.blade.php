@@ -55,7 +55,7 @@
         <div class="row g-3">
             @foreach($doctors as $doctor)
             <div class="col-lg-4">
-                <div class="person card">
+                <div class="person card h-100">
                     <div class="all-info">
                         <div class="image">
                             @if($doctor->image == null)
@@ -72,8 +72,13 @@
                             <div class="phone">
                                 <p>{{ $doctor->degree }}</p>
                                 <p>{{ $doctor->type['name'] }}</p>
-                                <p>{{ $doctor->city['name'] }}, {{ $doctor->district['name'] }}</p>
-
+                                <p>
+                                    @if($doctor->city)
+                                    {{ $doctor->city['name'] }},
+                                    @endif
+                                    @if($doctor->district)
+                                    {{ $doctor->district['name'] }}</p>
+                                    @endif
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\District;
 use App\Models\Journalist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JournalistController extends Controller
 {
@@ -17,24 +18,29 @@ class JournalistController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Journalist::latest()->get())
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('city', function($data){
-                return $data->city['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.journalist.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.journalist.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'city', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
+                })
+                ->addColumn('city', function ($data) {
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.journalist.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.journalist.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['district', 'city', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.journalist.index');
     }
@@ -68,7 +74,7 @@ class JournalistController extends Controller
         ]);
 
         $input = $request->all();
-    
+
         Journalist::create($input);
 
         return redirect()->route('admin.journalist.index')->with('success', 'New Journalist has been added successfully');
@@ -111,14 +117,14 @@ class JournalistController extends Controller
     {
         $journalist = Journalist::findOrFail(intval($id));
 
-        if($journalist->phone == $request->phone){
+        if ($journalist->phone == $request->phone) {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15|unique:journalists',
@@ -126,10 +132,10 @@ class JournalistController extends Controller
                 'city_id' => 'required',
             ]);
         }
-        
+
 
         $input = $request->all();
-    
+
         $journalist->update($input);
 
         return redirect()->route('admin.journalist.index')->with('success', 'Journalist has been updated successfully');

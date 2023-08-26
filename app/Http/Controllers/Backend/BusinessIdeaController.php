@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BusinessIdea;
 use App\Models\BusinessType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessIdeaController extends Controller
 {
@@ -24,7 +25,9 @@ class BusinessIdeaController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.businessidea.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.businessidea.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.businessidea.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['type', 'action'])
@@ -56,8 +59,9 @@ class BusinessIdeaController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:business_ideas',
             'type_id' => 'required',
-            'details' => 'required|max:255',
+            'details' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
@@ -112,12 +116,23 @@ class BusinessIdeaController extends Controller
     {
         $businessidea = BusinessIdea::findOrFail(intval($id));
 
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'type_id' => 'required',
-            'details' => 'required|max:255',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
-        ]);
+        if ($businessidea->slug == $request->slug) {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'type_id' => 'required',
+                'details' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        } else {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:business_ideas',
+                'type_id' => 'required',
+                'details' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }
 
         $input = $request->all();
 

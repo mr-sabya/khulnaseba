@@ -41,28 +41,6 @@
 	</div>
 </div>
 
-<div class="modal fade" id="deleteModal">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Confirmation</h5>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<form id="deleteForm" action="" method="post">
-				@csrf
-				@method('DELETE')
-				<div class="modal-body">
-					<h3 class="text-center">Do you want to delete this Train Ticket?</h3>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-danger">Delete</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 @endsection
 
@@ -106,11 +84,5 @@
 	});
 
 
-
-	$(document).on('click', '.delete', function () {
-		var route = $(this).attr('data-route');
-		$('#deleteForm').attr('action', route);
-		$('#deleteModal').modal('show');
-	});
 </script>
 @endsection

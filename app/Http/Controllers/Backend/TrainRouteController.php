@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TrainRoute;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 
 class TrainRouteController extends Controller
 {
@@ -21,7 +22,9 @@ class TrainRouteController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.trainroute.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.trainroute.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.trainroute.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -118,6 +121,9 @@ class TrainRouteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $route = TrainRoute::findOrFail(intval($id));
+        $route->delete();
+
+        return redirect()->route('admin.trainroute.index')->with('success', 'Train Route has been deleted successfully');
     }
 }

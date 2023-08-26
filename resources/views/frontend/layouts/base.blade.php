@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="{{ Session::get('theme') }}">
 
+@php
+$setting = App\Models\Setting::where('id', 1)->first();
+@endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/image/fab.png') }}">
     @if(Route::is('index'))
     <title> Khulna Seba | Online Service Platform</title>
     @else
@@ -23,6 +28,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/blog.css') }}">
 </head>
 
 <body>
@@ -44,17 +50,14 @@
 
                 <div class="main-menu">
                     <ul class="nav">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Job</a></li>
+                        <li><a href="{{ route('index') }}" class="{{ Route::is('index') ? 'active' : '' }}">Home</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="{{ Route::is('blog.index') ? 'active' : '' }}">Blog</a></li>
+                        <li><a href="{{ route('contact.index') }}" class="{{ Route::is('contact.index') ? 'active' : '' }}">Contact</a></li>
+                        <li><a href="#">Career</a></li>
                     </ul>
 
                     <div class="buttons">
-
-                        
                         <a href="javascript:void(0)" id="btnSwitch" title="Switch to Dark Theme"><i class="fa-solid fa-moon"></i></a>
-                       
                         <!-- <a href="#"><i class="fa-solid fa-sun"></i></a> -->
                     </div>
 
@@ -113,7 +116,7 @@
                 </ul>
             </div>
 
-            <p>Copyright © 2021 Inferno - All rights reserved || Designed By: Sabya Roy</p>
+            <p>{{ $setting->copyright_text }} || Developed By: <a class="text-white" target="_blank" href="https://sabyaroy.info/">Sabya Roy</a></p>
 
         </div>
     </footer>
@@ -175,7 +178,12 @@
 
 
         })
+
+
+        
     </script>
+
+    @yield('scripts')
 
 
 </body>

@@ -23,10 +23,27 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="slug">Slug</label>
+                            <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
+                            @if($errors->has('slug'))
+                            <small style="color: red">{{ $errors->first('slug') }}</small>
+                            @endif
+                        </div>
+
+
+                        <div class="form-group">
                             <label for="details">Details</label>
-                            <textarea class="form-control" name="details" id="details"></textarea>
+                            <textarea class="form-control details" name="details" id="details">{!! old('details') !!}</textarea>
                             @if($errors->has('details'))
                             <small style="color: red">{{ $errors->first('details') }}</small>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="slug">Short Description</label>
+                            <textarea name="short_description" id="short_description" class="form-control" cols="30" rows="10">{{ old('short_description') }}</textarea>
+                            @if($errors->has('short_description'))
+                            <small style="color: red">{{ $errors->first('short_description') }}</small>
                             @endif
                         </div>
 
@@ -48,7 +65,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="image">Image (300*300px)</label>
+                            <label for="image">Image (900*600px)</label>
                             <input type="file" class="form-control" name="image" id="image">
                             @if($errors->has('image'))
                             <small style="color: red">{{ $errors->first('image') }}</small>
@@ -67,5 +84,12 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    $("#title").keyup(function() {
+        var Text = $(this).val();
+        Text = Text.toLowerCase();
+        Text = Text.replace(/[^a-zA-Z0-9]+/g, '-');
+        $("#slug").val(Text);
+    });
+</script>
 @endsection

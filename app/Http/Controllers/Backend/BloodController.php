@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //models
 use App\Models\Blood;
+use Illuminate\Support\Facades\Auth;
 
 class BloodController extends Controller
 {
@@ -19,7 +20,7 @@ class BloodController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,18 +28,19 @@ class BloodController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Blood::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.blood.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.blood.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.blood.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.blood.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.blood.index');
     }
@@ -106,16 +108,16 @@ class BloodController extends Controller
     {
         $blood = Blood::findOrFail(intval($id));
 
-        if($blood->name == $request->name){
+        if ($blood->name == $request->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255|unique:bloods',
             ]);
         }
-        
+
 
         $input = $request->all();
         $blood->update($input);

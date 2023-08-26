@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Helpline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HelplineController extends Controller
 {
@@ -15,18 +16,19 @@ class HelplineController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Helpline::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.helpline.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.helpline.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.helpline.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.helpline.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.helpline.index');

@@ -8,6 +8,7 @@ use App\Models\TrainClass;
 use App\Models\TrainRoute;
 use App\Models\TrainTicket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainTicketController extends Controller
 {
@@ -21,18 +22,26 @@ class TrainTicketController extends Controller
         if (request()->ajax()) {
             return datatables()->of(TrainTicket::latest()->get())
                 ->addColumn('route', function ($data) {
-                    return $data->trainRoute['name'];
+                    if ($data->trainRoute) {
+                        return $data->trainRoute['name'];
+                    }
                 })
                 ->addColumn('class', function ($data) {
-                    return $data->trainClass['name'];
+                    if ($data->trainClass) {
+                        return $data->trainClass['name'];
+                    }
                 })
                 ->addColumn('train', function ($data) {
-                    return $data->train['name'];
+                    if ($data->train) {
+                        return $data->train['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.trainticket.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.trainticket.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.trainticket.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['route', 'class', 'train', 'action'])

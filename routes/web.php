@@ -74,8 +74,46 @@ Route::get('govt-office', [App\Http\Controllers\Frontend\GovtOfficeController::c
 //job
 Route::get('jobs', [App\Http\Controllers\Frontend\JobController::class, 'index'])->name('job.index');
 
+//help line
+Route::get('help-line', [App\Http\Controllers\Frontend\HelplineController::class, 'index'])->name('helpline.index');
+
+//police station
+Route::get('police-station', [App\Http\Controllers\Frontend\ThanaController::class, 'index'])->name('thana.index');
+
+Route::get('police-station/{id}/police', [App\Http\Controllers\Frontend\ThanaController::class, 'show'])->name('thana.show');
 
 
+//school
+Route::get('educational-institute', [App\Http\Controllers\Frontend\EduInstituteController::class, 'index'])->name('school.index');
+
+//library
+Route::get('libraries', [App\Http\Controllers\Frontend\LibraryController::class, 'index'])->name('library.index');
+
+//business idea
+Route::get('business-ideas', [App\Http\Controllers\Frontend\BusinessIdeaController::class, 'index'])->name('business.index');
+Route::get('business-ideas/{slug}', [App\Http\Controllers\Frontend\BusinessIdeaController::class, 'show'])->name('business.show');
+
+
+//live tv
+Route::get('live-tv', [App\Http\Controllers\Frontend\PageController::class, 'livetv'])->name('livetv.index');
+
+
+//blog
+Route::get('blog', [App\Http\Controllers\Frontend\BlogController::class, 'index'])->name('blog.index');
+Route::get('blog/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'show'])->name('blog.show');
+
+
+//contact us
+Route::get('contact-us', [App\Http\Controllers\Frontend\PageController::class, 'contact'])->name('contact.index');
+
+//about us
+Route::get('about-us', [App\Http\Controllers\Frontend\PageController::class, 'about'])->name('about.index');
+
+
+
+
+// filter
+Route::get('get-city/{id}', [App\Http\Controllers\Frontend\FilterController::class, 'getCity']);
 
 
 
@@ -178,6 +216,54 @@ Route::prefix('admin')->group(function () {
 
 	//hotel
 	Route::resource('hotel', App\Http\Controllers\Backend\HotelController::class, ['names' => 'admin.hotel']);
+
+
+	// tourist place
+	Route::resource('place-type', App\Http\Controllers\Backend\PlaceTypeController::class, ['names' => 'admin.placetype']);
+	Route::resource('tourist-place', App\Http\Controllers\Backend\TouristPlaceController::class, ['names' => 'admin.touristplace']);
+
+	// shop
+	Route::resource('shop-category', App\Http\Controllers\Backend\ShopCategoryController::class, ['names' => 'admin.shopcategory']);
+	Route::resource('shop', App\Http\Controllers\Backend\ShopController::class, ['names' => 'admin.shop']);
+
+	// thana-police
+	Route::resource('thana', App\Http\Controllers\Backend\ThanaController::class, ['names' => 'admin.thana']);
+	Route::resource('police', App\Http\Controllers\Backend\PoliceController::class, ['names' => 'admin.police']);
+
+	// blog
+	Route::resource('blog-category', App\Http\Controllers\Backend\BlogCategoryController::class, ['names' => 'admin.blogcategory']);
+	Route::resource('blog', App\Http\Controllers\Backend\BlogController::class, ['names' => 'admin.blog']);
+
+
+	// palli bidyut
+	Route::resource('palli-bidyut', App\Http\Controllers\Backend\PalliBidyutController::class, ['names' => 'admin.pallibidyut']);
+	
+	// story
+	Route::resource('story-category', App\Http\Controllers\Backend\StoryCategoryController::class, ['names' => 'admin.storycategory']);
+	Route::resource('story', App\Http\Controllers\Backend\StoryController::class, ['names' => 'admin.story']);
+
+	// testimonial
+	Route::resource('testimonial', App\Http\Controllers\Backend\TestimonialController::class, ['names' => 'admin.testimonial']);
+
+
+	// banner
+	Route::resource('banner', App\Http\Controllers\Backend\BannerController::class, ['names' => 'admin.banner']);
+	
+	
+	//user
+	Route::resource('user', App\Http\Controllers\Backend\UserController::class, ['names' => 'admin.user']);
+
+	Route::get('change-password/{id}', [App\Http\Controllers\Backend\UserController::class, 'updatePasswordView'])->name('admin.password.edit');
+	Route::put('change-password/{id}', [App\Http\Controllers\Backend\UserController::class, 'updatePassword'])->name('admin.password.update');
+	
+	
+	//setting
+	Route::get('setting', [App\Http\Controllers\Backend\SettingController::class, 'index'])->name('admin.setting.index');
+	Route::post('setting/banner/update', [App\Http\Controllers\Backend\SettingController::class, 'updateBanner'])->name('admin.setting.banner');
+	Route::post('setting/about/update', [App\Http\Controllers\Backend\SettingController::class, 'updateAbout'])->name('admin.setting.about');
+	Route::post('setting/contact/update', [App\Http\Controllers\Backend\SettingController::class, 'updateContact'])->name('admin.setting.contact');
+	Route::post('setting/page/update', [App\Http\Controllers\Backend\SettingController::class, 'updatePage'])->name('admin.setting.page');
+
 
 
 

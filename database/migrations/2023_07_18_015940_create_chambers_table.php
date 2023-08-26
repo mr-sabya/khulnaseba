@@ -16,9 +16,7 @@ class CreateChambersTable extends Migration
         Schema::create('chambers', function (Blueprint $table) {
             $table->id();
             $table->integer('doctor_id');
-            $table->string('name');
-            $table->string('phone');
-            $table->string('address');
+            $table->integer('hospital_id');
             $table->string('time')->nullable();
             $table->string('phone_1');
             $table->string('phone_2')->nullable();

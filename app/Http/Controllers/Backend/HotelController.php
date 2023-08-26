@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\District;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
@@ -20,15 +21,21 @@ class HotelController extends Controller
         if (request()->ajax()) {
             return datatables()->of(Hotel::latest()->get())
                 ->addColumn('district', function ($data) {
-                    return $data->district['name'];
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
                 })
                 ->addColumn('city', function ($data) {
-                    return $data->city['name'];
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.hotel.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.hotel.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.hotel.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['district', 'city', 'action'])
@@ -122,7 +129,7 @@ class HotelController extends Controller
     {
         $hotel = Hotel::findOrFail(intval($id));
 
-        if($hotel->phone == $request->phone){
+        if ($hotel->phone == $request->phone) {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:20',
@@ -133,7 +140,7 @@ class HotelController extends Controller
                 'city_id' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:20|unique:hotels',
@@ -145,7 +152,7 @@ class HotelController extends Controller
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }
-        
+
 
         $input = $request->all();
 

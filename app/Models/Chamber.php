@@ -16,11 +16,15 @@ class Chamber extends Model
      */
     protected $fillable = [
         'doctor_id',
-        'name',
-        'phone',
-        'address',
+        'hospital_id',
         'time',
         'phone_1',
         'phone_2'
     ];
+
+
+    public function hospital()
+    {
+    	return $this->belongsTo('App\Models\Hospital', 'hospital_id');
+    }
 }

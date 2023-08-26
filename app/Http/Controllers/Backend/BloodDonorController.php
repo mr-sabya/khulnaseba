@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\District;
 use App\Models\Blood;
 use App\Models\BloodDonor;
+use Illuminate\Support\Facades\Auth;
 
 class BloodDonorController extends Controller
 {
@@ -22,7 +23,7 @@ class BloodDonorController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,27 +31,34 @@ class BloodDonorController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(BloodDonor::latest()->get())
-            ->addColumn('blood', function($data){
-                return $data->bloodGroup['name'];
-            })
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('city', function($data){
-                return $data->city['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.blood-donor.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.blood-donor.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'city', 'blood', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('blood', function ($data) {
+                    if ($data->bloodGroup) {
+                        return $data->bloodGroup['name'];
+                    }
+                })
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
+                })
+                ->addColumn('city', function ($data) {
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.blood-donor.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.blood-donor.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['district', 'city', 'blood', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.blooddonor.index');
     }
@@ -126,11 +134,11 @@ class BloodDonorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id=0)
+    public function update(Request $request, $id = 0)
     {
         $donor = BloodDonor::findOrFail(intval($id));
 
-        if($donor->phone == $request->phone){
+        if ($donor->phone == $request->phone) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15',
@@ -139,7 +147,7 @@ class BloodDonorController extends Controller
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
-        }else{
+        } else {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15|unique:blood_donors',
@@ -149,7 +157,7 @@ class BloodDonorController extends Controller
                 'city_id' => 'required',
             ]);
         }
-        
+
 
         $input = $request->all();
 
@@ -166,6 +174,9 @@ class BloodDonorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $donor = BloodDonor::findOrFail(intval($id));
+        $donor->delete();
+
+        return redirect()->route('admin.blood-donor.index')->with('success', 'Blood Donor has been updated successfully');
     }
 }

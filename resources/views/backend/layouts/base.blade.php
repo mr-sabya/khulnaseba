@@ -9,7 +9,7 @@
     <title>@yield('title') - Admin Panel | Khulna Seba </title>
 
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url('assets/backend/images/favicon.png') }}">
 
     <!-- Datatable -->
     <link href="{{ asset('assets/backend/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -85,12 +85,32 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="./app-profile.html" class="dropdown-item">
-                                        <i class="icon-user"></i>
+                                        <i class="fa-regular fa-user"></i>
                                         <span class="ml-2">Profile </span>
                                     </a>
+                                    <a href="{{ route('admin.password.edit', Auth::user()->id) }}" class="dropdown-item">
+                                        <i class="fa-solid fa-key"></i>
+                                        <span class="ml-2">Change Password </span>
+                                    </a>
+                                    @if(Auth::user()->is_admin == 1)
+                                    <a href="{{ route('admin.setting.index')}}" class="dropdown-item">
+                                        <i class="fa-solid fa-gear"></i>
+                                        <span class="ml-2">Setting </span>
+                                    </a>
+
+                                    <a href="{{ route('admin.banner.index')}}" class="dropdown-item">
+                                        <i class="fa-solid fa-images"></i>
+                                        <span class="ml-2">Banner </span>
+                                    </a>
+
+                                    <a href="{{ route('admin.user.index') }}" class="dropdown-item">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span class="ml-2">Users </span>
+                                    </a>
+                                    @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="icon-key"></i>
+                                        <i class="fa-solid fa-right-from-bracket"></i>
                                         <span class="ml-2">Logout </span>
                                     </a>
 
@@ -133,7 +153,7 @@
                     <li class="nav-label">Services</li>
                     <li>
                         <a href="{{ route('admin.newspaper.index') }}" aria-expanded="false">
-                            <i class="icon icon-globe-2"></i><span class="nav-text">Newspaper</span>
+                            <i class="fa-solid fa-newspaper"></i><span class="nav-text">Newspaper</span>
                         </a>
                     </li>
 
@@ -156,6 +176,20 @@
                         <a href="{{ route('admin.hospital.index') }}" aria-expanded="false">
                             <i class="fa-solid fa-hospital"></i><span class="nav-text">Hospital</span>
                         </a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-user-doctor"></i><span class="nav-text">Doctor</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.medical.index') }}">Doctor Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.doctor.index') }}">Doctor</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
@@ -204,19 +238,7 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="fa-solid fa-user-doctor"></i><span class="nav-text">Doctor</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li>
-                                <a href="{{ route('admin.medical.index') }}">Doctor Type</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.doctor.index') }}">Doctor</a>
-                            </li>
-                        </ul>
-                    </li>
+
 
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -227,7 +249,7 @@
                                 <a href="{{ route('admin.busroute.index') }}">Bus Route</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.bus.index') }}">>Bus</a>
+                                <a href="{{ route('admin.bus.index') }}">Bus</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.bustype.index') }}">Bus Type</a>
@@ -262,6 +284,20 @@
                     </li>
 
                     <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-plane-departure"></i><span class="nav-text">Plane Ticket</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="#">Airlines</a>
+                            </li>
+                            <li>
+                                <a href="#">Ticket Counters</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
                         <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false">
                             <i class="fa-solid fa-handshake-angle"></i><span class="nav-text">E-Help</span>
                         </a>
@@ -275,7 +311,7 @@
 
                     <li>
                         <a href="{{ route('admin.job.index') }}" aria-expanded="false">
-                        <i class="fa-solid fa-briefcase"></i><span class="nav-text">Job</span>
+                            <i class="fa-solid fa-briefcase"></i><span class="nav-text">Job</span>
                         </a>
                     </li>
 
@@ -325,6 +361,92 @@
                     </li>
 
 
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-map-location-dot"></i><span class="nav-text">Tourist Place</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.placetype.index') }}">Place Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.touristplace.index') }}">Tourist Place</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-shop"></i><span class="nav-text">Shop</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.shopcategory.index') }}">Shop Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.shop.index') }}">Shop</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-handcuffs"></i><span class="nav-text">Thana-Police</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.thana.index') }}">Thana</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.police.index') }}">Police</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-brands fa-blogger-b"></i><span class="nav-text">Blog</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.blogcategory.index') }}">Blog Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.blog.index') }}">Blog</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="{{ route('admin.pallibidyut.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span class="nav-text">Bidyut</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-users-between-lines"></i>
+                            <span class="nav-text">Golpo Adda</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.storycategory.index') }}">Golpo Adda Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.story.index') }}">Golpo Adda</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.testimonial.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-comments"></i>
+                            <span class="nav-text">Testimonial</span>
+                        </a>
+                    </li>
+
 
                 </ul>
             </div>
@@ -349,75 +471,106 @@
         <div class="footer">
             <div class="copyright">
                 <p>Developed by <a href="https://sabyaroy.info/" target="_blank">Sabya Roy</a> 2019</p>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="modal fade" id="deleteModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                        </button>
+                    </div>
+                    <form id="deleteForm" action="" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body">
+                            <h3 class="text-center">Do you want to delete this Data?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
 
 
-    </div>
+        <!-- Required vendors -->
+        <script src="{{ asset('assets/backend/vendor/global/global.min.js') }}"></script>
+        <script src="{{ asset('assets/backend/js/quixnav-init.js') }}"></script>
 
 
+        <!-- Datatable -->
+        <script src="{{ asset('assets/backend/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 
-    <!-- Required vendors -->
-    <script src="{{ asset('assets/backend/vendor/global/global.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/quixnav-init.js') }}"></script>
+        <!-- Toastr -->
+        <script src="{{ asset('assets/backend/vendor/toastr/js/toastr.min.js') }}"></script>
 
+        <!-- select 2 -->
+        <script src="{{ asset('assets/backend/vendor/select2/js/select2.full.min.js') }}"></script>
 
-    <!-- Datatable -->
-    <script src="{{ asset('assets/backend/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+        <!-- summernote -->
+        <script src="{{ asset('assets/backend/vendor/summernote/summernote-bs4.min.js') }}"></script>
 
-    <!-- Toastr -->
-    <script src="{{ asset('assets/backend/vendor/toastr/js/toastr.min.js') }}"></script>
+        <script src="{{ asset('assets/backend/js/custom.min.js') }}"></script>
 
-    <!-- select 2 -->
-    <script src="{{ asset('assets/backend/vendor/select2/js/select2.full.min.js') }}"></script>
-
-    <!-- summernote -->
-    <script src="{{ asset('assets/backend/vendor/summernote/summernote-bs4.min.js') }}"></script>
-
-    <script src="{{ asset('assets/backend/js/custom.min.js') }}"></script>
-
-    <script type="text/javascript">
-        //ajax csrf token
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-
-        $('#image').change(function() {
-            const file = this.files[0];
-            console.log(file);
-            if (file) {
-                let reader = new FileReader();
-                reader.onload = function(event) {
-                    console.log(event.target.result);
-                    $('#imgPreview').attr('src', event.target.result);
+        <script type="text/javascript">
+            //ajax csrf token
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-                reader.readAsDataURL(file);
-            }
-        });
+            });
 
-        $('.details').summernote({
-            placeholder: 'details here....',
-            tabsize: 2,
-            height: 300
-        });
 
-        $(".single-select").select2();
-    </script>
-    @if(Session::has('success'))
-    <script>
-        toastr.success("{{ Session::get('success') }}", "Success");
-    </script>
-    @elseif(Session::has('error'))
-    <script>
-        toastr.error("{{ Session::get('error') }}", "Error");
-    </script>
-    @endif
+            $('#image').change(function() {
+                const file = this.files[0];
+                console.log(file);
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function(event) {
+                        console.log(event.target.result);
+                        $('#imgPreview').attr('src', event.target.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
 
-    <!-- page scripts -->
-    @yield('scripts')
+            $('.details').summernote({
+                placeholder: 'details here....',
+                tabsize: 2,
+                height: 300
+            });
+
+            $(".single-select").select2();
+
+
+            $(document).on('click', '.delete', function() {
+                var route = $(this).attr('data-route');
+                $('#deleteForm').attr('action', route);
+                $('#deleteModal').modal('show');
+            });
+        </script>
+        @if(Session::has('success'))
+        <script>
+            toastr.success("{{ Session::get('success') }}", "Success");
+        </script>
+        @elseif(Session::has('error'))
+        <script>
+            toastr.error("{{ Session::get('error') }}", "Error");
+        </script>
+        @endif
+
+        <!-- page scripts -->
+        @yield('scripts')
 
 </body>
 

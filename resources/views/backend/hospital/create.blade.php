@@ -39,6 +39,14 @@
 						</div>
 
 						<div class="form-group">
+							<label for="details">Details</label>
+							<textarea type="text" class="form-control details" name="details" id="details" value="{{ old('details') }}"></textarea>
+							@if($errors->has('details'))
+							<small style="color: red">{{ $errors->first('details') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group">
 							<label for="district_id">District</label>
 							<select class="form-control single-select" id="district_id" name="district_id">
 								<option value="" selected disabled>--select district--</option>
@@ -76,5 +84,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+	$(".multiple-select").select2({
+		placeholder: "-- select doctors --"
+	});
+</script>
 @endsection

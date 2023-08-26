@@ -54,8 +54,8 @@
 
         <div class="row g-3">
             @foreach($restaurants as $restaurant)
-            <div class="col-lg-3">
-                <div class="card p-0">
+            <div class="col-lg-4">
+                <div class="card p-0 h-100">
                     <div class="image">
                         @if($restaurant->image == null)
                         <img src="{{ url('assets/frontend/image/default_image.png') }}" alt="">
@@ -71,9 +71,16 @@
                         <div class="phone">
                             <p>{{ $restaurant->phone }}</p>
                             <p>{{ $restaurant->address }}</p>
-                            <p>{{ $restaurant->city['name'] }}, {{ $restaurant->district['name'] }}</p>
+                            <p>
+                                @if($restaurant->city)
+                                {{ $restaurant->city['name'] }},
+                                @endif
+                                @if($restaurant->district)
+                                {{ $restaurant->district['name'] }}
+                                @endif
+                            </p>
                             <P class="mt-3"><strong>Foods : </strong></P>
-                            <p> 
+                            <p>
                                 @foreach($restaurant->foods as $food)
                                 <span class="badge bg-info">{{ $food->name }}</span>
                                 @endforeach

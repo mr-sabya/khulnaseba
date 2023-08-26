@@ -46,7 +46,7 @@
         <div class="row g-3">
             @foreach($hotels as $hotel)
             <div class="col-lg-3">
-                <div class="card p-0">
+                <div class="card p-0 h-100">
                     <div class="image">
                         @if($hotel->image == null)
                         <img src="{{ url('assets/frontend/image/default_image.png') }}" alt="">
@@ -85,7 +85,14 @@
                         <div class="phone">
                             <p>{{ $hotel->phone }}</p>
                             <p>{{ $hotel->address }}</p>
-                            <p>{{ $hotel->city['name'] }}, {{ $hotel->district['name'] }}</p>
+                            <p>
+                                @if($hotel->city)
+                                {{ $hotel->city['name'] }},
+                                @endif
+                                @if($hotel->district)
+                                {{ $hotel->district['name'] }}
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <hr>
@@ -106,7 +113,7 @@
                         <div class="modal-body">
                             {!! $hotel->details !!}
                         </div>
-                    
+
                     </div>
                 </div>
             </div>

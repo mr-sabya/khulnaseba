@@ -37,8 +37,20 @@
                             <p class="mb-2"><strong>Designation:</strong> {{ $doctor->designation }}</p>
                             <p class="mb-2"><strong>Hospital Name:</strong> {{ $doctor->hospital }}</p>
                             <p class="mb-2"><strong>BMDC No:</strong> {{ $doctor->bmdc_no }}</p>
-                            <p class="mb-2"><strong>District:</strong>{{ $doctor->district['name'] }}</p>
-                            <p class="mb-2"><strong>City:</strong> {{ $doctor->city['name'] }}</p>
+                            <p class="mb-2"><strong>District:</strong>
+                                @if($doctor->district)
+                                {{ $doctor->district['name'] }}
+                                @endif
+                            </p>
+                            <p class="mb-2"><strong>City:</strong>
+                                @if($doctor->city)
+                                {{ $doctor->city['name'] }}
+                                @endif
+                            </p>
+
+                            <p class="mb-2"><strong>Details: </strong><br>
+                                {{ $doctor->details }}
+                            </p>
                         </div>
                     </div>
 
@@ -48,9 +60,9 @@
 
                         @foreach($doctor->chambers as $chamber)
                         <div class="chamber pb-4">
-                            <p class="mb-2"><strong>{{ $chamber->name }}</strong></p>
-                            <p class="mb-2">{{ $chamber->address }}</p>
-                            <p class="mb-2">Phohne: {{ $chamber->phone }}</p>
+                            <p class="mb-2"><strong>{{ $chamber->hospital['name'] }}</strong></p>
+                            <p class="mb-2">{{ $chamber->hospital['address'] }}, {{ $chamber->hospital['city']['name'] }}, {{ $chamber->hospital['district']['name'] }}</p>
+                            <p class="mb-2">Phone: {{ $chamber->hospital['phone'] }}</p>
                             <p class="mb-2">Time: {{ $chamber->time }}</p>
 
                             <div class="mt-4">
@@ -80,7 +92,7 @@
             <div class="row g-3">
                 @foreach($doctors as $doctor)
                 <div class="col-lg-4">
-                    <div class="person card">
+                    <div class="person card h-100">
                         <div class="all-info">
                             <div class="image">
                                 @if($doctor->image == null)
@@ -97,14 +109,20 @@
                                 <div class="phone">
                                     <p>{{ $doctor->degree }}</p>
                                     <p>{{ $doctor->type['name'] }}</p>
-                                    <p>{{ $doctor->city['name'] }}, {{ $doctor->district['name'] }}</p>
+                                    <p>
+                                        @if($doctor->city)
+                                        {{ $doctor->city['name'] }},
+                                        @endif
+                                        @if($doctor->district)
+                                        {{ $doctor->district['name'] }}
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="call-button">
-
-                            <a class="call-btn" href="#"><i class="fa-solid fa-circle-info"></i> Details</a>
+                            <a class="call-btn" href="{{ route('doctor.show', $doctor->id) }}"><i class="fa-solid fa-circle-info"></i> Details</a>
                         </div>
                     </div>
                 </div>

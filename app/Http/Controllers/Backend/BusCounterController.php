@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\BusCounter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BusCounterController extends Controller
 {
@@ -15,18 +16,19 @@ class BusCounterController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(BusCounter::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.buscounter.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.buscounter.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.buscounter.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.buscounter.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.bus.counter.index');
     }
@@ -96,20 +98,20 @@ class BusCounterController extends Controller
     {
         $counter = BusCounter::findOrFail(intval($id));
 
-        if($counter->phone == $request->phone){
+        if ($counter->phone == $request->phone) {
             $request->validate([
                 'counter' => 'required|string|max:255',
                 'phone' => 'required|string|max:20',
                 'address' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'counter' => 'required|string|max:255',
                 'phone' => 'required|string|max:20|unique:bus_counters',
                 'address' => 'required|string|max:255',
             ]);
         }
-        
+
         $input = $request->all();
 
         $counter->update($input);
@@ -127,7 +129,7 @@ class BusCounterController extends Controller
     {
         $counter = BusCounter::findOrFail(intval($id));
         $counter->delete();
-        
+
         return redirect()->route('admin.buscounter.index')->with('success', 'Bus Counter has been updated successfully');
     }
 }

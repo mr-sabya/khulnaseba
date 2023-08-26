@@ -59,7 +59,7 @@
 							<select class="form-control single-select" id="counter_id" name="counter_id">
 								<option value="" selected disabled>--select bus type--</option>
 								@foreach($counters as $counter)
-								<option value="{{ $counter->id }}">{{ $counter->counter }}</option>
+								<option value="{{ $counter->id }}">{{ $counter->counter }} - {{ $counter->address }}</option>
 								@endforeach
 							</select>
 							@if($errors->has('counter_id'))

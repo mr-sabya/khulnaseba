@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 // models
 use App\Models\Newspaper;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class NewspaperController extends Controller
 {
@@ -21,7 +20,7 @@ class NewspaperController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -29,18 +28,19 @@ class NewspaperController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Newspaper::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.newspaper.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.newspaper.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.newspaper.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.newspaper.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.newspaper.index');
@@ -77,7 +77,7 @@ class NewspaperController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalName();
-            $filename = time().'-image-'.$extension;
+            $filename = time() . '-image-' . $extension;
             $file->move('images/newspaper/', $filename);
             $input['image'] = $filename;
         }
@@ -122,14 +122,14 @@ class NewspaperController extends Controller
 
         $newspaper = Newspaper::findOrFail(intval($id));
 
-        if($newspaper->slug == $request->slug){
+        if ($newspaper->slug == $request->slug) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'slug' => 'required|string|max:255',
                 'link' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
-        }else{
+        } else {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'slug' => 'required|string|max:255|unique:newspapers',
@@ -137,14 +137,14 @@ class NewspaperController extends Controller
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }
-        
+
 
         $input = $request->all();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalName();
-            $filename = time().'-image-'.$extension;
+            $filename = time() . '-image-' . $extension;
             $file->move('images/newspaper/', $filename);
             $input['image'] = $filename;
         }

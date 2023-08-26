@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Chamber;
 use App\Models\Doctor;
+use App\Models\Hospital;
 use Illuminate\Http\Request;
 use SebastianBergmann\Diff\Chunk;
 
@@ -19,7 +20,8 @@ class ChamberController extends Controller
     {
         $doctor = Doctor::findOrFail(intval($id));
         $chambers = Chamber::where('doctor_id', $doctor->id)->get();
-        return view('backend.chamber.index', compact('doctor', 'chambers'));
+        $hospitals = Hospital::orderBy('name', 'ASC')->get();
+        return view('backend.chamber.index', compact('doctor', 'chambers', 'hospitals'));
     }
 
     /**
@@ -41,9 +43,7 @@ class ChamberController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'hospital_id' => 'required',
             'time' => 'required|string|max:255',
             'phone_1' => 'required|string|max:255',
             'phone_2' => 'nullable|string|max:255',
@@ -77,7 +77,8 @@ class ChamberController extends Controller
     public function edit($id)
     {
         $chamber = Chamber::findOrFail(intval($id));
-        return view('backend.chamber.edit', compact('chamber'));
+        $hospitals = Hospital::orderBy('name', 'ASC')->get();
+        return view('backend.chamber.edit', compact('chamber', 'hospitals'));
     }
 
     /**
@@ -90,9 +91,7 @@ class ChamberController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'hospital_id' => 'required',
             'time' => 'required|string|max:255',
             'phone_1' => 'required|string|max:255',
             'phone_2' => 'nullable|string|max:255',
@@ -114,6 +113,9 @@ class ChamberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $chamber = Chamber::findOrfail(intval($id));
+        $chamber->delete();
+
+        return redirect()->route('admin.chamber.index', $chamber->doctor_id)->with('success', 'Chamber has been deleted successfully');
     }
 }

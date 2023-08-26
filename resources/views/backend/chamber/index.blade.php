@@ -11,35 +11,25 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('admin.chamber.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
-                        @if($errors->has('name'))
-                        <small style="color: red">{{ $errors->first('name') }}</small>
+                        <label for="hospital_id">Hospital</label>
+                        <select class="form-control single-select" id="hospital_id" name="hospital_id">
+                            <option value="" selected disabled>--select hospital--</option>
+                            @foreach($hospitals as $hospital)
+                            <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('hospital_id'))
+                        <small style="color: red">{{ $errors->first('hospital_id') }}</small>
                         @endif
                     </div>
 
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone') }}">
-                        @if($errors->has('phone'))
-                        <small style="color: red">{{ $errors->first('phone') }}</small>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}">
-                        @if($errors->has('address'))
-                        <small style="color: red">{{ $errors->first('address') }}</small>
-                        @endif
-                    </div>
 
                     <div class="form-group">
                         <label for="time">Time</label>
@@ -64,14 +54,14 @@
                         @endif
                     </div>
 
-                
+
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -79,8 +69,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Phone</th>
+                                <th>Hospital</th>
+                                <th>Time</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -89,8 +79,8 @@
                             @foreach($chambers as $chamber)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $chamber->name }}</td>
-                                <td>{{ $chamber->phone }}</td>
+                                <td>{{ $chamber->hospital['name'] }}</td>
+                                <td>{{ $chamber->time }}</td>
                                 <td>
                                     <a href="{{ route('admin.chamber.edit', $chamber->id) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>
                                     <button type="button" data-route="" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>
@@ -102,8 +92,8 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Phone</th>
+                                <th>Hospital</th>
+                                <th>Time</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -114,39 +104,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <form id="deleteForm" action="" method="post">
-                @csrf
-                @method('DELETE')
-                <div class="modal-body">
-                    <h3 class="text-center">Do you want to delete this Doctor?</h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 @endsection
 
 @section('scripts')
 <script>
     $('#dataTable').DataTable();
-
-    $(document).on('click', '.delete', function() {
-        var route = $(this).attr('data-route');
-        $('#deleteForm').attr('action', route);
-        $('#deleteModal').modal('show');
-    });
 </script>
 @endsection

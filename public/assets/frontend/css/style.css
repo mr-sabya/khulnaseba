@@ -51,14 +51,14 @@ p {
     margin: 0;
 }
 
-img{
+img {
     width: 100%;
 }
-
-.container {
-    width: 1320px;
-    margin: 0 auto;
+img {
+    vertical-align: middle;
+    border-style: none;
 }
+
 
 .section-padding {
     padding: 60px 0;
@@ -98,6 +98,11 @@ img{
     cursor: pointer;
     border-radius: 8px;
     padding: 10px 20px;
+    transition: all .3s linear;
+}
+
+.custom-btn i{
+    transition: all .3s linear;
 }
 
 .custom-btn:hover{
@@ -126,8 +131,8 @@ img{
     margin-right: 5px;
 }
 
-.custom-btn:hover {
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.466);
+.custom-btn:hover i {
+    margin-left: 10px;
 }
 
 .card {
@@ -202,6 +207,10 @@ img{
 
 .menu .menu-section .nav a {
     padding: 15px 20px;
+}
+
+.menu .menu-section .nav .active{
+    background: var(--secondary);
 }
 
 .menu .menu-section .nav a:hover {
@@ -386,7 +395,7 @@ img{
 }
 
 .hero-section{
-    padding: 50px 0;
+    padding: 70px 0;
     padding-top: 90px;
     background: linear-gradient(90deg, rgb(6, 72, 253) 0%, rgb(66, 141, 252) 35%, rgb(116, 232, 255) 100%);
     color: var(--white);
@@ -407,7 +416,7 @@ img{
 /* header section start */
 .header {
     padding: 60px 0;
-    padding-top: 110px;
+    padding-top: 120px;
     background: linear-gradient(90deg, rgb(6, 72, 253) 0%, rgb(66, 141, 252) 35%, rgb(116, 232, 255) 100%);
 }
 
@@ -419,6 +428,16 @@ img{
 }
 
 /* header section end */
+
+/* weather */
+
+.weather{
+    margin-top: -60px;
+}
+
+.weather .card{
+    background: #f6faff;
+}
 
 /* service section start */
 .services .servive-section {
@@ -476,6 +495,12 @@ img{
 
 /* service section end */
 
+
+/* about section start */
+.about_us_text p{
+    margin-bottom: 15px;
+}
+/* about section end */
 
 
 /* banner section start */
@@ -537,7 +562,7 @@ img{
 
 .other-services .card {
     /* box-shadow: 0 0 7px rgb(0 0 0 / 20%); */
-    padding: 12px 25px;
+    padding: 12px 20px;
     border-radius: 8px;
     transition: all .3s linear;
 }
@@ -548,7 +573,7 @@ img{
 }
 
 .other-services .card h5 {
-    font-size: 18px;
+    font-size: 15px;
     transition: all .3s linear;
     margin: 0;
 }
@@ -559,7 +584,9 @@ img{
 
 .other-services .service a {
     display: flex;
+    gap: 10px;
     align-items: center;
+    justify-content: center;
 }
 
 .other-services .service img {
@@ -567,8 +594,6 @@ img{
 }
 
 .other-services .service .text {
-    display: flex;
-    justify-content: center;
     width: 100%;
 }
 
@@ -676,7 +701,7 @@ img{
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
-    gap: 15px;
+    gap: 7px;
 }
 
 .blogs .tag {
@@ -1106,6 +1131,10 @@ select::-ms-expand {
         grid-template-columns: repeat(3, 1fr);
     }
 
+    .newspaper-conatiner {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
 }
 
 @media only screen and (max-width: 425px) {
@@ -1152,6 +1181,10 @@ select::-ms-expand {
 
     .services .service:hover h4 {
         color: var(--primary);
+    }
+
+    .newspaper-conatiner {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 

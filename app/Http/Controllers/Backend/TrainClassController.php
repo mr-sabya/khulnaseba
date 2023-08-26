@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\TrainClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainClassController extends Controller
 {
@@ -20,7 +21,9 @@ class TrainClassController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.trainclass.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.trainclass.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.trainclass.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -93,16 +96,16 @@ class TrainClassController extends Controller
     {
         $trainclass = TrainClass::findOrFail(intval($id));
 
-        if($trainclass->name = $request->name){
+        if ($trainclass->name = $request->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255|unique:train_classes',
             ]);
         }
-        
+
         $input = $request->all();
         $trainclass->update($input);
 
@@ -117,6 +120,9 @@ class TrainClassController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trainclass = TrainClass::findOrFail(intval($id));
+        $trainclass->delete();
+
+        return redirect()->route('admin.trainclass.index')->with('success', 'Train Class has been deleted successfully');
     }
 }

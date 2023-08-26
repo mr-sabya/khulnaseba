@@ -20,14 +20,19 @@ class TrainingCenterController extends Controller
         if (request()->ajax()) {
             return datatables()->of(TrainingCenter::latest()->get())
                 ->addColumn('district', function ($data) {
-                    return $data->district['name'];
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
                 })
                 ->addColumn('city', function ($data) {
-                    return $data->city['name'];
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.trainingcenter.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
+
                     $button .= '<button type="button" name="delete" data-route="' . route('admin.trainingcenter.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
                     return $button;
                 })

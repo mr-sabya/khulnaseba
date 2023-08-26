@@ -53,7 +53,14 @@
 					</div>
 					<div class="phone">
 						<p>{{ $lawyer->phone }}</p>
-						<p>{{ $lawyer->city['name'] }}, {{ $lawyer->district['name'] }}</p>
+						<p>
+							@if($lawyer->city)
+							{{ $lawyer->city['name'] }},
+							@endif
+							@if($lawyer->district)
+							{{ $lawyer->district['name'] }}
+							@endif
+						</p>
 						<p><strong>Department :</strong> {{ $lawyer->department['name'] }}</p>
 					</div>
 					<hr>

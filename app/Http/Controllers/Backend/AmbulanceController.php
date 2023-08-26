@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Ambulance;
 use App\Models\District;
 use App\Models\City;
+use Illuminate\Support\Facades\Auth;
 
 class AmbulanceController extends Controller
 {
@@ -32,15 +33,21 @@ class AmbulanceController extends Controller
         {
             return datatables()->of(Ambulance::latest()->get())
             ->addColumn('district', function($data){
-                return $data->district['name'];
+                if($data->distric){
+                    return $data->district['name'];
+                }
             })
             ->addColumn('city', function($data){
-                return $data->city['name'];
+                if($data->city){
+                    return $data->city['name'];
+                }
             })
             ->addColumn('action', function($data){
                 $button = '<a href="'.route('admin.ambulance.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.ambulance.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                if(Auth::user()->is_admin == 1){
+                    $button .= '<button type="button" name="delete" data-route="'.route('admin.ambulance.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                }
                 return $button;
             })
             ->rawColumns(['district', 'city', 'action'])

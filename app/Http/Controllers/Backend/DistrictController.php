@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //models
 use App\Models\District;
+use Illuminate\Support\Facades\Auth;
 
 class DistrictController extends Controller
 {
@@ -19,7 +20,7 @@ class DistrictController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,18 +28,19 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(District::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.district.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.district.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.district.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.district.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.district.index');
     }
@@ -106,16 +108,16 @@ class DistrictController extends Controller
     {
         $district = District::findOrFail(intval($id));
 
-        if($district->name == $request->name){
+        if ($district->name == $request->name) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:districts',
             ]);
         }
-        
+
 
         $input = $request->all();
 

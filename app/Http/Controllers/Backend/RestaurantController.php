@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Food;
 use App\Models\Restaurant;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
@@ -29,24 +30,29 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Restaurant::latest()->get())
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('city', function($data){
-                return $data->city['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.restaurant.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.restaurant.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'city', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
+                })
+                ->addColumn('city', function ($data) {
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.restaurant.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.restaurant.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['district', 'city', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.restaurant.index');
     }
@@ -135,7 +141,43 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $restaurant = Restaurant::findOrFail(intval($id));
+
+        if ($restaurant->phone == $request->phone) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'phone' => 'required|max:15',
+                'address' => 'required|max:255',
+                'district_id' => 'required',
+                'city_id' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        } else {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'phone' => 'required|max:15|unique:restaurants',
+                'address' => 'required|max:255',
+                'district_id' => 'required',
+                'city_id' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            ]);
+        }
+
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/food/', $filename);
+            $input['image'] = $filename;
+        }
+
+        $restaurant->update($input);
+        $restaurant->foods()->sync($request->food);
+
+        return redirect()->route('admin.restaurant.index')->with('success', 'Restaurants has been updated successfully');
     }
 
     /**

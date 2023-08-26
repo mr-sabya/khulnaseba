@@ -16,8 +16,10 @@ class BusinessIdea extends Model
      */
     protected $fillable = [
         'title',
+        'slug',
         'type_id',
         'details',
+        'short_description',
         'image',
     ];
 

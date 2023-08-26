@@ -18,6 +18,7 @@ class Hospital extends Model
         'name',
         'phone',
         'address',
+        'details',
         'district_id',
         'city_id',
     ];
@@ -31,4 +32,6 @@ class Hospital extends Model
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
     }
+
+
 }

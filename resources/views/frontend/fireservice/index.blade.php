@@ -47,13 +47,20 @@
 		<div class="row g-3">
 			@foreach($fireservices as $fireservice)
 			<div class="col-lg-3">
-				<div class="hospital card text-center">
+				<div class="h-100 card text-center">
 					<div class="info">
 						<h5>{{ $fireservice->name }}</h5>
 					</div>
 					<div class="phone">
 						<p>{{ $fireservice->phone }}</p>
-						<p>{{ $fireservice->city['name'] }}, {{ $fireservice->district['name'] }}</p>
+						<p>
+							@if($fireservice->city)
+							{{ $fireservice->city['name'] }},
+							@endif
+							@if($fireservice->district)
+							{{ $fireservice->district['name'] }}
+							@endif
+						</p>
 					</div>
 					<hr>
 					<div class="call-button">

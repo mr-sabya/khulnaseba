@@ -15,26 +15,15 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{ $chamber->name }}">
-                        @if($errors->has('name'))
-                        <small style="color: red">{{ $errors->first('name') }}</small>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" class="form-control" name="phone" id="phone" value="{{ $chamber->phone }}">
-                        @if($errors->has('phone'))
-                        <small style="color: red">{{ $errors->first('phone') }}</small>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address" value="{{ $chamber->address }}">
-                        @if($errors->has('address'))
-                        <small style="color: red">{{ $errors->first('address') }}</small>
+                        <label for="hospital_id">Hospital</label>
+                        <select class="form-control single-select" id="hospital_id" name="hospital_id">
+                            <option value="" selected disabled>--select hospital--</option>
+                            @foreach($hospitals as $hospital)
+                            <option value="{{ $hospital->id }}" {{ $chamber->hospital_id == $hospital->id ? 'selected' : '' }}>{{ $hospital->name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('hospital_id'))
+                        <small style="color: red">{{ $errors->first('hospital_id') }}</small>
                         @endif
                     </div>
 

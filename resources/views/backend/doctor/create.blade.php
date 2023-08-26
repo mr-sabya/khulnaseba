@@ -113,6 +113,19 @@
                             @endif
                         </div>
 
+
+                        <div class="form-group">
+                            <label for="hospitals">Hospitals</label>
+                            <select class="form-control multiple-select" id="hospitals" name="hospitals[]" multiple>
+                                @foreach($hospitals as $hospital)
+                                <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('hospitals'))
+                            <small style="color: red">{{ $errors->first('hospitals') }}</small>
+                            @endif
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -125,5 +138,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    $(".multiple-select").select2({
+        placeholder: "-- select hospitals --"
+    });
+</script>
 @endsection

@@ -47,13 +47,20 @@
 		<div class="row g-3">
 			@foreach($journalists as $journalist)
 			<div class="col-lg-3">
-				<div class="hospital card text-center">
+				<div class="card text-center h-100">
 					<div class="info">
 						<h5>{{ $journalist->name }}</h5>
 					</div>
 					<div class="phone">
 						<p>{{ $journalist->phone }}</p>
-						<p>{{ $journalist->city['name'] }}, {{ $journalist->district['name'] }}</p>
+						<p>
+							@if($journalist->city)
+							{{ $journalist->city['name'] }},
+							@endif
+							@if($journalist->district)
+							{{ $journalist->district['name'] }}
+							@endif
+						</p>
 						<p><strong>Tv/Newspaper :</strong> {{ $journalist->media }}</p>
 					</div>
 					<hr>

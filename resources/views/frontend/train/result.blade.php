@@ -28,7 +28,11 @@
                 <tbody>
                     @foreach($tickets as $ticket)
                     <tr>
-                        <td>{{ $ticket->train['name'] }}</td>
+                        <td>
+                            @if($ticket->train)
+                            {{ $ticket->train['name'] }}
+                            @endif
+                        </td>
                         <td>{{ $ticket->amount }}</td>
                     </tr>
                     @endforeach

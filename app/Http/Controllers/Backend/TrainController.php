@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Train;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainController extends Controller
 {
@@ -20,7 +21,9 @@ class TrainController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.train.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.train.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.train.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -92,17 +95,16 @@ class TrainController extends Controller
     {
         $train = Train::findOrFail(intval($id));
 
-        if($train->name == $request->name)
-        {
+        if ($train->name == $request->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255|unique:trains',
             ]);
         }
-        
+
         $input = $request->all();
         $train->update($input);
 
@@ -117,6 +119,9 @@ class TrainController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $train = Train::findOrFail(intval($id));
+        $train->delete();
+
+        return redirect()->route('admin.train.index')->with('success', 'Train has been deleted successfully');
     }
 }

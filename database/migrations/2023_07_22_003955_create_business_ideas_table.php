@@ -16,8 +16,10 @@ class CreateBusinessIdeasTable extends Migration
         Schema::create('business_ideas', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->integer('type_id');
             $table->text('details');
+            $table->string('short_description');
             $table->string('image');
             $table->timestamps();
         });

@@ -31,9 +31,21 @@
                 <tbody>
                     @foreach($tickets as $ticket)
                     <tr>
-                        <td>{{ $ticket->counter['counter'] }}</td>
-                        <td>{{ $ticket->counter['address'] }}</td>
-                        <td>{{ $ticket->counter['phone'] }}</td>
+                        <td>
+                            @if($ticket->counter)
+                            {{ $ticket->counter['counter'] }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($ticket->counter)
+                            {{ $ticket->counter['address'] }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($ticket->counter)
+                            {{ $ticket->counter['phone'] }}
+                            @endif
+                        </td>
                         <td>{{ $ticket->price }}</td>
                         <td>
                             <div class="call-button">

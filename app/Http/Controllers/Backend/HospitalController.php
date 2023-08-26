@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Hospital;
 use App\Models\District;
 use App\Models\City;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\Auth;
 
 class HospitalController extends Controller
 {
@@ -20,7 +22,7 @@ class HospitalController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,24 +30,29 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Hospital::latest()->get())
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('city', function($data){
-                return $data->city['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.hospital.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.hospital.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'city', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
+                })
+                ->addColumn('city', function ($data) {
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.hospital.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.hospital.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['district', 'city', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.hospital.index');
     }
@@ -71,7 +78,7 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|max:15|unique:hospitals',
             'address' => 'required|max:255',
@@ -81,7 +88,7 @@ class HospitalController extends Controller
 
         $input = $request->all();
 
-        Hospital::create($input);
+        $hospital = Hospital::create($input);
 
         return redirect()->route('admin.hospital.index')->with('success', 'New Hospital has been added successfully');
     }
@@ -123,16 +130,16 @@ class HospitalController extends Controller
     {
         $hospital = Hospital::findOrFail(intval($id));
 
-        if($hospital->phone == $request->phone){
-            $validated = $request->validate([
+        if ($hospital->phone == $request->phone) {
+            $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15',
                 'address' => 'required|max:255',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
-        } else{
-            $validated = $request->validate([
+        } else {
+            $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15|unique:hospitals',
                 'address' => 'required|max:255',
@@ -140,7 +147,7 @@ class HospitalController extends Controller
                 'city_id' => 'required',
             ]);
         }
-        
+
 
         $input = $request->all();
 
@@ -157,6 +164,9 @@ class HospitalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hospital = Hospital::findOrFail(intval($id));
+        $hospital->delete();
+
+        return redirect()->route('admin.hospital.index')->with('success', 'Hospital has been deleted successfully');
     }
 }

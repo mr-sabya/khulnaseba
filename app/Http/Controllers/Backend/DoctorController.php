@@ -7,8 +7,11 @@ use App\Models\City;
 use App\Models\District;
 use App\Models\Doctor;
 use App\Models\DoctorType;
+use App\Models\Hospital;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Matcher\Type;
+use PhpOption\None;
 use PhpParser\Comment\Doc;
 
 class DoctorController extends Controller
@@ -20,21 +23,30 @@ class DoctorController extends Controller
      */
     public function index()
     {
+        // return $doctors = Doctor::with('hospitals')->get();
         if (request()->ajax()) {
             return datatables()->of(Doctor::latest()->get())
                 ->addColumn('type', function ($data) {
-                    return $data->type['name'];
+                    if ($data->type) {
+                        return $data->type['name'];
+                    }
                 })
                 ->addColumn('district', function ($data) {
-                    return $data->district['name'];
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
                 })
                 ->addColumn('city', function ($data) {
-                    return $data->city['name'];
+                    if ($data->city) {
+                        return $data->city['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.doctor.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.doctor.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.doctor.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="' . route('admin.chamber.index', $data->id) . '" class="btn btn-info btn-sm"><i class="fa-solid fa-hospital"></i> Chamber</button>';
                     return $button;
@@ -74,7 +86,7 @@ class DoctorController extends Controller
             'designation' => 'required|max:255',
             'hospital' => 'required|max:255',
             'bmdc_no' => 'nullable|max:255|unique:doctors',
-            'details' => 'required|max:255',
+            'details' => 'required',
             'type_id' => 'required',
             'district_id' => 'required',
             'city_id' => 'required',
@@ -91,7 +103,9 @@ class DoctorController extends Controller
             $input['image'] = $filename;
         }
 
-        Doctor::create($input);
+        $doctor = Doctor::create($input);
+
+        $doctor->hospitals()->sync($request->hospitals);
 
         return redirect()->route('admin.doctor.index')->with('success', 'New Doctor has been added successfully');
     }
@@ -141,7 +155,7 @@ class DoctorController extends Controller
                 'designation' => 'required|max:255',
                 'hospital' => 'required|max:255',
                 'bmdc_no' => 'nullable|max:255',
-                'details' => 'required|max:255',
+                'details' => 'required',
                 'type_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
@@ -154,7 +168,7 @@ class DoctorController extends Controller
                 'designation' => 'required|max:255',
                 'hospital' => 'required|max:255',
                 'bmdc_no' => 'nullable|max:255|unique:doctors',
-                'details' => 'required|max:255',
+                'details' => 'required',
                 'type_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
@@ -174,6 +188,7 @@ class DoctorController extends Controller
         }
 
         $doctor->update($input);
+        $doctor->hospitals()->sync($request->hospitals);
 
         return redirect()->route('admin.doctor.index')->with('success', 'Doctor has been updated successfully');
     }
@@ -186,6 +201,9 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $doctor = Doctor::findOrFail(intval($id));
+        $doctor->delete();
+
+        return redirect()->route('admin.doctor.index')->with('success', 'Doctor has been deleted successfully');
     }
 }

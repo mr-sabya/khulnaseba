@@ -3,17 +3,27 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Setting;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
+use Stevebauman\Location\Facades\Location;
 
 class HomeController extends Controller
 {
 
     public function index()
     {
-        
-        return view('frontend.home.index');
+        $ip = request()->ip();
+        $location = Location::get($ip); 
+        $blogs = Blog::orderBy('id', 'DESC')->take(4)->get();
+
+        $setting = Setting::findOrFail(intval(1));
+        $feedbacks = Testimonial::orderBy('id')->get();
+
+        return view('frontend.home.index', compact('blogs', 'location', 'setting', 'feedbacks'));
     }
 
     public function theme()

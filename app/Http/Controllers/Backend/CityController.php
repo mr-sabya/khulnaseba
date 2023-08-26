@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 //models
 use App\Models\City;
 use App\Models\District;
+use Illuminate\Support\Facades\Auth;
 
 class CityController extends Controller
 {
@@ -20,7 +21,7 @@ class CityController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,21 +29,24 @@ class CityController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(City::latest()->get())
-            ->addColumn('district', function($data){
-                return $data->district['name'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.city.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.city.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['district', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.city.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.city.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['district', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.city.index');
@@ -115,18 +119,18 @@ class CityController extends Controller
     {
         $city = City::findOrFail(intval($id));
 
-        if($city->name == $request->name){
+        if ($city->name == $request->name) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'district_id' => 'required',
             ]);
-        }else{
+        } else {
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:cities',
                 'district_id' => 'required',
             ]);
         }
-        
+
 
         $input = $request->all();
         $city->update($input);

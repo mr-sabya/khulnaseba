@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h4 class="card-title">Edit Hospital</h4>
-				
+
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
@@ -36,6 +36,14 @@
 							<input type="text" class="form-control" name="address" id="address" value="{{ $hospital->address }}">
 							@if($errors->has('address'))
 							<small style="color: red">{{ $errors->first('address') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group">
+							<label for="details">Details</label>
+							<textarea type="text" class="form-control details" name="details" id="details" value="{!! $hospital->details !!}"></textarea>
+							@if($errors->has('details'))
+							<small style="color: red">{{ $errors->first('details') }}</small>
 							@endif
 						</div>
 
@@ -77,5 +85,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    $(".multiple-select").select2({
+        placeholder: "-- select doctors --"
+    });
+</script>
 @endsection

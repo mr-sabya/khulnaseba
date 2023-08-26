@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Ehelp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EhelpController extends Controller
 {
@@ -15,18 +16,19 @@ class EhelpController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(Ehelp::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.ehelp.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.ehelp.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.ehelp.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.ehelp.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.ehelp.index');
@@ -61,7 +63,7 @@ class EhelpController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalName();
-            $filename = time().'-image-'.$extension;
+            $filename = time() . '-image-' . $extension;
             $file->move('images/ehelp/', $filename);
             $input['logo'] = $filename;
         }
@@ -110,14 +112,14 @@ class EhelpController extends Controller
             'website' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
-        
+
 
         $input = $request->all();
 
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalName();
-            $filename = time().'-image-'.$extension;
+            $filename = time() . '-image-' . $extension;
             $file->move('images/ehelp/', $filename);
             $input['logo'] = $filename;
         }

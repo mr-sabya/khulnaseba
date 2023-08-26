@@ -9,6 +9,7 @@ use App\Models\BusRoute;
 use App\Models\BusTicket;
 use App\Models\BusType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BusTicketController extends Controller
 {
@@ -19,30 +20,39 @@ class BusTicketController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             return datatables()->of(BusTicket::latest()->get())
-            ->addColumn('route', function($data){
-                return $data->route['name'];
-            })
-            ->addColumn('bus', function($data){
-                return $data->bus['name'];
-            })
-            ->addColumn('type', function($data){
-                return $data->type['name'];
-            })
-            ->addColumn('counter', function($data){
-                return $data->counter['counter'];
-            })
-            ->addColumn('action', function($data){
-                $button = '<a href="'.route('admin.busticket.edit', $data->id).'" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" data-route="'.route('admin.busticket.destroy', $data->id).'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
-                return $button;
-            })
-            ->rawColumns(['route', 'bus', 'type', 'counter', 'action'])
-            ->addIndexColumn()
-            ->make(true);
+                ->addColumn('route', function ($data) {
+                    if ($data->route) {
+                        return $data->route['name'];
+                    }
+                })
+                ->addColumn('bus', function ($data) {
+                    if ($data->bus) {
+                        return $data->bus['name'];
+                    }
+                })
+                ->addColumn('type', function ($data) {
+                    if ($data->type) {
+                        return $data->type['name'];
+                    }
+                })
+                ->addColumn('counter', function ($data) {
+                    if ($data->counter) {
+                        return $data->counter['counter'];
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.busticket.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.busticket.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['route', 'bus', 'type', 'counter', 'action'])
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('backend.bus.busticket.index');
     }
@@ -131,7 +141,7 @@ class BusTicketController extends Controller
             'counter_id' => 'required',
             'price' => 'required',
         ]);
-        
+
         $input = $request->all();
 
         $busticket->update($input);
@@ -147,6 +157,9 @@ class BusTicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $busticket = BusTicket::findORFail(intval($id));
+        $busticket->delete();
+
+        return redirect()->route('admin.busticket.index')->with('success', 'Bus Ticket has been deleted successfully');
     }
 }

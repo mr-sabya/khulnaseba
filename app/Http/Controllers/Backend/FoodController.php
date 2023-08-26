@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 // models
 use App\Models\Food;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -19,7 +20,7 @@ class FoodController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +33,9 @@ class FoodController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.food.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" data-route="' . route('admin.food.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.food.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -116,20 +119,20 @@ class FoodController extends Controller
     {
         $food = Food::findOrFail(intval($id));
 
-        if($food->slug == $request->slug){
+        if ($food->slug == $request->slug) {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'slug' => 'required|string|max:255',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'slug' => 'required|string|max:255|unique:food',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }
-        
+
 
         $input = $request->all();
 
@@ -154,6 +157,9 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $food = Food::findOrFail(intval($id));
+        $food->delete();
+
+        return redirect()->route('admin.food.index')->with('success', 'Food has been deleted successfully');
     }
 }
