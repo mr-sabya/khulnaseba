@@ -26,7 +26,7 @@
 						<tfoot>
 							<tr>
 								<th>#</th>
-								<<th>Counter</th>
+								<th>Counter</th>
 								<th>Phone</th>
 								<th>Address</th>
 								<th>Action</th>

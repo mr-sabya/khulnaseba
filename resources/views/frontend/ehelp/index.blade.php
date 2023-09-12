@@ -23,7 +23,7 @@
 					</a>
 				</div>
 				<div class="action">
-					<a href="{{ $ehelp->website }}" target="_blank">Go to Website <i class="fa-solid fa-arrow-right"></i></a>
+					<a href="{{ route('ehelp.show', $ehelp->id) }}">Open Website <i class="fa-solid fa-arrow-right"></i></a>
 				</div>
 			</div>
 			@endforeach

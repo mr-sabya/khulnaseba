@@ -61,7 +61,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
                         <!-- <a href="#"><i class="fa-solid fa-sun"></i></a> -->
                     </div>
 
-                    <a href="#" class="help"><i class="fa-solid fa-circle-info"></i> Help</a>
+                    <a href="{{ route('help.index')}}" class="help"><i class="fa-solid fa-circle-info"></i> Help</a>
                 </div>
             </div>
         </div>
@@ -108,10 +108,10 @@ $setting = App\Models\Setting::where('id', 1)->first();
 
             <div class="widget">
                 <ul>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Our Services</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="{{ route('contact.index')}}">Contact us</a></li>
+                    <li><a href="{{ route('about.index') }}">About Us</a></li>
+                    <li><a href="{{ route('privacy.index') }}">Privacy Policy</a></li>
+                    <li><a href="{{ route('terms.index') }}">Terms & Conditions</a></li>
                     <li><a href="#">Career</a></li>
                 </ul>
             </div>

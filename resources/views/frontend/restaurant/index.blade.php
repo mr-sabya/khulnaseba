@@ -89,7 +89,7 @@
                     </div>
                     <hr>
                     <div class="call-button text-center pb-3">
-                        <a class="call-btn" href="#"><i class="fa-solid fa-phone"></i> Call</a>
+                        <a class="call-btn" href="tel:{{ $restaurant->phone }}"><i class="fa-solid fa-phone"></i> Call</a>
                     </div>
                 </div>
             </div>

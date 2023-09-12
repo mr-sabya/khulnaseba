@@ -53,6 +53,7 @@
 					</div>
 					<div class="phone">
 						<p>{{ $govt_office->phone }}</p>
+						<p>{{ $govt_office->address }}</p>
 						<p>
 							@if($govt_office->city)
 							{{ $govt_office->city['name'] }},

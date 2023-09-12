@@ -26,7 +26,7 @@
                                         <span class="fa fa-map-marker"></span>
                                     </div>
                                     <div class="text">
-                                        <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+                                        <p><span>Address:</span> {{ $setting->address }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                         <span class="fa fa-phone"></span>
                                     </div>
                                     <div class="text">
-                                        <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+                                        <p><span>Phone:</span> <a href="tel://1234567920">{{ $setting->phone }}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                         <span class="fa fa-paper-plane"></span>
                                     </div>
                                     <div class="text">
-                                        <p><span>Email:</span> <a href="">mail@khulnaseba.com</a></p>
+                                        <p><span>Email:</span> <a href="">{{ $setting->email }}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <h3 class="heading mb-4 text-start">Let's talk about everything!</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas debitis, fugit natus?</p>
+                                <p>{{ $setting->contact_text }}</p>
                                 <p><img src="{{ url('assets/frontend/image/undraw-contact.svg') }}" alt="Image" class="img-fluid"></p>
                             </div>
                             <div class="col-md-6">

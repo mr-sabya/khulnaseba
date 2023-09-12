@@ -13,7 +13,7 @@ class NewspaperController extends Controller
     //list
     public function index()
     {
-    	$newspapers = Newspaper::orderBy('name', 'ASC')->get();
+    	$newspapers = Newspaper::orderBy('id', 'DESC')->get();
     	return view('frontend.newspaper.index', compact('newspapers'));
     }
 

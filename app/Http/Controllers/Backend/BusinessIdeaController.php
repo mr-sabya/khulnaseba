@@ -62,6 +62,7 @@ class BusinessIdeaController extends Controller
             'slug' => 'required|string|max:255|unique:business_ideas',
             'type_id' => 'required',
             'details' => 'required',
+            'short_description' => 'required|255',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
@@ -122,6 +123,7 @@ class BusinessIdeaController extends Controller
                 'slug' => 'required|string|max:255',
                 'type_id' => 'required',
                 'details' => 'required',
+                'short_description' => 'required|255',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         } else {
@@ -130,6 +132,7 @@ class BusinessIdeaController extends Controller
                 'slug' => 'required|string|max:255|unique:business_ideas',
                 'type_id' => 'required',
                 'details' => 'required',
+                'short_description' => 'required|255',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }

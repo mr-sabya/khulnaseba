@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Blog;
 use App\Models\Setting;
 use App\Models\Testimonial;
@@ -23,7 +24,9 @@ class HomeController extends Controller
         $setting = Setting::findOrFail(intval(1));
         $feedbacks = Testimonial::orderBy('id')->get();
 
-        return view('frontend.home.index', compact('blogs', 'location', 'setting', 'feedbacks'));
+        $banners = Banner::orderBy('id', 'DESC')->take(2)->get();
+
+        return view('frontend.home.index', compact('blogs', 'location', 'setting', 'feedbacks', 'banners'));
     }
 
     public function theme()

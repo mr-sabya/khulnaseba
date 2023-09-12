@@ -51,6 +51,11 @@
 							@endif
 						</div>
 
+						<div class="form-check mb-4">
+							<input type="checkbox" class="form-check-input" name="open_website" id="open_website" value="1">
+							<label class="form-check-label" for="open_website">Is open Out of Website/App</label>
+						</div>
+
 						<button type="submit" class="btn btn-primary">Save</button>
 					</form>
 				</div>

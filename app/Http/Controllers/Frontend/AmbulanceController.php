@@ -13,7 +13,7 @@ class AmbulanceController extends Controller
 {
     public function index()
     {
-    	$ambulances = Ambulance::orderBy('name', 'ASC')->paginate(12);
+    	$ambulances = Ambulance::orderBy('id', 'DESC')->paginate(12);
 
     	$districts = District::orderBy('name', 'ASC')->get();
 

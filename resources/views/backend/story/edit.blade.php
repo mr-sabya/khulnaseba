@@ -32,7 +32,7 @@
 
 						<div class="form-group">
                             <label for="details">Details</label>
-                            <textarea class="form-control" name="details" id="details">{{ $story->details }}</textarea>
+                            <textarea class="form-control details" name="details" id="details">{{ $story->details }}</textarea>
                             @if($errors->has('details'))
                             <small style="color: red">{{ $errors->first('details') }}</small>
                             @endif

@@ -11,7 +11,7 @@ class EduInstituteController extends Controller
 {
     public function index()
     {
-        $schools = EducationalInstitute::orderBy('name', 'ASC')->paginate(12);
+        $schools = EducationalInstitute::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
 
         return view('frontend.school.index', compact('schools', 'districts'));

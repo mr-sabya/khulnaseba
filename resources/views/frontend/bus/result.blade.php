@@ -15,8 +15,9 @@
 <!-- newspaper section start -->
 <div class="blood-section section-padding">
     <div class="container ">
-
-        <h5>Result For : <span>{{ $route->name }} - {{ $bus->name }} - {{ $type->name }}</span></h5>
+        <a href="{{ route('bus.index') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+        <br>
+        <h5>Result For : <span>{{ $route->name }} - {{ $bus->name }}</span></h5>
         <div class="table-responsive mt-3">
             <table class="table table-bordered text-center">
                 <thead>
@@ -24,11 +25,13 @@
                         <th>Counter</th>
                         <th>Address</th>
                         <th>Phone</th>
+                        <th>Type</th>
                         <th>Price</th>
                         <th>Call</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @if($tickets->count()>0)
                     @foreach($tickets as $ticket)
                     <tr>
                         <td>
@@ -46,6 +49,11 @@
                             {{ $ticket->counter['phone'] }}
                             @endif
                         </td>
+                        <td>
+                            @if($ticket->counter)
+                            {{ $ticket->type['name'] }}
+                            @endif
+                        </td>
                         <td>{{ $ticket->price }}</td>
                         <td>
                             <div class="call-button">
@@ -54,9 +62,15 @@
                         </td>
                     </tr>
                     @endforeach
+                    @else
+                    <tr>
+                        <td colspan="6"> <center>No Results Found!</center></td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
+        
     </div>
 </div>
 

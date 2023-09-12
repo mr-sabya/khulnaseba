@@ -11,7 +11,7 @@ class GovtOfficeController extends Controller
 {
     public function index()
     {
-        $govt_offices = GovtOffice::orderBy('name', 'ASC')->paginate(12);
+        $govt_offices = GovtOffice::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
 
         return view('frontend.govt-office.index', compact('govt_offices', 'districts'));

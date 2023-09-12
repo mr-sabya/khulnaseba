@@ -122,7 +122,7 @@ class BannerController extends Controller
             'title' => 'required|string|max:255',
             'text' => 'required|string|max:255',
             'link' => 'required',
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
         $input = $request->all();

@@ -15,10 +15,12 @@ class CreateNewspapersTable extends Migration
     {
         Schema::create('newspapers', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('link');
             $table->string('image');
+            $table->boolean('open_website')->default(0);
             $table->timestamps();
         });
     }

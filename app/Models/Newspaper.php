@@ -19,5 +19,6 @@ class Newspaper extends Model
         'slug',
         'link',
         'image',
+        'open_website',
     ];
 }

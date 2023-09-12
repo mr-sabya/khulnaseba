@@ -12,7 +12,7 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        $doctors = Doctor::orderBy('name', 'ASC')->paginate(12);
+        $doctors = Doctor::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
         $types = DoctorType::orderBy('name', 'ASC')->get();
 

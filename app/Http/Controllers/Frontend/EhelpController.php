@@ -11,7 +11,7 @@ class EhelpController extends Controller
     //list
     public function index()
     {
-    	$ehelps = Ehelp::orderBy('name', 'ASC')->get();
+    	$ehelps = Ehelp::orderBy('id', 'DESC')->get();
     	return view('frontend.ehelp.index', compact('ehelps'));
     }
 

@@ -18,12 +18,14 @@
 			@foreach($newspapers as $newspaper)
 			<div class="newspaper">
 				<div class="image">
-					<a href="{{ route('newspaper.show', $newspaper->slug) }}">
-						<img src="{{ url('images/newspaper', $newspaper->image)}}" alt="{{ $newspaper->name }}">
-					</a>
+					<img src="{{ url('images/newspaper', $newspaper->image)}}" alt="{{ $newspaper->name }}">
 				</div>
 				<div class="action">
+					@if($newspaper->open_website == 1)
 					<a href="{{ $newspaper->link }}" target="_blank">Go to Website <i class="fa-solid fa-arrow-right"></i></a>
+					@else
+					<a href="{{ route('newspaper.show',$newspaper->slug) }}">Open Newspaper <i class="fa-solid fa-arrow-right"></i></a>
+					@endif
 				</div>
 			</div>
 			@endforeach

@@ -84,7 +84,7 @@ class BloodDonorController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|max:15|unique:blood_donors',
             'address' => 'required|max:255',

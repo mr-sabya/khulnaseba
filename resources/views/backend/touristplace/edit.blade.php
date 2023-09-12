@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="image">Image (300*300px)</label>
+                            <label for="image">Image (400*300px)</label>
                             <input type="file" class="form-control" name="image" id="image">
                             @if($errors->has('image'))
                             <small style="color: red">{{ $errors->first('image') }}</small>

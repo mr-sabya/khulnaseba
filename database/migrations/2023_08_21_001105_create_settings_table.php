@@ -34,6 +34,7 @@ class CreateSettingsTable extends Migration
             $table->text('help')->nullable();
             $table->text('terms_conditions')->nullable();
             $table->text('privacy_policy')->nullable();
+            $table->text('about_khulna')->nullable();
             
             $table->timestamps();
         });

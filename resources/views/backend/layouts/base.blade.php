@@ -142,6 +142,9 @@
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Address</span></a>
                         <ul aria-expanded="false">
                             <li>
+                                <a href="{{ route('admin.country.index') }}">Country</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('admin.district.index') }}">District</a>
                             </li>
                             <li>
@@ -151,10 +154,19 @@
                     </li>
 
                     <li class="nav-label">Services</li>
+                      
                     <li>
-                        <a href="{{ route('admin.newspaper.index') }}" aria-expanded="false">
-                            <i class="fa-solid fa-newspaper"></i><span class="nav-text">Newspaper</span>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="fa-solid fa-newspaper"></i><span class="nav-text">Newspaper</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.newspaper-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.newspaper.index') }}">Newspaper</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
@@ -289,13 +301,21 @@
                         </a>
                         <ul aria-expanded="false">
                             <li>
-                                <a href="#">Airlines</a>
+                                <a href="{{ route('admin.airline.index') }}">Airlines</a>
                             </li>
                             <li>
-                                <a href="#">Ticket Counters</a>
+                                <a href="{{ route('admin.plane-counter.index')}}">Ticket Counters</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.plane-route.index')}}">Routes</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.plane-ticket.index')}}">Tickets</a>
                             </li>
                         </ul>
                     </li>
+
+                    
 
                     <li>
                         <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false">
@@ -441,10 +461,32 @@
                     </li>
 
                     <li>
+                        <a href="{{ route('admin.volunteer.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-comments"></i>
+                            <span class="nav-text">Volunteers</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.testimonial.index') }}" aria-expanded="false">
                             <i class="fa-solid fa-comments"></i>
                             <span class="nav-text">Testimonial</span>
                         </a>
+                    </li>
+
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-users-between-lines"></i>
+                            <span class="nav-text">Course</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.course-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.course.index') }}">Course</a>
+                            </li>
+                        </ul>
                     </li>
 
 

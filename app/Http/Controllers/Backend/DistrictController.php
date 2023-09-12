@@ -63,7 +63,7 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255|unique:districts',
         ]);
 
@@ -109,11 +109,11 @@ class DistrictController extends Controller
         $district = District::findOrFail(intval($id));
 
         if ($district->name == $request->name) {
-            $validated = $request->validate([
+            $request->validate([
                 'name' => 'required|string|max:255',
             ]);
         } else {
-            $validated = $request->validate([
+            $request->validate([
                 'name' => 'required|string|max:255|unique:districts',
             ]);
         }

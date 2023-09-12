@@ -15,11 +15,11 @@ class CreatePlaneTicketsTable extends Migration
     {
         Schema::create('plane_tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('city_id');
-            $table->string('district_id');
+            $table->integer('route_id');
+            $table->integer('airplane_id');
+            $table->integer('business_price')->default(0);
+            $table->integer('economic_price')->default(0);
+            $table->string('air_time', 50);
             $table->timestamps();
         });
     }

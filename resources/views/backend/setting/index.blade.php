@@ -272,6 +272,16 @@
 												</div>
 											</div>
 
+											<div class="col-lg-12">
+												<div class="form-group">
+													<label for="about_khulna">About Khulna Page</label>
+													<textarea class="form-control details" name="about_khulna" id="about_khulna">{!! $setting->about_khulna !!}</textarea>
+													@if($errors->has('about_khulna'))
+													<small style="color: red">{{ $errors->first('about_khulna') }}</small>
+													@endif
+												</div>
+											</div>
+
 										</div>
 
 										<button type="submit" class="btn btn-primary">Save</button>

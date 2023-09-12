@@ -13,7 +13,7 @@ class BloodDonorController extends Controller
 {
     public function index()
     {
-    	$donors = BloodDonor::orderBy('name', 'ASC')->paginate(12);
+    	$donors = BloodDonor::orderBy('id', 'DESC')->paginate(12);
     	$districts = District::orderBy('name', 'ASC')->get();
     	$bloods = Blood::all();
 

@@ -41,7 +41,7 @@
 
                         <div class="form-group">
 							<label for="food">Food</label>
-							<select class="form-control multiple-select" id="food[]" name="food[]" multiple>
+							<select class="form-control multiple-select" id="food" name="food[]" multiple>
 								@foreach($foods as $food)
 								<option value="{{ $food->id }}" {{ $restaurant->get_food($food->id) ? 'selected' : ''}}>{{ $food->name }}</option>
 								@endforeach

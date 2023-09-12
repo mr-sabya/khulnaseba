@@ -1,18 +1,18 @@
 @extends('backend.layouts.base')
 
-@section('title', 'Add District')
+@section('title', 'Add Country')
 
 @section('content')
 <div class="row">
 	<div class="col-lg-6">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Add District</h4>
+				<h4 class="card-title">Add Country</h4>
 				
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
-					<form action="{{ route('admin.district.store') }}" method="post">
+					<form action="{{ route('admin.country.store') }}" method="post">
 						@csrf
 						<div class="form-group">
 							<label for="name">Name</label>

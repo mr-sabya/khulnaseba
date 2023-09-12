@@ -28,7 +28,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label for="route_id">Select Route</label>
-										<select name="route_id" id="route_id" class="form-control">
+										<select name="route_id" id="route_id" class="form-control" required>
 											<option value="" selected disabled>-- pic a route --</option>
 											@foreach($routes as $route)
 											<option value="{{ $route->id }}">{{ $route->name }}</option>
@@ -39,7 +39,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label for="bus_id">Select Bus</label>
-										<select name="bus_id" id="bus_id" class="form-control">
+										<select name="bus_id" id="bus_id" class="form-control" required>
 											<option value="" selected disabled>-- pic a bus --</option>
 											@foreach($buses as $bus)
 											<option value="{{ $bus->id }}">{{ $bus->name }}</option>
@@ -47,17 +47,7 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label for="type_id">Select Bus type</label>
-										<select name="type_id" id="type_id" class="form-control">
-											<option value="" selected disabled>-- pic a bus type --</option>
-											@foreach($types as $type)
-											<option value="{{ $type->id }}">{{ $type->name }}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
+								
 
 							</div>
 							<button class="btn form-btn custom-btn mt-4"><i class="fa-solid fa-magnifying-glass"></i> Search</button>

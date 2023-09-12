@@ -500,14 +500,26 @@ img {
 .about_us_text p{
     margin-bottom: 15px;
 }
+
+.about .sub-title{
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.about .contact{
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    transition: all .3s linear;
+}
+
+.about .contact:hover{
+    color: var(--primary);
+}
 /* about section end */
 
 
 /* banner section start */
-.banner-section {
-    display: flex;
-    gap: 20px;
-}
 
 .banner-section .banner {
     display: flex;

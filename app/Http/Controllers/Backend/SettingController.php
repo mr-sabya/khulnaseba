@@ -82,6 +82,7 @@ class SettingController extends Controller
         $setting->help = $request->help;
         $setting->terms_conditions = $request->terms_conditions;
         $setting->privacy_policy = $request->privacy_policy;
+        $setting->about_khulna = $request->about_khulna;
 
         $setting->save();
 

@@ -103,11 +103,44 @@ Route::get('blog', [App\Http\Controllers\Frontend\BlogController::class, 'index'
 Route::get('blog/{slug}', [App\Http\Controllers\Frontend\BlogController::class, 'show'])->name('blog.show');
 
 
+//plane service
+Route::get('plane-service', [App\Http\Controllers\Frontend\PlaneController::class, 'index'])->name('plane.index');
+
+//airline
+Route::get('airline/{slug}', [App\Http\Controllers\Frontend\PlaneController::class, 'airline'])->name('plane.airline');
+
+
+//tourist place
+Route::get('tourist-place', [App\Http\Controllers\Frontend\TouristPlaceController::class, 'index'])->name('place.index');
+
+
+//shop
+Route::get('shop', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('shop.index');
+
+//story
+Route::get('story', [App\Http\Controllers\Frontend\StoryController::class, 'index'])->name('story.index');
+Route::get('story/{slug}', [App\Http\Controllers\Frontend\StoryController::class, 'show'])->name('story.show');
+
+
+
 //contact us
 Route::get('contact-us', [App\Http\Controllers\Frontend\PageController::class, 'contact'])->name('contact.index');
 
 //about us
 Route::get('about-us', [App\Http\Controllers\Frontend\PageController::class, 'about'])->name('about.index');
+
+//terms and conditions
+Route::get('terms-conditions', [App\Http\Controllers\Frontend\PageController::class, 'terms'])->name('terms.index');
+
+//Privacy Policy
+Route::get('privacy-policy', [App\Http\Controllers\Frontend\PageController::class, 'privacy'])->name('privacy.index');
+
+//help
+Route::get('help', [App\Http\Controllers\Frontend\PageController::class, 'help'])->name('help.index');
+
+//about khulna
+Route::get('about-khulna', [App\Http\Controllers\Frontend\PageController::class, 'aboutKhulna'])->name('khulna.index');
+
 
 
 
@@ -125,6 +158,7 @@ Route::prefix('admin')->group(function () {
 	Route::get('', [App\Http\Controllers\Backend\HomeController::class, 'index'])->name('dashboard');
 
 	// newspaper
+	Route::resource('newspaper-category', App\Http\Controllers\Backend\NewspaperCategoryController::class, ['names' => 'admin.newspaper-category']);
 	Route::resource('newspaper', App\Http\Controllers\Backend\NewspaperController::class, ['names' => 'admin.newspaper']);
 
 	//address
@@ -248,6 +282,34 @@ Route::prefix('admin')->group(function () {
 
 	// banner
 	Route::resource('banner', App\Http\Controllers\Backend\BannerController::class, ['names' => 'admin.banner']);
+
+
+	// country
+	Route::resource('country', App\Http\Controllers\Backend\CountryController::class, ['names' => 'admin.country']);
+
+
+	// airline
+	Route::resource('airline', App\Http\Controllers\Backend\AirlineController::class, ['names' => 'admin.airline']);
+
+	// plane ticket counter
+	Route::resource('plane-ticket-counter', App\Http\Controllers\Backend\PlaneCounterController::class, ['names' => 'admin.plane-counter']);
+
+	// plane route
+	Route::resource('plane-route', App\Http\Controllers\Backend\PlaneRouteController::class, ['names' => 'admin.plane-route']);
+
+	// plane ticket
+	Route::resource('plane-ticket', App\Http\Controllers\Backend\PlaneTicketController::class, ['names' => 'admin.plane-ticket']);
+
+
+	// volunteer
+	Route::resource('volunteer', App\Http\Controllers\Backend\VolunteerController::class, ['names' => 'admin.volunteer']);
+
+
+	// course category
+	Route::resource('course-category', App\Http\Controllers\Backend\CourseCategoryController::class, ['names' => 'admin.course-category']);
+
+	// course
+	Route::resource('course', App\Http\Controllers\Backend\CourseController::class, ['names' => 'admin.course']);
 	
 	
 	//user

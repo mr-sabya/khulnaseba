@@ -12,7 +12,7 @@ class RestaurantController extends Controller
 {
     public function index()
     {
-        $restaurants = Restaurant::orderBy('name', 'ASC')->paginate(12);
+        $restaurants = Restaurant::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
         $foods = Food::orderBy('name', 'ASC')->get();
         

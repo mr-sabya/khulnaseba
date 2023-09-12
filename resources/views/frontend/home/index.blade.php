@@ -10,9 +10,9 @@
 					<div class="banner-text">
 						<h5>{{ $setting->banner_sub_heading }}</h5>
 						<h1>{!! $setting->banner_heading !!}</h1>
-						<p>{{ $setting->text }}</p>
+						<p>{{ $setting->banner_text }}</p>
 
-						<a href="#" class="btn custom-btn mt-4">About Khulna <i class="fa-solid fa-arrow-right"></i></a>
+						<a href="{{ route('khulna.index') }}" class="btn custom-btn mt-4">About Khulna <i class="fa-solid fa-arrow-right"></i></a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -189,13 +189,15 @@
 				@endif
 			</div>
 			<div class="col-lg-6">
-				<h2 class="heading text-start mb-4">About Us</h2>
+				<p class="sub-title">WHO WE ARE</p>
+				<h2 class="heading text-start mb-4">About Khulna Seba</h2>
 				<div class="about_us_text">
 					{!! $setting->about_us_short_text !!}
 				</div>
 
 
 				<a href="{{ route('about.index') }}" class="btn custom-btn">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+				<a href="{{ route('contact.index') }}" class="ms-4 contact">Contact Us</a>
 			</div>
 		</div>
 	</div>
@@ -206,34 +208,23 @@
 <div class="banners section-padding">
 	<div class="container">
 		<div class="banner-section">
-			<div class="banner cornsilk">
-				<div class="image">
-					<img src="{{ url('assets/frontend/image/bigstock-148711844.jpg') }}" alt="">
-					<div class="shape"></div>
+			<div class="row justify-content-center">
+				@foreach($banners as $banner)
+				<div class="col-lg-6">
+					<div class="banner cornsilk">
+						<div class="image">
+							<img src="{{ url('images/banner', $banner->image) }}" alt="">
+							<div class="shape"></div>
+						</div>
+
+						<div class="banner-text">
+							<h3 class="mb-15">{{ $banner->title }}</h3>
+							<p class="mb-15">{{ $banner->text }}</p>
+							<a href="{{ $banner->link }}" class="site-url">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+						</div>
+					</div>
 				</div>
-
-				<div class="banner-text">
-
-					<h3 class="mb-15">We will provide All types of online support</h3>
-					<p class="mb-15">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque iusto minima
-						asperiores tenetur alias ipsam!</p>
-					<a href="#" class="site-url">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
-				</div>
-			</div>
-
-			<div class="banner cornsilk">
-				<div class="image">
-					<img src="{{ url('assets/frontend/image/bigstock-148711844.jpg') }}" alt="">
-					<div class="shape"></div>
-				</div>
-
-				<div class="banner-text">
-
-					<h3 class="mb-15">We will provide All types of online support</h3>
-					<p class="mb-15">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque iusto minima
-						asperiores tenetur alias ipsam!</p>
-					<a href="#" class="site-url">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</div>
@@ -248,7 +239,7 @@
 		<div class="service-container">
 
 			<div class="service card">
-				<a href="#">
+				<a href="{{ route('plane.index') }}">
 					<div class="icon">
 						<img src="{{ url('assets/frontend/image/icons8-plane-96.png') }}" alt="">
 					</div>
@@ -319,7 +310,7 @@
 						<img src="{{ url('assets/frontend/image/icons8-electricity-64.png') }}" alt="">
 					</div>
 					<div class="text">
-						<h5>Polli Biddut</h5>
+						<h5>Biddut/Electricity</h5>
 					</div>
 				</a>
 			</div>
@@ -424,6 +415,42 @@
 			</div>
 
 
+			<div class="service card">
+				<a href="{{ route('place.index') }}">
+					<div class="icon">
+						<img src="{{ url('assets/frontend/image/icons8-place-64.png') }}" alt="">
+					</div>
+					<div class="text">
+						<h5>Tourist Place</h5>
+					</div>
+				</a>
+			</div>
+
+
+			<div class="service card">
+				<a href="{{ route('shop.index') }}">
+					<div class="icon">
+						<img src="{{ url('assets/frontend/image/icons8-shop-64.png') }}" alt="">
+					</div>
+					<div class="text">
+						<h5>Shops</h5>
+					</div>
+				</a>
+			</div>
+
+
+			<div class="service card">
+				<a href="{{ route('story.index') }}">
+					<div class="icon">
+						<img src="{{ url('assets/frontend/image/icons8-story-100.png') }}" alt="">
+					</div>
+					<div class="text">
+						<h5>Golpo/Adda</h5>
+					</div>
+				</a>
+			</div>
+
+
 
 
 		</div>
@@ -442,26 +469,59 @@
 			<div class="item">
 				<div class="text">
 					<div class="rating">
+
+						@if($feedback->star == 1)
 						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star-half-stroke"></i>
 						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+
+						@elseif($feedback->star == 2)
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+
+						@elseif($feedback->star == 3)
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+
+						@elseif($feedback->star == 4)
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-regular fa-star"></i>
+						@elseif($feedback->star == 5)
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						<i class="fa-solid fa-star"></i>
+						@endif
 					</div>
 					<div class="speech">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat, obcaecati expedita
-							consequuntur ea dolores dolorum ut sapiente unde laudantium at.</p>
+						<p>{{ $feedback->feedback }}</p>
 					</div>
 
 					<div class="shape"></div>
 				</div>
 				<div class="customer">
 					<div class="image">
+						@if($feedback->image == null)
 						<img src="{{ url('assets/frontend/image/person.jpg') }}" alt="">
+						@else
+						<img src="{{ url('images/testimonial', $feedback->image) }}" alt="">
+						@endif
 					</div>
 					<div class="info">
-						<h4>Jhon Doe</h4>
-						<p>Web Developer</p>
+						<h4>{{ $feedback->name }}</h4>
+						<p>{{ $feedback->designation }}, {{ $feedback->company }}</p>
 					</div>
 				</div>
 			</div>

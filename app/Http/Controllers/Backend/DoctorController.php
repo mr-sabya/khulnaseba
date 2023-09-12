@@ -188,7 +188,6 @@ class DoctorController extends Controller
         }
 
         $doctor->update($input);
-        $doctor->hospitals()->sync($request->hospitals);
 
         return redirect()->route('admin.doctor.index')->with('success', 'Doctor has been updated successfully');
     }

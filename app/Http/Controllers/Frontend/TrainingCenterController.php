@@ -11,7 +11,7 @@ class TrainingCenterController extends Controller
 {
     public function index()
     {
-        $training_centers = TrainingCenter::orderBy('name', 'ASC')->paginate(12);
+        $training_centers = TrainingCenter::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
 
         return view('frontend.training-center.index', compact('training_centers', 'districts'));

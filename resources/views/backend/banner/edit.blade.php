@@ -40,7 +40,7 @@
 						</div>
 
 						<div class="form-group text-center">
-							<img src="{{ url('images/banner')}}" id="imgPreview" style="width: 300px;border: 1px solid #eaeaea;">
+							<img src="{{ url('images/banner', $banner->image)}}" id="imgPreview" style="width: 300px;border: 1px solid #eaeaea;">
 						</div>
 
 						<div class="form-group">

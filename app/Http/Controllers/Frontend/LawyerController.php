@@ -11,7 +11,7 @@ class LawyerController extends Controller
 {
     public function index()
     {
-        $lawyers = Lawyer::orderBy('name', 'ASC')->paginate(12);
+        $lawyers = Lawyer::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
 
         return view('frontend.lawyer.index', compact('lawyers', 'districts'));

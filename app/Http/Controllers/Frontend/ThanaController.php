@@ -12,7 +12,7 @@ class ThanaController extends Controller
 {
     public function index()
     {
-        $thanas = Thana::orderBy('name', 'ASC')->paginate(12);
+        $thanas = Thana::orderBy('id', 'DESC')->paginate(12);
         $districts = District::orderBy('name', 'ASC')->get();
 
         return view('frontend.thana.index', compact('thanas', 'districts'));
@@ -21,7 +21,7 @@ class ThanaController extends Controller
     public function show($id)
     {
         $thana = Thana::findOrFail(intval($id));
-        $polices = Police::where('thana_id', $thana->id)->paginate(12);
+        $polices = Police::where('thana_id', $thana->id)->orderBy('id', 'DESC')->paginate(12);
 
         return view('frontend.thana.show', compact('polices'));
     }
