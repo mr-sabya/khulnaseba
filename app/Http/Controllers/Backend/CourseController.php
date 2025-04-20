@@ -31,13 +31,7 @@ class CourseController extends Controller
                 ->addColumn('category', function ($data) {
                     return $data->category['name'];
                 })
-                ->addColumn('course_type', function ($data) {
-                    if ($data->type == 1) {
-                        return "Offline";
-                    } else if ($data->type == 2) {
-                        return "Online";
-                    }
-                })
+                
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.course.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
@@ -76,10 +70,12 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:courses',
             'category_id' => 'required',
+            'duration' => 'required',
+            'lecture' => 'required',
+            'projects' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
             'details' => 'required',
-            'type' => 'required',
-            'short_desc' => 'required|string|max:255',
+            'short_desc' => 'required|string|max:500',
         ]);
 
         $input = $request->all();
@@ -138,20 +134,24 @@ class CourseController extends Controller
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|max:255',
                 'category_id' => 'required',
+                'duration' => 'required',
+                'lecture' => 'required',
+                'projects' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
                 'details' => 'required',
-                'type' => 'required',
-                'short_desc' => 'required|string|max:255',
+                'short_desc' => 'required|string|max:500',
             ]);
         } else {
             $request->validate([
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|max:255|unique:courses',
                 'category_id' => 'required',
+                'duration' => 'required',
+                'lecture' => 'required',
+                'projects' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
                 'details' => 'required',
-                'type' => 'required',
-                'short_desc' => 'required|string|max:255',
+                'short_desc' => 'required|string|max:500',
             ]);
         }
 

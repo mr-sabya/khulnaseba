@@ -17,6 +17,16 @@ use PhpParser\Comment\Doc;
 class DoctorController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -104,8 +114,6 @@ class DoctorController extends Controller
         }
 
         $doctor = Doctor::create($input);
-
-        $doctor->hospitals()->sync($request->hospitals);
 
         return redirect()->route('admin.doctor.index')->with('success', 'New Doctor has been added successfully');
     }

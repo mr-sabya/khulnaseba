@@ -32,6 +32,19 @@
 						</div>
 
 						<div class="form-group">
+							<label for="category_id">Categories</label>
+							<select name="category_id" id="category_id" class="form-control">
+								<option value="" selected disabled>--select category--</option>
+								@foreach($categories as $category)
+								<option value="{{ $category->id }}" {{ $newspaper->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('category_id'))
+							<small style="color: red">{{ $errors->first('category_id') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group">
 							<label for="link">Link</label>
 							<input type="text" class="form-control" name="link" id="link" value="{{ $newspaper->link }}">
 							@if($errors->has('link'))

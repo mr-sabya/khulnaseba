@@ -18,4 +18,9 @@ class StoryCategory extends Model
         'name',
         'slug',
     ];
+
+    public function stories()
+    {
+        return $this->hasMany('App\Models\Story', 'category_id');
+    }
 }

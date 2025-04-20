@@ -11,9 +11,9 @@ $setting = App\Models\Setting::where('id', 1)->first();
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/image/fab.png') }}">
     @if(Route::is('index'))
-    <title> Khulna Seba | Online Service Platform</title>
+    <title> Info Khulna | Online Service Platform</title>
     @else
-    <title>@yield('title') - Khulna Seba | Online Service Platform</title>
+    <title>@yield('title') - Info Khulna | Online Service Platform</title>
     @endif
 
 
@@ -29,6 +29,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/blog.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/custom.css') }}">
 </head>
 
 <body>
@@ -36,25 +37,39 @@ $setting = App\Models\Setting::where('id', 1)->first();
     <div id="menu-overlay" class="menu-overlay"></div>
     <!-- menu section start -->
     <div class="menu">
-        <div class="container">
+        <div class="container-fluid">
             <div class="menu-section">
-                <a href="#" class="menu-btn" id="menu_btn">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </a>
+
 
                 <div class="logo">
+                    <a href="#" class="menu-btn" id="menu_btn">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </a>
                     <a href="{{ route('index')}}">
-                        <img src="{{ url('assets/frontend/image/logo.png') }}" alt="">
+                        <!-- <img src="{{ url('assets/frontend/image/logo.png') }}" alt=""> -->
+                        <h4 class="m-0"><i class="fa-solid fa-info-circle"></i> Info Khulna</h4>
                     </a>
                 </div>
 
                 <div class="main-menu">
-                    <ul class="nav">
-                        <li><a href="{{ route('index') }}" class="{{ Route::is('index') ? 'active' : '' }}">Home</a></li>
-                        <li><a href="{{ route('blog.index') }}" class="{{ Route::is('blog.index') ? 'active' : '' }}">Blog</a></li>
-                        <li><a href="{{ route('contact.index') }}" class="{{ Route::is('contact.index') ? 'active' : '' }}">Contact</a></li>
-                        <li><a href="#">Career</a></li>
-                    </ul>
+                    <div class="action d-flex gap-3 justify-content-between align-items-center me-3">
+
+
+                        <!-- language toggle -->
+                        <div class="language-toggle">
+                            <a href="" class="active">EN</a>
+                            <a href="" class="{{ Session::get('lang') == 'bn' ? 'active' : '' }}">BN</a>
+                        </div>
+
+                        <!-- login -->
+                        @if (Auth::check())
+                        <a href="{{ route('user.dashboard') }}" class="btn btn-primary">Dashboard</a>
+                        @else
+                        <a href="{{ route('login') }}" class="login-btn">Login</a>
+
+                        @endif
+
+                    </div>
 
                     <div class="buttons">
                         <a href="javascript:void(0)" id="btnSwitch" title="Switch to Dark Theme"><i class="fa-solid fa-moon"></i></a>
@@ -75,15 +90,15 @@ $setting = App\Models\Setting::where('id', 1)->first();
 
 
             <div class="shape"></div>
-            <a href="#" class="item">
-                <i class="fa-solid fa-users-gear"></i> <span>Services</span>
+            <a href="{{ route('volunteer.index') }}" class="item">
+                <i class="fa-solid fa-users"></i> <span>Volunteer</span>
             </a>
 
-            <a href="#" class="item">
+            <a href="{{ route('index')}}" class="item">
                 <i class="fa-solid fa-house"> </i><span>Home</span>
             </a>
 
-            <a href="#" class="item">
+            <a href="{{ route('contact.index')}}" class="item">
                 <i class="fa-solid fa-address-book"></i> <span>Contact</span>
             </a>
 
@@ -93,33 +108,73 @@ $setting = App\Models\Setting::where('id', 1)->first();
     <!-- mobile menu end -->
 
 
+    <div class="main-content">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-area">
 
-    @yield('content')
+                <div class="sp-menu">
+                    <ul class="nav">
+                        <li><a href="{{ route('index') }}" class="{{ Route::is('index') ? 'active' : '' }}"> Publish Ad</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="{{ Route::is('blog.index') ? 'active' : '' }}">Become Volunteer</a></li>
+                    </ul>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="{{ route('index') }}" class="{{ Route::is('index') ? 'active' : '' }}"><i class="fa-solid fa-home"></i> Home</a>
+                    </li>
 
+                    <li class="nav-item"><a href="{{ route('course.index') }}" class="{{ Route::is('course.index') ? 'active' : '' }}">Rent a Car</a></li>
 
-    <footer>
-        <div class="footer">
-            <div class="widget">
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            </div>
+                    <li class="nav-item"><a href="{{ route('volunteer.index') }}" class="{{ Route::is('volunteer.index') ? 'active' : '' }}">To-Let</a></li>
 
-            <div class="widget">
-                <ul>
-                    <li><a href="{{ route('contact.index')}}">Contact us</a></li>
-                    <li><a href="{{ route('about.index') }}">About Us</a></li>
-                    <li><a href="{{ route('privacy.index') }}">Privacy Policy</a></li>
-                    <li><a href="{{ route('terms.index') }}">Terms & Conditions</a></li>
-                    <li><a href="#">Career</a></li>
+                    <li class="nav-item"><a href="{{ route('blog.index') }}" class="{{ Route::is('blog.index') ? 'active' : '' }}">Super Shop</a></li>
+
+                    <li class="nav-item"><a href="{{ route('blog.index') }}" class="{{ Route::is('blog.index') ? 'active' : '' }}">Blog</a></li>
+
+                    <li class="nav-item"><a href="{{ route('contact.index') }}" class="{{ Route::is('contact.index') ? 'active' : '' }}">Contact</a></li>
+                    <li class="nav-item"><a href="#">Career</a></li>
                 </ul>
+
+
             </div>
-
-            <p>{{ $setting->copyright_text }} || Developed By: <a class="text-white" target="_blank" href="https://sabyaroy.info/">Sabya Roy</a></p>
-
         </div>
-    </footer>
+
+        <!-- content area -->
+        <div class="content-area" id="content-area">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @yield('content')
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <div class="widget">
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+
+                    <div class="widget">
+                        <ul>
+                            <li><a href="{{ route('contact.index')}}">Contact us</a></li>
+                            <li><a href="{{ route('about.index') }}">About Us</a></li>
+                            <li><a href="{{ route('privacy.index') }}">Privacy Policy</a></li>
+                            <li><a href="{{ route('terms.index') }}">Terms & Conditions</a></li>
+                            <li><a href="#">Career</a></li>
+                        </ul>
+                    </div>
+
+                    <p>{{ $setting->copyright_text }} || Developed By: <a class="text-white" target="_blank" href="https://sabyaroy.info/">Sabya Roy</a></p>
+
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+
 
 
 
@@ -178,9 +233,6 @@ $setting = App\Models\Setting::where('id', 1)->first();
 
 
         })
-
-
-        
     </script>
 
     @yield('scripts')

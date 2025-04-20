@@ -9,6 +9,7 @@ use App\Models\Hospital;
 use App\Models\District;
 use App\Models\City;
 use App\Models\Doctor;
+use App\Models\HospitalCategory;
 use Illuminate\Support\Facades\Auth;
 
 class HospitalController extends Controller
@@ -32,6 +33,11 @@ class HospitalController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(Hospital::latest()->get())
+                ->addColumn('category', function ($data) {
+                    if ($data->category) {
+                        return $data->category['name'];
+                    }
+                })
                 ->addColumn('district', function ($data) {
                     if ($data->district) {
                         return $data->district['name'];
@@ -64,10 +70,11 @@ class HospitalController extends Controller
      */
     public function create()
     {
+        $categories = HospitalCategory::all();
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.hospital.create', compact('districts', 'cities'));
+        return view('backend.hospital.create', compact('categories', 'districts', 'cities'));
     }
 
     /**
@@ -80,6 +87,7 @@ class HospitalController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'category_id' => 'required',
             'phone' => 'required|max:15|unique:hospitals',
             'address' => 'required|max:255',
             'district_id' => 'required',
@@ -112,11 +120,12 @@ class HospitalController extends Controller
      */
     public function edit($id)
     {
+        $categories = HospitalCategory::all();
         $hospital = Hospital::findOrFail(intval($id));
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.hospital.edit', compact('hospital', 'districts', 'cities'));
+        return view('backend.hospital.edit', compact('categories', 'hospital', 'districts', 'cities'));
     }
 
     /**
@@ -133,6 +142,7 @@ class HospitalController extends Controller
         if ($hospital->phone == $request->phone) {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'category_id' => 'required',
                 'phone' => 'required|max:15',
                 'address' => 'required|max:255',
                 'district_id' => 'required',
@@ -141,6 +151,7 @@ class HospitalController extends Controller
         } else {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'category_id' => 'required',
                 'phone' => 'required|max:15|unique:hospitals',
                 'address' => 'required|max:255',
                 'district_id' => 'required',

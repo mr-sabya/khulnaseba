@@ -20,6 +20,7 @@
 								<th>Address</th>
 								<th>Phone</th>
 								<th>Type</th>
+								<th>District</th>
 								<th>Image</th>
 								<th>Action</th>
 							</tr>
@@ -32,6 +33,7 @@
 								<th>Address</th>
 								<th>Phone</th>
 								<th>Type</th>
+								<th>District</th>
 								<th>Image</th>
 								<th>Action</th>
 							</tr>
@@ -76,6 +78,10 @@
 		{
 			data: 'type',
 			name: 'type'
+		},
+		{
+			data: 'district',
+			name: 'district'
 		},
 		{
 			data: 'image',

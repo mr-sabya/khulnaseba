@@ -16,4 +16,18 @@ class LibraryController extends Controller
 
         return view('frontend.library.index', compact('libraries', 'districts'));
     }
+
+
+    public function search(Request $request)
+    {
+        if($request->district_id && $request->city_id){
+            $libraries = Library::where()->orderBy('id', 'DESC')->paginate(12);
+        }else if($request->district_id){
+            $libraries = Library::orderBy('id', 'DESC')->paginate(12);
+        }else{
+            $libraries = Library::orderBy('id', 'DESC')->paginate(12);
+        }
+
+        return view('frontend.library.result', compact('libraries'));
+    }
 }

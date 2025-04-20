@@ -19,6 +19,7 @@ class CreateHospitalsTable extends Migration
             $table->string('phone')->unique();
             $table->string('address');
             $table->text('details')->nullable();
+            $table->integer('category_id');
             $table->integer('district_id');
             $table->integer('city_id');
             $table->timestamps();

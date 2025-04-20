@@ -20,10 +20,16 @@ class TouristPlace extends Model
         'phone',
         'type_id',
         'image',
+        'district_id',
     ];
 
     public function placeType()
     {
     	return $this->belongsTo('App\Models\PlaceType', 'type_id');
+    }
+
+    public function district()
+    {
+    	return $this->belongsTo('App\Models\District', 'district_id');
     }
 }

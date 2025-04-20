@@ -18,6 +18,7 @@ class CreateEducationalInstitutesTable extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('address');
+            $table->integer('category_id');
             $table->integer('district_id');
             $table->integer('city_id');
             $table->timestamps();

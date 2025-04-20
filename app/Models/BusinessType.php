@@ -17,4 +17,10 @@ class BusinessType extends Model
     protected $fillable = [
         'name',
     ];
+
+
+    public function ideas()
+    {
+        return $this->hasMany('App\Models\BusinessIdea', 'type_id');
+    }
 }

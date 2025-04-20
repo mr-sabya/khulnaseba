@@ -65,7 +65,7 @@
 
 						<div class="form-group">
                             <label for="tags">Tags</label>
-                            <textarea class="form-control" name="tags" id="tags"></textarea>
+                            <input type="text" class="form-control" name="tags" id="tgas" value="{{ old('tags') }}">
                             @if($errors->has('tags'))
                             <small style="color: red">{{ $errors->first('tags') }}</small>
                             @endif
@@ -73,7 +73,7 @@
 
                         <div class="form-group">
 							<label for="meta_description">Meta Description</label>
-							<input type="text" class="form-control" name="meta_description" id="meta_description" value="{{ old('meta_description') }}">
+							<textarea class="form-control" name="meta_description" id="meta_description">{{ old('meta_description') }}</textarea>
 							@if($errors->has('meta_description'))
 							<small style="color: red">{{ $errors->first('meta_description') }}</small>
 							@endif

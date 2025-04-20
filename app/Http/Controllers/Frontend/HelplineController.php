@@ -11,7 +11,7 @@ class HelplineController extends Controller
     //list
     public function index()
     {
-    	$helplines = Helpline::orderBy('id', 'DESC')->paginate(12);
+    	$helplines = Helpline::orderBy('id', 'DESC')->get();
     	return view('frontend.helpline.index', compact('helplines'));
     }
 }

@@ -17,6 +17,7 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
+								<th>Category</th>
 								<th>Phone</th>
 								<th>Address</th>
 								<th>District</th>
@@ -28,6 +29,7 @@
 							<tr>
 								<th>#</th>
 								<th>Name</th>
+								<th>Category</th>
 								<th>Phone</th>
 								<th>Address</th>
 								<th>District</th>
@@ -62,6 +64,10 @@
 		{
 			data: 'name',
 			name: 'name'
+		},
+		{
+			data: 'category',
+			name: 'category'
 		},
 		{
 			data: 'phone',

@@ -18,11 +18,14 @@ class CreateCoursesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('category_id');
-            $table->integer('type');
+            $table->string('duration', 20);
+            $table->integer('lecture');
+            $table->integer('projects');
             $table->string('image');
             $table->text('details');
-            $table->string('short_desc');
-            $table->integer('price')->nullable();
+            $table->string('short_desc', 500);
+            $table->integer('price')->default(0);
+            $table->boolean('is_free')->default(0);
             $table->timestamps();
         });
     }

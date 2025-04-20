@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
         $setting = Setting::findOrFail(intval(1));

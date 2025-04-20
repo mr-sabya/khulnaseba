@@ -14,8 +14,14 @@
 <!-- newspaper section start -->
 <div class="newspaper-section section-padding">
 	<div class="container">
-		<div class="newspaper-conatiner">
-			@foreach($newspapers as $newspaper)
+		@foreach($categories as $category)
+		<div class="bg-primary text-white text-center p-2 mb-3">
+			<h4 class="m-0">{{ $category->name }}</h4>
+		</div>
+		<div class="newspaper-conatiner mb-5">
+
+
+			@foreach($category->newspapers as $newspaper)
 			<div class="newspaper">
 				<div class="image">
 					<img src="{{ url('images/newspaper', $newspaper->image)}}" alt="{{ $newspaper->name }}">
@@ -30,6 +36,7 @@
 			</div>
 			@endforeach
 		</div>
+		@endforeach
 	</div>
 </div>
 <!-- newspaper section end -->

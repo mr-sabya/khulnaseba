@@ -51,6 +51,21 @@
                             @endif
                         </div>
 
+
+                        <div class="form-group">
+                            <label for="district_id">District</label>
+                            <select class="form-control single-select" id="district_id" name="district_id">
+                                <option value="" selected disabled>--select district--</option>
+                                @foreach($districts as $district)
+                                <option value="{{ $district->id }}" {{ $touristplace->district_id = $district->id ? 'selected' : '' }}>{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('district_id'))
+                            <small style="color: red">{{ $errors->first('district_id') }}</small>
+                            @endif
+                        </div>
+
+
                         <div class="form-group text-center">
                             @if($touristplace->image == null)
                             <img src="{{ url('assets/backend/images/default_image.png')}}" id="imgPreview" style="width: 300px;border: 1px solid #eaeaea;">

@@ -16,6 +16,7 @@ class Thana extends Model
      */
     protected $fillable = [
         'name',
+        'category_id',
         'phone',
         'address',
         'district_id',
@@ -24,5 +25,10 @@ class Thana extends Model
     public function district()
     {
     	return $this->belongsTo('App\Models\District', 'district_id');
+    }
+
+    public function category()
+    {
+    	return $this->belongsTo('App\Models\ThanaCategory', 'category_id');
     }
 }

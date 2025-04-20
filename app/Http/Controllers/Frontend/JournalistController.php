@@ -16,4 +16,35 @@ class JournalistController extends Controller
 
         return view('frontend.journalist.index', compact('journalists', 'districts'));
     }
+
+    public function search(Request $request)
+    {
+        if($request->district_id && $request->city_id && $request->search){
+            $journalists = Journalist::where('city_id', $request->city_id)
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }else if($request->district_id && $request->city_id){
+            $journalists = Journalist::where('city_id', $request->city_id)
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }else if($request->district_id && $request->search){
+            $journalists = Journalist::where('district_id', $request->district_id)
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }else if($request->search){
+            $journalists = Journalist::where('name', 'like', '%' . $request->search . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }else if($request->district_id){
+            $journalists = Journalist::where('district_id', $request->district_id)
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
+        }else{
+            $journalists = Journalist::orderBy('id', 'DESC')->paginate(12);
+        }
+
+    	return view('frontend.journalist.result', compact('journalists'));
+    }
 }

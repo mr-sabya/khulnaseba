@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //models
 use App\Models\Newspaper;
+use App\Models\NewspaperCategory;
 
 class NewspaperController extends Controller
 {
@@ -14,7 +15,8 @@ class NewspaperController extends Controller
     public function index()
     {
     	$newspapers = Newspaper::orderBy('id', 'DESC')->get();
-    	return view('frontend.newspaper.index', compact('newspapers'));
+        $categories = NewspaperCategory::all();
+    	return view('frontend.newspaper.index', compact('newspapers', 'categories'));
     }
 
     //show

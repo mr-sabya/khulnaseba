@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h4 class="card-title">Add Educational Institute</h4>
-				
+
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
@@ -30,11 +30,24 @@
 							@endif
 						</div>
 
-                        <div class="form-group">
+						<div class="form-group">
 							<label for="address">Address</label>
 							<input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}">
 							@if($errors->has('address'))
 							<small style="color: red">{{ $errors->first('address') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group">
+							<label for="category_id">Categories</label>
+							<select class="form-control single-select" id="category_id" name="category_id">
+								<option value="" selected disabled>--select category--</option>
+								@foreach($categories as $category)
+								<option value="{{ $category->id }}">{{ $category->name }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('category_id'))
+							<small style="color: red">{{ $errors->first('category_id') }}</small>
 							@endif
 						</div>
 

@@ -46,6 +46,15 @@ class VolunteerController extends Controller
                         return $data->city['name'];
                     }
                 })
+                ->addColumn('status', function ($data) {
+                    if ($data->is_active == 1) {
+                        $status = '<span style="color:green">Approved</span>';
+                    }else{
+                        $status = '<span style="color:red">Pending</span>';
+                    }
+
+                    return $status;
+                })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.volunteer.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
@@ -54,7 +63,7 @@ class VolunteerController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['district', 'city', 'blood', 'action'])
+                ->rawColumns(['district', 'city', 'blood', 'status', 'action'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -106,6 +115,7 @@ class VolunteerController extends Controller
             $file->move('images/volunteer/', $filename);
             $input['image'] = $filename;
         }
+        $input['is_active'] = 1;
 
         Volunteer::create($input);
 

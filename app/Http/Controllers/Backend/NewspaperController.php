@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 // models
 use App\Models\Newspaper;
+use App\Models\NewspaperCategory;
 use Illuminate\Support\Facades\Auth;
 
 class NewspaperController extends Controller
@@ -30,6 +31,11 @@ class NewspaperController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(Newspaper::latest()->get())
+                ->addColumn('category', function ($data) {
+                    if ($data->category) {
+                        return $data->category['name'];
+                    }
+                })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.newspaper.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
                     $button .= '&nbsp;&nbsp;';
@@ -53,7 +59,8 @@ class NewspaperController extends Controller
      */
     public function create()
     {
-        return view('backend.newspaper.create');
+        $categories = NewspaperCategory::all();
+        return view('backend.newspaper.create', compact('categories'));
     }
 
     /**
@@ -66,6 +73,7 @@ class NewspaperController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'category_id' => 'required',
             'slug' => 'required|string|max:255|unique:newspapers',
             'link' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
@@ -106,8 +114,9 @@ class NewspaperController extends Controller
      */
     public function edit($id)
     {
+        $categories = NewspaperCategory::all();
         $newspaper = Newspaper::findOrFail(intval($id));
-        return view('backend.newspaper.edit', compact('newspaper'));
+        return view('backend.newspaper.edit', compact('categories', 'newspaper'));
     }
 
     /**
@@ -125,6 +134,7 @@ class NewspaperController extends Controller
         if ($newspaper->slug == $request->slug) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
+                'category_id' => 'required',
                 'slug' => 'required|string|max:255',
                 'link' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
@@ -132,6 +142,7 @@ class NewspaperController extends Controller
         } else {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
+                'category_id' => 'required',
                 'slug' => 'required|string|max:255|unique:newspapers',
                 'link' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',

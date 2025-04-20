@@ -18,18 +18,22 @@
 
 		<div class="row justify-content-center mb-5">
 			<div class="col-lg-10">
+				
 				<div class="filter">
-					<form action="">
+					<form action="{{ route('blood-donor.search')}}" method="post">
+						@csrf
+						@method('GET')
 						<div class="row g-2">
 							<div class="col-lg-2 d-flex align-items-center">
-								<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#locationModal">
+								<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#locationModal" class="btn btn-primary w-100">
 									<i class="fa-solid fa-location-dot"></i>
 									<span id="location">All Bangladesh</span>
 								</a>
+								<input type="hidden" name="city_id" id="city_id">
 							</div>
 							<div class="col-lg-2">
-								<select name="" id="" class="form-control">
-									<option value="" selected disabled>Seclect Blood Group</option>
+								<select name="blood_id" id="blood_id" class="form-control">
+									<option value="">All Blood Groups</option>
 									@foreach($bloods as $blood)
 									<option value="{{ $blood->id }}">{{ $blood->name }}</option>
 									@endforeach
@@ -53,6 +57,7 @@
 
 
 		<div class="row g-3">
+			@if($donors->count()>0)
 			@foreach($donors as $donor)
 			<div class="col-lg-3">
 				<div class="card text-center h-100">
@@ -60,7 +65,7 @@
 						<h5>{{ $donor->name }}</h5>
 						<p>Blood Group : <span class="badge bg-success">{{ $donor->bloodGroup['name'] }}</span></p>
 					</div>
-					<div class="phone">
+					<div class="phone" style="display: none">
 						<p>{{ $donor->phone }}</p>
 						<p>{{ $donor->address }}</p>
 						<p>
@@ -73,12 +78,19 @@
 						</p>
 					</div>
 					<hr>
-					<div class="call-button">
+					<div class="call-button" style="display: none">
 						<a class="call-btn" href="tel:{{ $donor->phone }}"><i class="fa-solid fa-phone"></i> Call</a>
 					</div>
 				</div>
 			</div>
 			@endforeach
+			@else
+			<div class="col-lg-12">
+				<div class="text-center">
+					<h4>No Dobors Found!</h4>
+				</div>
+			</div>
+			@endif
 		</div>
 
 		<div class="mt-30">
@@ -152,8 +164,10 @@
 
 	$(document).on('click', '.city', function() {
 		var name = $(this).attr('data-value');
+		var id = $(this).attr('data-id');
 
 		$('#location').html(name);
+		$('#city_id').val(id);
 
 		$('#locationModal').modal('hide');
 	});

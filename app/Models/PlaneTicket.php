@@ -24,7 +24,7 @@ class PlaneTicket extends Model
 
     public function route()
     {
-        return $this->belongsTo('App\Models\PlaneCounter', 'route_id');
+        return $this->belongsTo('App\Models\PlaneRoute', 'route_id');
     }
 
     public function airline()

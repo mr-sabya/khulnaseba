@@ -6,11 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\District;
 use App\Models\EducationalInstitute;
+use App\Models\EducationCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EducationalInstituteController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +31,11 @@ class EducationalInstituteController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(EducationalInstitute::latest()->get())
+                ->addColumn('category', function ($data) {
+                    if ($data->category) {
+                        return $data->category['name'];
+                    }
+                })
                 ->addColumn('district', function ($data) {
                     if ($data->district) {
                         return $data->district['name'];
@@ -52,10 +68,11 @@ class EducationalInstituteController extends Controller
      */
     public function create()
     {
+        $categories = EducationCategory::all();
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.educationalinstitute.create', compact('districts', 'cities'));
+        return view('backend.educationalinstitute.create', compact('categories', 'districts', 'cities'));
     }
 
     /**
@@ -70,6 +87,7 @@ class EducationalInstituteController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|max:15|unique:educational_institutes',
             'address' => 'required|string|max:255',
+            'category_id' => 'required',
             'district_id' => 'required',
             'city_id' => 'required',
         ]);
@@ -100,11 +118,12 @@ class EducationalInstituteController extends Controller
      */
     public function edit($id)
     {
+        $categories = EducationCategory::all();
         $educationalinstitute = EducationalInstitute::findOrFail(intval($id));
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.educationalinstitute.edit', compact('educationalinstitute', 'districts', 'cities'));
+        return view('backend.educationalinstitute.edit', compact('educationalinstitute', 'categories', 'districts', 'cities'));
     }
 
     /**
@@ -123,6 +142,7 @@ class EducationalInstituteController extends Controller
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15',
                 'address' => 'required|string|max:255',
+                'category_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
@@ -131,6 +151,7 @@ class EducationalInstituteController extends Controller
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15|unique:educational_institutes',
                 'address' => 'required|string|max:255',
+                'category_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);

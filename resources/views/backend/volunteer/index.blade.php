@@ -22,6 +22,7 @@
 								<th>Blood Group</th>
 								<th>City</th>
 								<th>District</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -35,6 +36,7 @@
 								<th>Blood Group</th>
 								<th>City</th>
 								<th>District</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>
@@ -90,6 +92,10 @@
 		{
 			data: 'district',
 			name: 'district'
+		},
+		{
+			data: 'status',
+			name: 'status'
 		},
 		{
 			data: 'action',

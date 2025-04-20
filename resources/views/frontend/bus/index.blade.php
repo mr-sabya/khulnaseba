@@ -29,7 +29,7 @@
 									<div class="form-group">
 										<label for="route_id">Select Route</label>
 										<select name="route_id" id="route_id" class="form-control" required>
-											<option value="" selected disabled>-- pic a route --</option>
+											<option value="">-- All route --</option>
 											@foreach($routes as $route)
 											<option value="{{ $route->id }}">{{ $route->name }}</option>
 											@endforeach
@@ -41,9 +41,7 @@
 										<label for="bus_id">Select Bus</label>
 										<select name="bus_id" id="bus_id" class="form-control" required>
 											<option value="" selected disabled>-- pic a bus --</option>
-											@foreach($buses as $bus)
-											<option value="{{ $bus->id }}">{{ $bus->name }}</option>
-											@endforeach
+											
 										</select>
 									</div>
 								</div>
@@ -95,4 +93,21 @@
 </div>
 <!-- newspaper section end -->
 
+@endsection
+
+@section('scripts')
+<script>
+	$('#route_id').change(function() {
+	    $('#bus_id').html('');
+		var id = $(this).val();
+		$.ajax({
+			url: "/get-bus/" + id,
+			dataType: "json",
+			success: function(data) {
+			    $('#bus_id').append('<option value="" selected disabled>-- Select Bus -- </option>');
+				$('#bus_id').append(data.data);
+			}
+		})
+	})
+</script>
 @endsection

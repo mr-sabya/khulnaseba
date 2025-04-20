@@ -15,10 +15,16 @@ class Newspaper extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'link',
         'image',
         'open_website',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\NewspaperCategory', 'category_id');
+    }
 }

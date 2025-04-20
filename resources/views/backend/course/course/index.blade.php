@@ -19,7 +19,6 @@
 								<th>Image</th>
 								<th>Name</th>
 								<th>Category</th>
-								<th>Type</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -30,7 +29,6 @@
 								<th>Image</th>
 								<th>Name</th>
 								<th>Category</th>
-								<th>Type</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>
@@ -73,10 +71,6 @@
 		{
 			data: 'category',
 			name: 'category'
-		},
-		{
-			data: 'course_type',
-			name: 'course_type'
 		},
 		{
 			data: 'action',

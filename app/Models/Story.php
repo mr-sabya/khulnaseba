@@ -20,6 +20,7 @@ class Story extends Model
         'details',
         'category_id',
         'writer',
+        'image',
         'reference',
     ];
 

@@ -19,6 +19,7 @@ class Hospital extends Model
         'phone',
         'address',
         'details',
+        'category_id',
         'district_id',
         'city_id',
     ];
@@ -31,6 +32,11 @@ class Hospital extends Model
     public function city()
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
+    }
+
+    public function category()
+    {
+    	return $this->belongsTo('App\Models\HospitalCategory', 'category_id');
     }
 
 

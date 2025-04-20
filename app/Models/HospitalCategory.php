@@ -19,8 +19,8 @@ class HospitalCategory extends Model
         'slug',
     ];
 
-    public function newspapers()
+    public function hospitals()
     {
-    	return $this->hasMany('App\Models\Newspaper', 'category_id');
+    	return $this->hasMany('App\Models\Hospital', 'category_id');
     }
 }

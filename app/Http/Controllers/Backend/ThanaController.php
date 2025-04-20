@@ -5,11 +5,23 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Thana;
 use App\Models\District;
+use App\Models\ThanaCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ThanaController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +31,11 @@ class ThanaController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(Thana::latest()->get())
+                ->addColumn('category', function ($data) {
+                    if ($data->category) {
+                        return $data->category['name'];
+                    }
+                })
                 ->addColumn('district', function ($data) {
                     if ($data->district) {
                         return $data->district['name'];
@@ -46,9 +63,10 @@ class ThanaController extends Controller
      */
     public function create()
     {
+        $categories = ThanaCategory::all();
         $districts = District::orderBy('name', 'ASC')->get();
 
-        return view('backend.thana.create', compact('districts'));
+        return view('backend.thana.create', compact('districts', 'categories'));
     }
 
     /**
@@ -63,6 +81,7 @@ class ThanaController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:thanas',
             'address' => 'required|string|max:255',
+            'category_id' => 'required',
             'district_id' => 'required',
         ]);
 
@@ -92,10 +111,11 @@ class ThanaController extends Controller
      */
     public function edit($id)
     {
+        $categories = ThanaCategory::all();
         $thana = Thana::findOrFail(intval($id));
         $districts = District::orderBy('name', 'ASC')->get();
 
-        return view('backend.thana.edit', compact('thana', 'districts'));
+        return view('backend.thana.edit', compact('thana', 'districts', 'categories'));
     }
 
     /**
@@ -114,6 +134,7 @@ class ThanaController extends Controller
                 'name' => 'required|string|max:255',
                 'phone' => 'required|string|max:15',
                 'address' => 'required|string|max:255',
+                'category_id' => 'required',
                 'district_id' => 'required',
             ]);
         } else {
@@ -121,6 +142,7 @@ class ThanaController extends Controller
                 'name' => 'required|string|max:255',
                 'phone' => 'required|string|max:15|unique:shops',
                 'address' => 'required|string|max:255',
+                'category_id' => 'required',
                 'district_id' => 'required',
             ]);
         }

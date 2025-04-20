@@ -3,10 +3,22 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\HospitalCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HospitalCategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,21 @@ class HospitalCategoryController extends Controller
      */
     public function index()
     {
-        //
+        if (request()->ajax()) {
+            return datatables()->of(HospitalCategory::latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('admin.hospital-category.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
+                    $button .= '&nbsp;&nbsp;';
+                    if (Auth::user()->is_admin == 1) {
+                        $button .= '<button type="button" name="delete" data-route="' . route('admin.hospital-category.destroy', $data->id) . '" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> Delete</button>';
+                    }
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.hospital.category.index');
     }
 
     /**
@@ -24,7 +50,7 @@ class HospitalCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.hospital.category.create');
     }
 
     /**
@@ -35,7 +61,16 @@ class HospitalCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:hospital_categories',
+        ]);
+
+        $input = $request->all();
+
+        HospitalCategory::create($input);
+
+        return redirect()->route('admin.hospital-category.index')->with('success', 'New Hospital Category Type has been added successfully');
     }
 
     /**
@@ -57,7 +92,8 @@ class HospitalCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = HospitalCategory::findOrFail(intval($id));
+        return view('backend.hospital.category.edit', compact('category'));
     }
 
     /**
@@ -69,7 +105,26 @@ class HospitalCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = HospitalCategory::findOrFail(intval($id));
+
+        if ($category->slug == $request->slug) {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:hospital_categories',
+            ]);
+        }
+
+
+        $input = $request->all();
+
+        $category->update($input);
+
+        return redirect()->route('admin.hospital-category.index')->with('success', 'Hospital Category Type has been updated successfully');
     }
 
     /**
@@ -80,6 +135,8 @@ class HospitalCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = HospitalCategory::findOrFail(intval($id));
+        $category->delete();
+        return redirect()->route('admin.hospital-category.index')->with('success', 'Hospital Category Type has been deleted successfully');
     }
 }

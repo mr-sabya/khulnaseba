@@ -36,7 +36,7 @@
                                         <span class="fa fa-phone"></span>
                                     </div>
                                     <div class="text">
-                                        <p><span>Phone:</span> <a href="tel://1234567920">{{ $setting->phone }}</a></p>
+                                        <p><span>Phone:</span></br> <a href="tel://1234567920">+1234567920</a></p>
                                     </div>
                                 </div>
                             </div>

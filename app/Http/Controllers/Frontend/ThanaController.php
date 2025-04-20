@@ -25,4 +25,26 @@ class ThanaController extends Controller
 
         return view('frontend.thana.show', compact('polices'));
     }
+
+    public function search(Request $request)
+    {
+        if ($request->district_id && $request->search) {
+            $thanas = Thana::where('district_id', $request->district_id)
+                ->where('name', 'like', '%' . $request->search . '%')
+                ->orderBy('id', 'DESC')
+                ->paginate(12);
+        } else if ($request->district_id) {
+            $thanas = Thana::where('district_id', $request->district_id)
+                ->orderBy('id', 'DESC')
+                ->paginate(12);
+        } else if ($request->search) {
+            $thanas = Thana::where('name', 'like', '%' . $request->search . '%')
+                ->orderBy('id', 'DESC')
+                ->paginate(12);
+        } else {
+            $thanas = Thana::orderBy('id', 'DESC')->paginate(12);
+        }
+
+        return view('frontend.thana.result', compact('thanas'));
+    }
 }

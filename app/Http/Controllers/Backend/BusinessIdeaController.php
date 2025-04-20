@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class BusinessIdeaController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -62,7 +72,7 @@ class BusinessIdeaController extends Controller
             'slug' => 'required|string|max:255|unique:business_ideas',
             'type_id' => 'required',
             'details' => 'required',
-            'short_description' => 'required|255',
+            'short_description' => 'required|max:255',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
@@ -123,7 +133,7 @@ class BusinessIdeaController extends Controller
                 'slug' => 'required|string|max:255',
                 'type_id' => 'required',
                 'details' => 'required',
-                'short_description' => 'required|255',
+                'short_description' => 'required|max:255',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         } else {
@@ -132,7 +142,7 @@ class BusinessIdeaController extends Controller
                 'slug' => 'required|string|max:255|unique:business_ideas',
                 'type_id' => 'required',
                 'details' => 'required',
-                'short_description' => 'required|255',
+                'short_description' => 'required|max:255',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }

@@ -16,11 +16,11 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Name</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>City</th>
-								<th>District</th>
+								<th>Route</th>
+								<th>Airline</th>
+								<th>Business Class Price</th>
+								<th>Economic Class Price</th>
+								<th>Air Time</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -28,11 +28,11 @@
 						<tfoot>
 							<tr>
 								<th>#</th>
-								<th>Name</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>City</th>
-								<th>District</th>
+								<th>Route</th>
+								<th>Airline</th>
+								<th>Business Class Price</th>
+								<th>Economic Class Price</th>
+								<th>Air Time</th>
 								<th>Action</th>
 							</tr>
 						</tfoot>

@@ -19,6 +19,7 @@
 								<th>Name</th>
 								<th>Phone</th>
 								<th>Address</th>
+								<th>Category</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -31,6 +32,7 @@
 								<th>Name</th>
 								<th>Phone</th>
 								<th>Address</th>
+								<th>Category</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -72,6 +74,10 @@
 		{
 			data: 'address',
 			name: 'address'
+		},
+		{
+			data: 'category',
+			name: 'category'
 		},
 		{
 			data: 'city',

@@ -1,0 +1,113 @@
+.menu .language-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    background: #fff;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+
+.menu .language-toggle a {
+    color: #000;
+    font-size: 14px;
+}
+
+.menu .language-toggle a.active {
+    color: var(--primary);
+}
+
+.main-content {
+    display: flex;
+    padding-top: 56px;
+}
+
+#sidebar {
+    transition: all 0.3s ease;
+}
+
+#content-area {
+    transition: all 0.3s ease;
+}
+
+/* Optional: Set sidebar width and content margin */
+#sidebar:not(.d-none) {
+    width: 250px;
+    /* or whatever width you prefer */
+}
+
+#content-area.ms-0 {
+    margin-left: 0 !important;
+}
+
+#content-area:not(.ms-0) {
+    margin-left: 250px;
+    /* match sidebar width */
+}
+
+.main-content .sidebar {
+    width: 250px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    height: 100vh;
+    position: fixed;
+    padding-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.sidebar .sp-menu {
+    border-bottom: #cfcfcf 1px solid;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar .sp-menu .nav li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+    padding: 2px 10px;
+    width: 100%;
+    display: block;
+}
+
+.sidebar .sp-menu .nav li a:hover {
+    background: #e2e6ea;
+}
+
+
+
+/* sidebaar logo */
+
+.main-content .sidebar .nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .nav .nav-item {
+    /* margin-bottom: 10px; */
+}
+
+.sidebar .nav .nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+    padding: 10px;
+    width: 100%;
+    display: block;
+}
+
+.sidebar .nav .nav-item a:hover {
+    background: #e2e6ea;
+}
+
+.sidebar .nav .nav-item a.active {
+    background: var(--primary);
+    color: #fff;
+}
+
+.main-content .content-area {
+    flex: 1;
+    background: #fff;
+    margin-left: 250px;
+}

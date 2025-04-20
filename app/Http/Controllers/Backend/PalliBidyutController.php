@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Auth;
 class PalliBidyutController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,10 +31,14 @@ class PalliBidyutController extends Controller
         if (request()->ajax()) {
             return datatables()->of(PalliBidyut::latest()->get())
                 ->addColumn('district', function ($data) {
-                    return $data->district['name'];
+                    if($data->district){
+                        return $data->district['name'];
+                    }
                 })
                 ->addColumn('city', function ($data) {
-                    return $data->city['name'];
+                    if($data->city){
+                        return $data->city['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.pallibidyut.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';

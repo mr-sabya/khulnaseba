@@ -20,6 +20,7 @@ class CreateTouristPlacesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('image');
             $table->integer('type_id');  
+            $table->integer('district_id');  
             $table->timestamps();
         });
     }

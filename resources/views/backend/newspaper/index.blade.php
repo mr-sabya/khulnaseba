@@ -18,6 +18,7 @@
 								<th>#</th>
 								<th>Image</th>
 								<th>Name</th>
+								<th>Category</th>
 								<th>Link</th>
 								<th>Action</th>
 							</tr>
@@ -28,6 +29,7 @@
 								<th>#</th>
 								<th>Image</th>
 								<th>Name</th>
+								<th>Category</th>
 								<th>Link</th>
 								<th>Action</th>
 							</tr>
@@ -68,6 +70,10 @@
 		{
 			data: 'name',
 			name: 'name'
+		},
+		{
+			data: 'category',
+			name: 'category'
 		},
 		{
 			data: 'link',

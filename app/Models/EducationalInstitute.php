@@ -18,6 +18,7 @@ class EducationalInstitute extends Model
         'name',
         'phone',
         'address',
+        'category_id',
         'district_id',
         'city_id',
     ];
@@ -30,5 +31,10 @@ class EducationalInstitute extends Model
     public function city()
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
+    }
+
+    public function category()
+    {
+    	return $this->belongsTo('App\Models\EducationCategory', 'category_id');
     }
 }

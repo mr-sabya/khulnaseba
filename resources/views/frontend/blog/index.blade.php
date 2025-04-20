@@ -19,8 +19,8 @@
 
 			@if($blogs->count() > 0)
 			@foreach($blogs as $blog)
-			<div class="col-lg-3">
-				<div class="card p-0 border-0">
+			<div class="col-lg-3 ">
+				<div class="card p-0 border-0 h-100">
 					<div class="card-header border-0 p-0">
 						<img src="{{ url('images/blog', $blog->image) }}" alt="rover" />
 					</div>
@@ -30,7 +30,7 @@
 							<h5>{{ $blog->title }}</h5>
 						</a>
 
-						{!! str_limit($blog->blog, 80) !!}
+						{!! str_limit($blog->meta_description, 80) !!}
 
 						<div class="user">
 

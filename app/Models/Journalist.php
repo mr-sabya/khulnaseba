@@ -18,6 +18,7 @@ class Journalist extends Model
         'name',
         'phone',
         'media',
+        'category_id',
         'district_id',
         'city_id',
     ];
@@ -30,5 +31,10 @@ class Journalist extends Model
     public function city()
     {
     	return $this->belongsTo('App\Models\City', 'city_id');
+    }
+
+    public function category()
+    {
+    	return $this->belongsTo('App\Models\JournalistCategory', 'category_id');
     }
 }

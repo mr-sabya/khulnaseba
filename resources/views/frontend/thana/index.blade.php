@@ -18,19 +18,24 @@
 	<div class="container">
 
 		<div class="filter mb-4">
-			<form action="">
+			<form action="{{ route('thana.search') }}" method="post">
+				@csrf
+				@method('GET')
 				<div class="row g-2">
 					<div class="col-lg-2">
-						<select name="" id="" class="form-control">
-							<option value="" selected disabled>Seclect District</option>
+						<select name="district_id" id="district_id" class="form-control">
+							<option value="">All Bangladesh</option>
 							@foreach($districts as $district)
 							<option value="{{ $district->id }}">{{ $district->name }}</option>
 							@endforeach
 						</select>
 					</div>
+					<div class="col-lg-6">
+						<input type="text" name="search" class="form-control" placeholder="search here....">
+					</div>
 
 					<div class="col-lg-2">
-						<button class="btn form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
+						<button type="submit" class="btn form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
 					</div>
 				</div>
 			</form>
@@ -38,6 +43,7 @@
 
 
 		<div class="row g-3">
+			@if($thanas->count()>0)
 			@foreach($thanas as $thana)
 			<div class="col-lg-3">
 				<div class="hospital card text-center h-100">
@@ -45,7 +51,12 @@
 						<h5>{{ $thana->name }}</h5>
 					</div>
 					<div class="phone">
-						<p>{{ $thana->phone }}</p>
+						<p>Type :
+							@if($thana->category)
+							{{ $thana->category['name'] }}
+							@endif
+						</p>
+						<p>Phone : {{ $thana->phone }}</p>
 						<p>{{ $thana->address }}, @if($thana->district){{ $thana->district['name'] }}@endif</p>
 					</div>
 					<hr>
@@ -56,6 +67,13 @@
 				</div>
 			</div>
 			@endforeach
+			@else
+			<div class="col-lg-12">
+				<div class="text-center">
+					<h4>No Police Station Found!</h4>
+				</div>
+			</div>
+			@endif
 		</div>
 
 		<div class="mt-30">

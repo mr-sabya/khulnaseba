@@ -18,4 +18,10 @@ class ShopCategory extends Model
         'name',
         'image',
     ];
+
+
+    public function shops()
+    {
+        return $this->hasMany('App\Models\Shop', 'category_id');
+    }
 }

@@ -18,11 +18,14 @@ class Course extends Model
         'title',
         'slug',
         'category_id',
-        'type',
+        'duration',
+        'lecture',
+        'projects',
         'image',
         'details',
         'short_desc',
-        'price'
+        'price',
+        'is_free'
     ];
 
     public function category()

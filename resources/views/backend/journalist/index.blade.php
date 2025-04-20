@@ -19,6 +19,7 @@
 								<th>Name</th>
 								<th>Phone</th>
 								<th>Newspaper/TV</th>
+								<th>Category</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -31,6 +32,7 @@
 								<th>Name</th>
 								<th>Phone</th>
 								<th>Newspaper/TV</th>
+								<th>Category</th>
 								<th>City</th>
 								<th>District</th>
 								<th>Action</th>
@@ -72,6 +74,10 @@
 		{
 			data: 'media',
 			name: 'media'
+		},
+		{
+			data: 'category',
+			name: 'category'
 		},
 		{
 			data: 'city',

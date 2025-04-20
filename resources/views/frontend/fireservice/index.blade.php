@@ -18,11 +18,13 @@
 	<div class="container">
 
 		<div class="filter mb-4">
-			<form action="">
+			<form action="{{ route('fireservice.search') }}" method="post">
+				@csrf
+				@method('GET')
 				<div class="row g-2">
 					<div class="col-lg-2">
-						<select name="" id="" class="form-control">
-							<option value="" selected disabled>Seclect District</option>
+						<select name="district_id" id="district_id" class="form-control">
+							<option value="" selected disabled>All Bangladesh</option>
 							@foreach($districts as $district)
 							<option value="{{ $district->id }}">{{ $district->name }}</option>
 							@endforeach
@@ -30,14 +32,14 @@
 					</div>
 
 					<div class="col-lg-2">
-						<select name="" id="" class="form-control">
+						<select name="city_id" id="city_id" class="form-control">
 							<option value="" disabled selected>Select City</option>
 						</select>
 					</div>
 
 
 					<div class="col-lg-2">
-						<button class="btn form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
+						<button type="submit" class="btn form-btn custom-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter</button>
 					</div>
 				</div>
 			</form>
@@ -79,4 +81,21 @@
 </div>
 <!-- newspaper section end -->
 
+@endsection
+
+
+@section('scripts')
+<script>
+	$('#district_id').change(function() {
+		$('#city_id').html('');
+		var id = $(this).val();
+		$.ajax({
+			url: "/get-city-option/" + id,
+			dataType: "json",
+			success: function(data) {
+				$('#city_id').append(data.data);
+			}
+		})
+	})
+</script>
 @endsection

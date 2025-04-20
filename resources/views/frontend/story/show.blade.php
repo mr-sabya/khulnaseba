@@ -49,7 +49,11 @@
                             <div class="latest-post-aside media d-flex gap-2">
                                 <div class="lpa-right">
                                     <a href="#">
-                                        <!-- <img src="{{ url('images/business-idea', $story->image)}}" title="" alt=""> -->
+                                        @if($story->image == null)
+                                        <img src="{{ url('assets/backend/images/default_image.png') }}" alt="">
+                                        @else
+                                        <img src="{{ url('images/story', $story->image)}}" alt="{{ $story->title }}" />
+                                        @endif
                                     </a>
                                 </div>
                                 <div class="lpa-left media-body">
@@ -74,7 +78,7 @@
                         <div class="widget-body">
                             <div class="nav tag-cloud">
                                 @foreach($categories as $type)
-                                <a href="#">{{ $type->name }}</a>
+                                <a href="{{ route('story.category', $type->slug) }}">{{ $type->name }}</a>
                                 @endforeach
                             </div>
                         </div>

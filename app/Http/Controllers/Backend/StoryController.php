@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 class StoryController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -64,9 +75,18 @@ class StoryController extends Controller
             'category_id' => 'required',
             'writer' => 'nullable|required|max:255',
             'reference' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
         $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/story/', $filename);
+            $input['image'] = $filename;
+        }
 
         Story::create($input);
 
@@ -117,6 +137,7 @@ class StoryController extends Controller
                 'category_id' => 'required',
                 'writer' => 'nullable|required|max:255',
                 'reference' => 'nullable|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         } else {
             $request->validate([
@@ -126,10 +147,18 @@ class StoryController extends Controller
                 'category_id' => 'required',
                 'writer' => 'nullable|required|max:255',
                 'reference' => 'nullable|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }
 
         $input = $request->all();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalName();
+            $filename = time() . '-image-' . $extension;
+            $file->move('images/story/', $filename);
+            $input['image'] = $filename;
+        }
 
         $story->update($input);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use App\Models\PlaceType;
 use App\Models\TouristPlace;
 use Illuminate\Http\Request;
@@ -10,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class TouristPlaceController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +33,11 @@ class TouristPlaceController extends Controller
             return datatables()->of(TouristPlace::latest()->get())
                 ->addColumn('type', function ($data) {
                     return $data->placeType['name'];
+                })
+                ->addColumn('district', function ($data) {
+                    if ($data->district) {
+                        return $data->district['name'];
+                    }
                 })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('admin.touristplace.edit', $data->id) . '" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i> Edit</a>';
@@ -45,8 +62,9 @@ class TouristPlaceController extends Controller
     public function create()
     {
         $types = PlaceType::orderBy('name', 'ASC')->get();
+        $districts = District::orderBy('name', 'ASC')->get();
 
-        return view('backend.touristplace.create', compact('types'));
+        return view('backend.touristplace.create', compact('types', 'districts'));
     }
 
     /**
@@ -62,6 +80,7 @@ class TouristPlaceController extends Controller
             'address' => 'required|string|max:255',
             'phone' => 'nullable|string|max:15|unique:tourist_places',
             'type_id' => 'required',
+            'district_id' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
 
@@ -100,9 +119,10 @@ class TouristPlaceController extends Controller
     public function edit($id)
     {
         $touristplace = TouristPlace::findOrFail(intval($id));
+        $districts = District::orderBy('name', 'ASC')->get();
         $types = PlaceType::orderBy('name', 'ASC')->get();
 
-        return view('backend.touristplace.edit', compact('touristplace', 'types'));
+        return view('backend.touristplace.edit', compact('touristplace', 'districts', 'types'));
     }
 
     /**
@@ -122,6 +142,7 @@ class TouristPlaceController extends Controller
                 'address' => 'required|string|max:255',
                 'phone' => 'nullable|string|max:15',
                 'type_id' => 'required',
+                'district_id' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         } else {
@@ -130,6 +151,7 @@ class TouristPlaceController extends Controller
                 'address' => 'required|string|max:255',
                 'phone' => 'nullable|string|max:15|unique:tourist_places',
                 'type_id' => 'required',
+                'district_id' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             ]);
         }

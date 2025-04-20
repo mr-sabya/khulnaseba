@@ -39,6 +39,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="district_id">District</label>
+                            <select class="form-control single-select" id="district_id" name="district_id">
+                                <option value="" selected disabled>--select district--</option>
+                                @foreach($districts as $district)
+                                <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('district_id'))
+                            <small style="color: red">{{ $errors->first('district_id') }}</small>
+                            @endif
+                        </div>
+
+
+                        <div class="form-group">
                             <label for="type_id">Place Type</label>
                             <select class="form-control single-select" id="type_id" name="type_id">
                                 <option value="" selected disabled>--select place type--</option>

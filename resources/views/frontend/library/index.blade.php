@@ -20,18 +20,21 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="filter mb-4">
-					<form action="">
+					<form action="{{ route('library.search')}}" method="post">
+						@csrf
+						@method('GET')
 						<div class="row g-2">
 							<div class="col-lg-3">
-								<select name="" id="" class="form-control">
-									<option value="" selected disabled>Seclect District</option>
+								<select name="district_id" id="district_id" class="form-control">
+									<option value="">All Bangladesh</option>
 									@foreach($districts as $district)
 									<option value="{{ $district->id }}">{{ $district->name }}</option>
 									@endforeach
 								</select>
 							</div>
+
 							<div class="col-lg-3">
-								<select name="" id="" class="form-control">
+								<select name="city_id" id="city_id" class="form-control">
 									<option value="" disabled selected>Select City</option>
 								</select>
 							</div>
@@ -54,6 +57,7 @@
 
 
 		<div class="row g-3">
+			@if($libraries->count() > 0)
 			@foreach($libraries as $library)
 			<div class="col-lg-3">
 				<div class="h-100 card text-center">
@@ -79,6 +83,13 @@
 				</div>
 			</div>
 			@endforeach
+			@else
+			<div class="col-lg-12">
+				<div class="text-center">
+					<h4>No Library Found!</h4>
+				</div>
+			</div>
+			@endif
 		</div>
 
 		<div class="mt-30">
@@ -89,4 +100,21 @@
 </div>
 <!-- content section end -->
 
+@endsection
+
+
+@section('scripts')
+<script>
+	$('#district_id').change(function() {
+		$('#city_id').html('');
+		var id = $(this).val();
+		$.ajax({
+			url: "/get-city-option/" + id,
+			dataType: "json",
+			success: function(data) {
+				$('#city_id').append(data.data);
+			}
+		})
+	})
+</script>
 @endsection

@@ -119,6 +119,13 @@
 							@endif
 						</div>
 
+						<div class="form-check form-group">
+							<input class="form-check-input" type="checkbox" value="1" name="is_active" id="is_active" {{ $volunteer->is_active == 1 ? 'checked' : '' }}>
+							<label class="form-check-label" for="is_active">
+								Approved
+							</label>
+						</div>
+
 						<button type="submit" class="btn btn-primary">Save</button>
 					</form>
 				</div>

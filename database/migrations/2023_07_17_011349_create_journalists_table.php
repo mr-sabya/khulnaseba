@@ -18,6 +18,7 @@ class CreateJournalistsTable extends Migration
             $table->string('name');
             $table->string('phone', 20)->unique();
             $table->string('media');
+            $table->integer('category_id');
             $table->integer('district_id');
             $table->integer('city_id');
             $table->timestamps();

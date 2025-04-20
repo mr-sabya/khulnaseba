@@ -17,4 +17,21 @@ class BusRoute extends Model
     protected $fillable = [
         'name',
     ];
+    
+
+    public function buses()
+    {
+        return $this->belongsToMany('App\Models\Bus');
+    }
+
+
+    public function get_bus($id){
+        $bus = $this->buses()->where('id', $id)->count();
+
+        if($bus > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -1,7 +1,9 @@
 $('#menu_btn').click(function (e) {
     e.preventDefault();
-    $('.main-menu').addClass('show');
-    $('#menu-overlay').addClass('show');
+    // $('.main-menu').addClass('show');
+    // $('#menu-overlay').addClass('show');
+    $('#sidebar').toggleClass('d-none');
+    $('#content-area').toggleClass('ms-0');
 });
 
 $('#menu-overlay').click(function (e) {

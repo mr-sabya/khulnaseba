@@ -145,6 +145,9 @@
                                 <a href="{{ route('admin.country.index') }}">Country</a>
                             </li>
                             <li>
+                                <a href="{{ route('admin.division.index') }}">Division</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('admin.district.index') }}">District</a>
                             </li>
                             <li>
@@ -154,10 +157,10 @@
                     </li>
 
                     <li class="nav-label">Services</li>
-                      
+
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="fa-solid fa-newspaper"></i><span class="nav-text">Newspaper</span>
+                            <i class="fa-solid fa-newspaper"></i><span class="nav-text">Newspaper</span>
                         </a>
                         <ul aria-expanded="false">
                             <li>
@@ -185,9 +188,18 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.hospital.index') }}" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fa-solid fa-hospital"></i><span class="nav-text">Hospital</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.hospital-category.index') }}">Category</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('admin.hospital.index') }}">Hospital</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
@@ -231,9 +243,17 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.journalist.index') }}" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fa-solid fa-user-secret"></i><span class="nav-text">Journalist</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.journalist-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.journalist.index') }}">Journalist</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
@@ -315,7 +335,7 @@
                         </ul>
                     </li>
 
-                    
+
 
                     <li>
                         <a href="{{ route('admin.ehelp.index') }}" aria-expanded="false">
@@ -362,16 +382,34 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="{{ route('admin.library.index') }}" aria-expanded="false">
-                            <i class="fa-solid fa-book-atlas"></i><span class="nav-text">Library</span>
-                        </a>
-                    </li>
 
                     <li>
-                        <a href="{{ route('admin.educationalinstitute.index') }}" aria-expanded="false">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="fa-solid fa-book-atlas"></i><span class="nav-text">Library</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.library.index') }}">Library</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.pdf.index') }}">Pdf</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fa-solid fa-school-flag"></i><span class="nav-text">Educational Institute</span>
                         </a>
+                        <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.educationalinstitute-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.educationalinstitute.index') }}">Institute</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
@@ -414,6 +452,9 @@
                             <i class="fa-solid fa-handcuffs"></i><span class="nav-text">Thana-Police</span>
                         </a>
                         <ul aria-expanded="false">
+                            <li>
+                                <a href="{{ route('admin.thana-category.index') }}">Category</a>
+                            </li>
                             <li>
                                 <a href="{{ route('admin.thana.index') }}">Thana</a>
                             </li>
@@ -460,6 +501,12 @@
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="{{ route('admin.namaz.index') }}" aria-expanded="false">
+                            <i class="fa-solid fa-person-praying"></i>
+                            <span class="nav-text">Namaz</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('admin.volunteer.index') }}" aria-expanded="false">
                             <i class="fa-solid fa-comments"></i>

@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 :root {
-    --primary: #f26e00;
-    --secondary: #fc8b2f;
+    --primary: #5500f2;
+    --secondary: #8b4dff;   
     --white: #fff;
     --black: #000;
     --border-color: #cccccc;
@@ -240,7 +240,9 @@ img {
 }
 
 .menu .menu-btn {
-    display: none;
+    /* display: none; */
+    font-size: 20px;
+    margin-right: 20px;
 }
 
 /* menu section end */
@@ -416,15 +418,16 @@ img {
 /* header section start */
 .header {
     padding: 60px 0;
-    padding-top: 120px;
-    background: linear-gradient(90deg, rgb(6, 72, 253) 0%, rgb(66, 141, 252) 35%, rgb(116, 232, 255) 100%);
+    padding-top: 30px;
+    /* padding-top: 120px; */
+    background: var(--primary);
 }
 
 .header h2 {
     text-align: center;
     font-weight: 500;
     margin: 0;
-    color: var(--black);
+    color: var(--white);
 }
 
 /* header section end */
@@ -1150,6 +1153,14 @@ select::-ms-expand {
 }
 
 @media only screen and (max-width: 425px) {
+    .section-padding{
+        padding: 30px 0;
+    }
+
+    .heading{
+        margin-bottom: 30px;
+    }
+
     .hero-slider {
         padding-top: 63px;
     }
@@ -1162,6 +1173,40 @@ select::-ms-expand {
         padding: 80px 0;
     }
 
+    .hero .banner-text{
+        text-align: center;
+    }
+
+    .hero img{
+        display: none;
+    }
+
+    .hero .banner-text h1{
+        font-size: 36px;
+    }
+
+    .weather .icon{
+        display: none;
+    }
+
+    .weather p{
+        font-size: 12px;
+    }
+
+    .banners .banner-text h3{
+        font-size: 15px;
+    }
+    .banners .banner-text p{
+        font-size: 12px;
+    }
+
+    .banners .banner-text .mb-15{
+        margin-bottom: 8px;
+    }
+    .banners .banner-text a{
+        font-size: 12px;
+    }
+
     .service-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -1169,6 +1214,10 @@ select::-ms-expand {
 
     .services .servive-section {
         gap: 15px;
+    }
+
+    .services .servive-section .item .text p{
+        font-size: 11px;
     }
 
     .services .service {
@@ -1199,7 +1248,12 @@ select::-ms-expand {
         grid-template-columns: repeat(2, 1fr);
     }
 
-
+    .other-services .card{
+        padding: 10px 15px;
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+    }
 
     .other-services .service .text h4 {
         font-size: 14px;

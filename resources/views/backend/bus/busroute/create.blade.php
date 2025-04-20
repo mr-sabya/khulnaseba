@@ -22,6 +22,19 @@
 							@endif
 						</div>
 
+
+						<div class="form-group">
+							<label for="bus_id">Bus</label>
+							<select class="form-control multiple-select" id="bus" name="bus[]" multiple>
+								@foreach($buses as $bus)
+								<option value="{{ $bus->id }}">{{ $bus->name }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('bus_id'))
+							<small style="color: red">{{ $errors->first('bus_id') }}</small>
+							@endif
+						</div>
+
 						<button type="submit" class="btn btn-primary">Save</button>
 					</form>
 				</div>
@@ -34,5 +47,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    $(".multiple-select").select2({
+        placeholder: "-- select bus --"
+    });
+</script>
 @endsection

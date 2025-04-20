@@ -23,6 +23,19 @@
 						</div>
 
 						<div class="form-group">
+							<label for="category_id">Categories</label>
+							<select name="category_id" id="category_id" class="form-control">
+								<option value="" selected disabled>--select category--</option>
+								@foreach($categories as $category)
+								<option value="{{ $category->id }}" {{ $thana->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+								@endforeach
+							</select>
+							@if($errors->has('category_id'))
+							<small style="color: red">{{ $errors->first('category_id') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group">
 							<label for="phone">Phone Number</label>
 							<input type="text" class="form-control" name="phone" id="phone" value="{{ $thana->phone }}">
 							@if($errors->has('phone'))

@@ -37,9 +37,7 @@
 			@endforeach
 		</div>
 
-		<div class="mt-30">
-			{{ $helplines->links() }}
-		</div>
+		
 
 	</div>
 </div>

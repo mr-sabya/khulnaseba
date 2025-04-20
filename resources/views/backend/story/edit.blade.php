@@ -11,7 +11,7 @@
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
-					<form action="{{ route('admin.story.update', $story->id) }}" method="post">
+					<form action="{{ route('admin.story.update', $story->id) }}" method="post" enctype="multipart/form-data">
 						@csrf
                         @method('PUT')
 						<div class="form-group">
@@ -64,6 +64,22 @@
 							<input type="text" class="form-control" name="reference" id="reference" value="{{ $story->reference }}">
 							@if($errors->has('reference'))
 							<small style="color: red">{{ $errors->first('reference') }}</small>
+							@endif
+						</div>
+
+						<div class="form-group text-center">
+                            @if($story->image == null)
+                            <img src="{{ url('assets/backend/images/default_image.png')}}" id="imgPreview" style="width: 300px;border: 1px solid #eaeaea;">
+                            @else
+                            <img src="{{ url('images/story', $story->image)}}" id="imgPreview" style="width: 300px;border: 1px solid #eaeaea;">
+                            @endif
+                        </div>
+
+						<div class="form-group">
+							<label for="image">Image (900*600px)</label>
+							<input type="file" class="form-control" name="image" id="image">
+							@if($errors->has('image'))
+							<small style="color: red">{{ $errors->first('image') }}</small>
 							@endif
 						</div>
 

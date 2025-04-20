@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bus;
 use App\Models\BusRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Bus;
 
 class BusRouteController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +27,7 @@ class BusRouteController extends Controller
      */
     public function index()
     {
+        // return BusRoute::with('buses')->get();
         if (request()->ajax()) {
             return datatables()->of(BusRoute::latest()->get())
                 ->addColumn('action', function ($data) {
@@ -41,7 +52,8 @@ class BusRouteController extends Controller
      */
     public function create()
     {
-        return view('backend.bus.busroute.create');
+        $buses = Bus::orderBy('id', 'ASC')->get();
+        return view('backend.bus.busroute.create', compact('buses'));
     }
 
     /**
@@ -58,7 +70,8 @@ class BusRouteController extends Controller
 
         $input = $request->all();
 
-        BusRoute::create($input);
+        $busroute = BusRoute::create($input);
+        $busroute->buses()->sync($request->bus);
 
         return redirect()->route('admin.busroute.index')->with('success', 'New Bus Route has been added successfully');
     }
@@ -83,7 +96,8 @@ class BusRouteController extends Controller
     public function edit($id)
     {
         $busroute = BusRoute::findOrFail(intval($id));
-        return view('backend.bus.busroute.edit', compact('busroute'));
+        $buses = Bus::orderBy('id', 'ASC')->get();
+        return view('backend.bus.busroute.edit', compact('busroute', 'buses'));
     }
 
     /**
@@ -110,6 +124,7 @@ class BusRouteController extends Controller
         $input = $request->all();
 
         $busroute->update($input);
+        $busroute->buses()->sync($request->bus);
 
         return redirect()->route('admin.busroute.index')->with('success', 'Bus Route has been updated successfully');
     }

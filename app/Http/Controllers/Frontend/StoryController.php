@@ -11,8 +11,23 @@ class StoryController extends Controller
 {
     public function index()
     {
-        $stories = Story::orderBy('id', 'DESC')->paginate(15);
-        return view('frontend.story.index', compact('stories'));   
+        $stories = Story::orderBy('id', 'DESC')->paginate(12);
+        $recent_stories = Story::orderBy('id', 'DESC')->take(5)->get();
+        $categories = StoryCategory::all();
+        $c_category = 'all';
+        return view('frontend.story.index', compact('stories', 'categories', 'recent_stories', 'c_category'));   
+    }
+
+    public function category($slug)
+    {
+        $category = StoryCategory::where('slug', $slug)->first();
+        $c_category = $category->name;
+
+        $stories = Story::where('category_id', $category->id)->orderBy('id', 'DESC')->paginate(12);
+        $recent_stories = Story::orderBy('id', 'DESC')->take(5)->get();
+        $categories = StoryCategory::all();
+
+        return view('frontend.story.index', compact('stories', 'categories', 'recent_stories', 'c_category'));   
     }
 
     public function show($slug)

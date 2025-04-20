@@ -6,11 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Journalist;
+use App\Models\JournalistCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JournalistController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +31,11 @@ class JournalistController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(Journalist::latest()->get())
+                ->addColumn('category', function ($data) {
+                    if ($data->category) {
+                        return $data->category['name'];
+                    }
+                })
                 ->addColumn('district', function ($data) {
                     if ($data->district) {
                         return $data->district['name'];
@@ -52,10 +68,11 @@ class JournalistController extends Controller
      */
     public function create()
     {
+        $categories = JournalistCategory::all();
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.journalist.create', compact('districts', 'cities'));
+        return view('backend.journalist.create', compact('categories', 'districts', 'cities'));
     }
 
     /**
@@ -69,6 +86,7 @@ class JournalistController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|max:15|unique:journalists',
+            'category_id' => 'required',
             'district_id' => 'required',
             'city_id' => 'required',
         ]);
@@ -100,10 +118,11 @@ class JournalistController extends Controller
     public function edit($id)
     {
         $journalist = Journalist::findOrFail(intval($id));
+        $categories = JournalistCategory::all();
         $districts = District::orderBy('name', 'ASC')->get();
         $cities = City::orderBy('name', 'ASC')->get();
 
-        return view('backend.journalist.edit', compact('journalist', 'districts', 'cities'));
+        return view('backend.journalist.edit', compact('journalist', 'categories', 'districts', 'cities'));
     }
 
     /**
@@ -121,6 +140,7 @@ class JournalistController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15',
+                'category_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
@@ -128,6 +148,7 @@ class JournalistController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'phone' => 'required|max:15|unique:journalists',
+                'category_id' => 'required',
                 'district_id' => 'required',
                 'city_id' => 'required',
             ]);
